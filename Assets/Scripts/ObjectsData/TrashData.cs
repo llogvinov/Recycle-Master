@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Main;
+using UnityEngine;
 
 namespace ObjectsData
 {
@@ -7,12 +8,12 @@ namespace ObjectsData
     {
         [SerializeField] private TrashType _type;
         [SerializeField] private string _title;
-        [SerializeField] private GameObject _model;
+        [SerializeField] private TrashObject _model;
 
         public TrashType Type => _type;
 
         public string Title => _title;
 
-        public GameObject Model => _model;
+        public TrashObject Model => _model;
     }
 }
