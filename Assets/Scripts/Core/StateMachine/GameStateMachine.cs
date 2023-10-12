@@ -11,17 +11,16 @@ namespace Core.StateMachine
         
         private IState _activeState;
         
-        public GameStateMachine(Game game)
+        public GameStateMachine(Game game, SceneLoader sceneLoader)
         {
             _game = game;
             _states = new List<IState>
             {
                 new BootstrapState(this),
                 new MenuState(this),
-                //new LoadSceneState(this, sceneLoader, loadingScreenProvider),
-                //new PrepareGameState(this, services.Single<IGameFactory>(), loadingScreenProvider),
-                //new GameLoopState(this),
-                //new GameOverState(this, services.Single<IGameFactory>()),
+                new LoadSceneState(this, sceneLoader/*, loadingScreenProvider*/),
+                new GameLoopState(this),
+                new GameOverState(this),
             };
         }
 
