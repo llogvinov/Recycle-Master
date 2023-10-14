@@ -15,12 +15,15 @@ namespace Main
 
         public void OnStartDrag()
         {
-            Debug.Log("on start");
+            _rigidbody.useGravity = false;
+            _rigidbody.isKinematic = true;
+            _rigidbody.angularVelocity = Vector3.zero;
         }
 
         public void OnEndDrag()
         {
-            Debug.Log("on end");
+            _rigidbody.useGravity = true;
+            _rigidbody.isKinematic = false;
         }
     }
 }
