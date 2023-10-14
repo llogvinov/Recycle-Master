@@ -27,10 +27,10 @@ namespace Main
         private TrashObject SpawnObject() =>
             Instantiate(_trashData.Model, GetRandomPosition(), GetRandomRotation(), transform);
 
-        private Vector3 GetRandomPosition() => 
+        private Vector3 GetRandomPosition() =>
             new Vector3(0, 0, 0);
 
-        private Quaternion GetRandomRotation() => 
+        private Quaternion GetRandomRotation() =>
             Random.rotation;
     }
 }
