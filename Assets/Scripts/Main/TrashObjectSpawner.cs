@@ -7,7 +7,7 @@ namespace Main
     public class TrashObjectSpawner : MonoBehaviour
     {
         [SerializeField] private TrashData _trashData;
-        [SerializeField] int _count = 10;
+        [SerializeField] int _count;
         [Space] 
         [SerializeField] private float _sideBound;
         [SerializeField] private float _topBound;

@@ -7,11 +7,15 @@ namespace Main
     {
         [SerializeField] private GameObject _mesh;
         [SerializeField] private ColliderChecker _checkCollider;
+        [Space]
+        [SerializeField] private Transform _objectStartPoint;
         [SerializeField] private Transform _objectEndPoint;
 
         public TrashCanData TrashCanData { get; private set; }
 
         public Transform ObjectEndPoint => _objectEndPoint;
+
+        public Transform ObjectStartPoint => _objectStartPoint;
 
         public void Init(TrashCanData trashCanData)
         {

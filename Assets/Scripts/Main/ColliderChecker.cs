@@ -26,12 +26,10 @@ namespace Main
                 if (trashObject.TrashData.Type == _trashCan.TrashCanData.Type)
                 {
                     Success?.Invoke(trashObject, _trashCan);
-                    Debug.Log("success");
                 }
                 else
                 {
                     Fail?.Invoke(trashObject);
-                    Debug.Log("fail");
                 }
             }
         }
