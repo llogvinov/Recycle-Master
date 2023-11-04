@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PaperTrashContainerData
   m_EditorClassIdentifier: 
   _type: 6
+  _color: {r: 0.3137255, g: 0.4156863, b: 0.74509805, a: 1}

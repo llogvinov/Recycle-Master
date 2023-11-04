@@ -9,6 +9,12 @@ namespace Core
         [Space]
         [SerializeField] private LayerMask _interactableLayerMask;
         [SerializeField] private LayerMask _rayCheckerLayerMask;
+        [Space]
+        [SerializeField] private GameObject _rayCheckerPlane;
+        
+        [Range(1f, 3f)]
+        [SerializeField] private float _objectFloatHeight;
+        
 
         private Camera _camera;
         private TrashObject _dragged;
@@ -16,6 +22,7 @@ namespace Core
         private void Awake()
         {
             _camera = Camera.main;
+            _rayCheckerPlane.transform.position = Vector3.up * _objectFloatHeight;
         }
 
         private void Update()

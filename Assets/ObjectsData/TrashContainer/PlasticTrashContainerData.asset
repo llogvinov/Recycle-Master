@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PlasticTrashContainerData
   m_EditorClassIdentifier: 
   _type: 3
+  _color: {r: 0.91372555, g: 0.21568629, b: 0.10588236, a: 1}

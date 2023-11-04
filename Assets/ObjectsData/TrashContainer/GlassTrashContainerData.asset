@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GlassTrashContainerData
   m_EditorClassIdentifier: 
   _type: 4
+  _color: {r: 0.14509805, g: 0.53333336, b: 0.10980393, a: 1}

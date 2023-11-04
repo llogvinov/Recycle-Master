@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: OrganicTrashContainerData
   m_EditorClassIdentifier: 
   _type: 5
+  _color: {r: 0.39607847, g: 0.40784317, b: 0.48235297, a: 1}

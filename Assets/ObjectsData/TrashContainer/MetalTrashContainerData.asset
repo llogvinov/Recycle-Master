@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: MetalTrashContainerData
   m_EditorClassIdentifier: 
   _type: 2
+  _color: {r: 0.9686275, g: 0.7960785, b: 0.078431375, a: 1}

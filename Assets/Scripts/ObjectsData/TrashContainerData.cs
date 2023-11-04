@@ -6,7 +6,10 @@ namespace ObjectsData
     public class TrashContainerData : ScriptableObject
     {
         [SerializeField] private TrashType _type;
+        [SerializeField] private Color _color;
 
         public TrashType Type => _type;
+
+        public Color Color => _color;
     }
 }

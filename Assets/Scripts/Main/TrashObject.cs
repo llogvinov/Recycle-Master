@@ -1,12 +1,24 @@
-﻿using UnityEngine;
+﻿using ObjectsData;
+using UnityEngine;
 
 namespace Main
 {
     public class TrashObject : MonoBehaviour
     {
+        public TrashData TrashData { get; private set; }
+        public bool IsDragged { get; private set; }
+        public bool IsThrown { get; set; }
+        
         private Rigidbody _rigidbody;
         private Collider _collider;
 
+        public void Init(TrashData trashData)
+        {
+            TrashData = trashData;
+            IsDragged = false;
+            IsThrown = false;
+        }
+        
         private void Awake()
         {
             _rigidbody = GetComponentInChildren<Rigidbody>();
@@ -15,13 +27,15 @@ namespace Main
 
         public void OnStartDrag()
         {
+            IsDragged = true;
+            _rigidbody.angularVelocity = Vector3.zero;
             _rigidbody.useGravity = false;
             _rigidbody.isKinematic = true;
-            _rigidbody.angularVelocity = Vector3.zero;
         }
 
         public void OnEndDrag()
         {
+            IsDragged = false;
             _rigidbody.useGravity = true;
             _rigidbody.isKinematic = false;
         }

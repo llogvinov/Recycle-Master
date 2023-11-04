@@ -21,16 +21,17 @@ namespace Main
             Spawn(_count);
         }
 
-        public void Spawn(int count)
+        private void Spawn(int count)
         {
             for (int i = 0; i < count; i++)
             {
-                TrashObject trashObject = SpawnObject();
+                var trashObject = SpawnTrashObject();
+                trashObject.Init(_trashData);
                 _trashObjects.Add(trashObject);
             }
         }
 
-        private TrashObject SpawnObject() =>
+        private TrashObject SpawnTrashObject() =>
             Instantiate(_trashData.Model, GetRandomPosition(), GetRandomRotation(), transform);
 
         private Vector3 GetRandomPosition() =>
