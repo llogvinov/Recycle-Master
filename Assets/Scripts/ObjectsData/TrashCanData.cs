@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace ObjectsData
 {
-    [CreateAssetMenu(fileName = nameof(TrashContainerData), menuName = "Object Data/Trash Container Data")]
-    public class TrashContainerData : ScriptableObject
+    [CreateAssetMenu(fileName = nameof(TrashCanData), menuName = "Object Data/Trash Can Data")]
+    public class TrashCanData : ScriptableObject
     {
         [SerializeField] private TrashType _type;
         [SerializeField] private Color _color;

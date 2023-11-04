@@ -5,15 +5,17 @@ namespace Main
 {
     public class TrashCan : MonoBehaviour
     {
+        [SerializeField] private GameObject _mesh;
         [SerializeField] private ColliderChecker _checkCollider;
         [SerializeField] private Transform _objectEndPoint;
 
-        public TrashContainerData TrashCanData { get; private set; }
+        public TrashCanData TrashCanData { get; private set; }
 
         public Transform ObjectEndPoint => _objectEndPoint;
 
-        public void Init(TrashContainerData trashCanData)
+        public void Init(TrashCanData trashCanData)
         {
+            _mesh.GetComponent<MeshRenderer>().material.color = trashCanData.Color;
             TrashCanData = trashCanData;
         }
         

@@ -22,14 +22,16 @@ namespace Main
             {
                 if (trashObject.IsDragged || trashObject.IsThrown) return;
                 
+                trashObject.IsThrown = true;
                 if (trashObject.TrashData.Type == _trashCan.TrashCanData.Type)
                 {
-                    trashObject.IsThrown = true;
                     Success?.Invoke(trashObject, _trashCan);
+                    Debug.Log("success");
                 }
                 else
                 {
                     Fail?.Invoke(trashObject);
+                    Debug.Log("fail");
                 }
             }
         }
