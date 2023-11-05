@@ -19,18 +19,36 @@ namespace Main
 
         private void Spawn()
         {
-            foreach (var trashCanData in _trashCanDatas)
+            var xPositions = GetCanXPositions(_trashCanDatas.Count);
+            for (int i = 0; i < _trashCanDatas.Count; i++)
             {
-                var trashCan = SpawnTrashCan();
-                trashCan.Init(trashCanData);
+                var trashCan = SpawnTrashCan(xPositions[i]);
+                trashCan.Init(_trashCanDatas[i]);
                 _trashCans.Add(trashCan);
             }
         }
+        
+        private TrashCan SpawnTrashCan(float xPosition) =>
+            Instantiate(_trashCanPrefab, GetCanPosition(xPosition), Quaternion.identity, transform);
 
-        private TrashCan SpawnTrashCan() =>
-            Instantiate(_trashCanPrefab, GetCanPosition(), Quaternion.identity, transform);
+        private Vector3 GetCanPosition(float xPosition) => 
+            new(xPosition, 0f, -4f);
 
-        private Vector3 GetCanPosition() =>
-            new(0f, 0f, -4f);
+        private float[] GetCanXPositions(int count)
+        {
+            switch (count)
+            {
+                case 1:
+                    return new[] {0f};
+                case 2:
+                    return new[] {-1f, 1f};
+                case 3:
+                    return new[] {-2f, 0f, 2f};
+                case 4:
+                    return new[] {-3f, -1f, 1f, 3f};
+                default:
+                    return null;
+            }
+        }
     }
 }

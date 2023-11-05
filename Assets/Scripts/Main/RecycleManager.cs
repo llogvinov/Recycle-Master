@@ -21,10 +21,12 @@ namespace Main
 
         private void OnSuccess(TrashObject trashObject, TrashCan trashCan)
         {
-            var animationDurationPart = AnimationDuration / 2;
-            
+            const float animationDurationPart = AnimationDuration / 2;
+            const float midScaler = 0.5f;
+
             var animationTween = DOTween.Sequence();
             animationTween.Append(trashObject.transform.DOMove(trashCan.ObjectStartPoint.position, animationDurationPart));
+            animationTween.Insert(animationDurationPart, trashObject.transform.DOScale(Vector3.one * midScaler, animationDurationPart));
             animationTween.Append(trashObject.transform.DOMove(trashCan.ObjectEndPoint.position, animationDurationPart));
             animationTween.Insert(animationDurationPart, trashObject.transform.DOScale(Vector3.zero, animationDurationPart));
             animationTween.OnComplete(() => trashObject.gameObject.SetActive(false));
