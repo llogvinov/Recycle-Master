@@ -39,5 +39,8 @@ namespace Main
             _rigidbody.useGravity = true;
             _rigidbody.isKinematic = false;
         }
+
+        public void ToggleInteraction(bool enable) => 
+            _collider.enabled = enable;
     }
 }

@@ -43,9 +43,9 @@ namespace Main
                 case 2:
                     return new[] {-1f, 1f};
                 case 3:
-                    return new[] {-2f, 0f, 2f};
+                    return new[] {-1.8f, 0f, 1.8f};
                 case 4:
-                    return new[] {-3f, -1f, 1f, 3f};
+                    return new[] {-2.4f, -0.8f, 0.8f, 2.4f};
                 default:
                     return null;
             }

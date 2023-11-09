@@ -115,9 +115,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mesh: {fileID: 6564771758702207627}
-  _checkCollider: {fileID: 6282807844578663284}
-  _objectEndPoint: {fileID: 5453248079094679850}
+  _checkTrashCanCollider: {fileID: 6282807844578663284}
   _objectStartPoint: {fileID: 5802131752940889147}
+  _objectEndPoint: {fileID: 5453248079094679850}
 --- !u!1 &7284851939984684686
 GameObject:
   m_ObjectHideFlags: 0

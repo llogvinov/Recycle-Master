@@ -895,8 +895,6 @@ MonoBehaviour:
   _trashCanDatas:
   - {fileID: 11400000, guid: db07ccde8dea84a48997e1524e1bae69, type: 2}
   - {fileID: 11400000, guid: 162067b5aa6b17d4a8b450fa1c9dad25, type: 2}
-  - {fileID: 11400000, guid: fa92eb58d955c584eafe0d84d55e63d6, type: 2}
-  - {fileID: 11400000, guid: b2733e4c3ed630e47af8c2708c09fdca, type: 2}
 --- !u!1 &1255141351
 GameObject:
   m_ObjectHideFlags: 0

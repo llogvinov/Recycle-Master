@@ -6,7 +6,7 @@ namespace Main
     public class TrashCan : MonoBehaviour
     {
         [SerializeField] private GameObject _mesh;
-        [SerializeField] private ColliderChecker _checkCollider;
+        [SerializeField] private TrashCanColliderChecker _checkTrashCanCollider;
         [Space]
         [SerializeField] private Transform _objectStartPoint;
         [SerializeField] private Transform _objectEndPoint;
@@ -25,7 +25,7 @@ namespace Main
         
         private void Awake()
         {
-            _checkCollider.Init(this);
+            _checkTrashCanCollider.Init(this);
         }
     }
 }
