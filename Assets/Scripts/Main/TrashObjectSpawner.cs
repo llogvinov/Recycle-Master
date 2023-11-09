@@ -8,12 +8,10 @@ namespace Main
     {
         [SerializeField] private TrashData _trashData;
         [SerializeField] int _count;
-        [Space] 
-        [SerializeField] private float _sideBound;
-        [SerializeField] private float _topBound;
-        [SerializeField] private float _bottomBound;
 
         private List<TrashObject> _trashObjects;
+
+        private const float SpawnOffset = 1f;
 
         private void Awake()
         {
@@ -35,9 +33,9 @@ namespace Main
             Instantiate(_trashData.Model, GetRandomPosition(), GetRandomRotation(), transform);
 
         private Vector3 GetRandomPosition() =>
-            new (Random.Range(-_sideBound, _sideBound),
+            new (Random.Range(-WallAdjuster.HalfWidth + SpawnOffset, WallAdjuster.HalfWidth - SpawnOffset),
                 Random.Range(1f, 2f),
-                Random.Range(_bottomBound, _topBound));
+                Random.Range(WallAdjuster.TempWallHeight + SpawnOffset, WallAdjuster.HalfHeight - SpawnOffset));
 
         private Quaternion GetRandomRotation() =>
             Random.rotation;

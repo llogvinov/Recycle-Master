@@ -300,10 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trashData: {fileID: 11400000, guid: 29f8698a236bff04bacfeea629fdfbe3, type: 2}
-  _count: 5
-  _sideBound: 2
-  _topBound: 3
-  _bottomBound: -2
+  _count: 10
 --- !u!4 &204941754
 Transform:
   m_ObjectHideFlags: 0
@@ -364,10 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trashData: {fileID: 11400000, guid: ef14703167e2ed746a10a2675d88b513, type: 2}
-  _count: 5
-  _sideBound: 2
-  _topBound: 3
-  _bottomBound: -2
+  _count: 10
 --- !u!1 &275750698
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,6 +889,7 @@ MonoBehaviour:
   _trashCanDatas:
   - {fileID: 11400000, guid: db07ccde8dea84a48997e1524e1bae69, type: 2}
   - {fileID: 11400000, guid: 162067b5aa6b17d4a8b450fa1c9dad25, type: 2}
+  - {fileID: 11400000, guid: f6304d1f7a6392f4eb9a9ab6f7f2c890, type: 2}
 --- !u!1 &1255141351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,10 +1132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trashData: {fileID: 11400000, guid: 4e312887c757290449d72b75c3f71dbb, type: 2}
-  _count: 5
-  _sideBound: 2
-  _topBound: 3
-  _bottomBound: -2
+  _count: 10
 --- !u!4 &1702329752
 Transform:
   m_ObjectHideFlags: 0
