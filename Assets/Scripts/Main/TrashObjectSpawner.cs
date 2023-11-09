@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using ObjectsData;
 using UnityEngine;
 
@@ -16,6 +17,12 @@ namespace Main
         private void Awake()
         {
             _trashObjects = new List<TrashObject>();
+            StartCoroutine(DelayedSpawn());
+        }
+
+        private IEnumerator DelayedSpawn()
+        {
+            yield return new WaitForSeconds(0.5f);
             Spawn(_count);
         }
 
