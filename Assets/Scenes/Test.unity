@@ -496,50 +496,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 202578836}
   m_CullTransparentMesh: 1
---- !u!1 &204941752
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 204941754}
-  - component: {fileID: 204941753}
-  m_Layer: 0
-  m_Name: Spawner Book
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &204941753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204941752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecd62688d2ed47dbb3fcb2518f85e3de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &204941754
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204941752}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &215655163
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,50 +670,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 8.818749, z: 13.995695}
   m_Center: {x: 0, y: 4.4054885, z: 0.048419}
---- !u!1 &334743809
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 334743811}
-  - component: {fileID: 334743810}
-  m_Layer: 0
-  m_Name: Spawner Soap Bottle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &334743810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 334743809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecd62688d2ed47dbb3fcb2518f85e3de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &334743811
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 334743809}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &359201120
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,50 +855,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411162447}
   m_CullTransparentMesh: 1
---- !u!1 &473581804
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 473581806}
-  - component: {fileID: 473581805}
-  m_Layer: 0
-  m_Name: Spawner Meatbone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &473581805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473581804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecd62688d2ed47dbb3fcb2518f85e3de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &473581806
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473581804}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &596475915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1853,50 +1721,6 @@ MonoBehaviour:
   _mediumLevel: {fileID: 1464045966}
   _hardLevel: {fileID: 215655165}
   _superHardLevel: {fileID: 596475917}
---- !u!1 &1702329750
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1702329752}
-  - component: {fileID: 1702329751}
-  m_Layer: 0
-  m_Name: Spawner Beer Bottle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1702329751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1702329750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecd62688d2ed47dbb3fcb2518f85e3de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1702329752
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1702329750}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1899858822
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,67 +1895,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 8.818749, z: 13.995695}
   m_Center: {x: 0, y: 4.4054885, z: 0.048419}
---- !u!1001 &1707615545483031938
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5758480356953231544, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_Name
-      value: Spawner Beer Can
-      objectReference: {fileID: 0}
-    - target: {fileID: 5758480356953231544, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694511625182165427, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694511625182165427, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694511625182165427, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694511625182165427, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694511625182165427, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694511625182165427, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694511625182165427, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694511625182165427, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694511625182165427, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694511625182165427, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
 --- !u!1001 &4109710473590570108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2198,11 +1961,6 @@ SceneRoots:
   - {fileID: 1431797238}
   - {fileID: 396975886}
   - {fileID: 627911315}
-  - {fileID: 1707615545483031938}
-  - {fileID: 1702329752}
-  - {fileID: 204941754}
-  - {fileID: 334743811}
-  - {fileID: 473581806}
   - {fileID: 1498493124}
   - {fileID: 4109710473590570108}
   - {fileID: 359201122}
