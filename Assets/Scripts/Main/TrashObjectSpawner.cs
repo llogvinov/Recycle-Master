@@ -7,22 +7,17 @@ namespace Main
 {
     public class TrashObjectSpawner : MonoBehaviour
     {
-        [SerializeField] private TrashData _trashData;
-        [SerializeField] int _count;
-
+        private int _count;
+        private TrashData _trashData;
         private List<TrashObject> _trashObjects;
 
         private const float SpawnOffset = 1f;
-
-        private void Awake()
+        
+        public void Init(TrashData trashData, int count)
         {
             _trashObjects = new List<TrashObject>();
-            StartCoroutine(DelayedSpawn());
-        }
-
-        private IEnumerator DelayedSpawn()
-        {
-            yield return new WaitForSeconds(0.5f);
+            _trashData = trashData;
+            _count = count;
             Spawn(_count);
         }
 

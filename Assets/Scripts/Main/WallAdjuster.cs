@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Main
@@ -17,8 +18,8 @@ namespace Main
         public static float HalfHeight;
         public static float HalfWidth;
         public static float TempWallHeight = -2f;
-        
-        private const float Delay = 1f;
+
+        private const float DelayInSeconds = 1f;
 
         private void Awake()
         {
@@ -31,13 +32,12 @@ namespace Main
 
             AdjustAllWalls();
 
-            // todo: replace with callback on every spawner initialized
-            StartCoroutine(DisableTempWall());
+            LevelCreator.AllObjectSpawned += DisableTempWall;
         }
 
-        private IEnumerator DisableTempWall()
+        private async void DisableTempWall()
         {
-            yield return new WaitForSeconds(Delay);
+            await Task.Delay((int)(DelayInSeconds * 1000));
             _tempWall.gameObject.SetActive(false);
         }
 

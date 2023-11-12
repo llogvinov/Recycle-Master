@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ObjectsData;
 using UnityEngine;
 
@@ -7,13 +8,14 @@ namespace Main
     public class TrashCanSpawner : MonoBehaviour
     {
         [SerializeField] private TrashCan _trashCanPrefab;
-        [SerializeField] private List<TrashCanData> _trashCanDatas;
-
+        
+        private List<TrashCanData> _trashCanDatas;
         private List<TrashCan> _trashCans;
 
-        private void Awake()
+        public void Init(List<TrashCanData> trashCanDatas)
         {
             _trashCans = new List<TrashCan>();
+            _trashCanDatas = trashCanDatas;
             Spawn();
         }
 
