@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 4
   _title: BeerBottle
-  _model: {fileID: 5021614919708238060, guid: e9b05f6fae767ae469e2703caee7ea81, type: 3}
+  _model: {fileID: 1742388604329089275, guid: eb2ab78fca914a745861b0b1548f0de8, type: 3}

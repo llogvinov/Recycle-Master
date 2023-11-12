@@ -33,7 +33,7 @@ namespace Core
             {
                 if (Physics.Raycast(ray, out var hit, 50f, _interactableLayerMask))
                 {
-                    if (hit.collider.TryGetComponent<TrashObject>(out var trashObject))
+                    if (hit.collider.transform.parent.TryGetComponent<TrashObject>(out var trashObject))
                     {
                         _dragged = trashObject;
                         _dragged.OnStartDrag();

@@ -18,7 +18,7 @@ namespace Main
         
         private void OnTriggerStay(Collider other)
         {
-            if (!other.TryGetComponent<TrashObject>(out var trashObject)) return;
+            if (!other.transform.parent.TryGetComponent<TrashObject>(out var trashObject)) return;
             if (trashObject.IsDragged || trashObject.IsThrown) return;
                 
             OnTrashObjectThrown(trashObject);

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9127c3f4f8724a23a2686c7a38479935, type: 3}
-  m_Name: Book
+  m_Name: Meatbone
   m_EditorClassIdentifier: 
-  _type: 6
-  _title: Book
-  _model: {fileID: 1552052833404465932, guid: 0dde0de9c89da134ab26dc8a795ebf56, type: 3}
+  _type: 5
+  _title: Meatbone
+  _model: {fileID: 1552052833404465932, guid: 296e03a5e0a32b84b87277eadea21d83, type: 3}
