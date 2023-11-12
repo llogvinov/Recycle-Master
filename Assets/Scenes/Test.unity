@@ -1717,6 +1717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _trashCanSpawner: {fileID: 1154907381}
   _trashObjectSpawner: {fileID: 7841422674897555346, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
+  _allowSimilarObjects: 1
   _easyLevel: {fileID: 1899858824}
   _mediumLevel: {fileID: 1464045966}
   _hardLevel: {fileID: 215655165}

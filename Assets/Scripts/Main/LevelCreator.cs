@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ObjectsData;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Main
 {
@@ -12,6 +14,7 @@ namespace Main
         
         [SerializeField] private TrashCanSpawner _trashCanSpawner;
         [SerializeField] private TrashObjectSpawner _trashObjectSpawner;
+        [SerializeField] private bool _allowSimilarObjects;
         [Space]
         [SerializeField] private Button _easyLevel;
         [SerializeField] private Button _mediumLevel;
@@ -39,21 +42,45 @@ namespace Main
 
         private void GenerateLevel(int trashCanCount, int trashObjectForCanCount, int trashObjectMaxCount)
         {
-            var trashCanDatas = new List<TrashCanData>();
-            
-            for (int i = 0; i < trashCanCount; i++)
-            {
-                trashCanDatas.Add(_trashCanDatas[i]);
-            }
-            
-            _trashCanSpawner.Init(trashCanDatas);
+            var trashCanDatas = SpawnTrashCans(trashCanCount);
 
-            for (int i = 0; i < trashObjectForCanCount; i++)
-            {
-                var trashObjectSpawner = Instantiate(_trashObjectSpawner);
-                trashObjectSpawner.Init(_trashDatas[i], trashObjectMaxCount);
-            }
+            foreach (var trashCanData in trashCanDatas)
+                SpawnTrashObject(trashCanData, trashObjectForCanCount, trashObjectMaxCount);
+            
             AllObjectSpawned?.Invoke();
+        }
+
+        private List<TrashCanData> SpawnTrashCans(int trashCanCount)
+        {
+            var trashCanDatas = new List<TrashCanData>();
+            var trashCanDatasTemp = new List<TrashCanData>();
+            trashCanDatasTemp.AddRange(_trashCanDatas);
+
+            for (var i = 0; i < trashCanCount; i++)
+            {
+                var addingTrashCanIndex = Random.Range(0, trashCanDatasTemp.Count);
+                var addingTrashCan = trashCanDatasTemp[addingTrashCanIndex];
+                trashCanDatas.Add(addingTrashCan);
+                trashCanDatasTemp.Remove(addingTrashCan);
+            }
+
+            _trashCanSpawner.Init(trashCanDatas);
+            return trashCanDatas;
+        }
+
+        private void SpawnTrashObject(TrashCanData trashCanData, int trashObjectForCanCount, int trashObjectMaxCount)
+        {
+            var trashObjectDatasOfType = _trashDatas.Where(data => data.Type == trashCanData.Type).ToList();
+
+            for (var i = 0; i < trashObjectForCanCount; i++)
+            {
+                var addingTrashObjectIndex = Random.Range(0, trashObjectDatasOfType.Count);
+                var addingTrashObject = trashObjectDatasOfType[addingTrashObjectIndex];
+                var trashObjectSpawner = Instantiate(_trashObjectSpawner);
+                trashObjectSpawner.Init(addingTrashObject, trashObjectMaxCount);
+                if (!_allowSimilarObjects) 
+                    trashObjectDatasOfType.Remove(addingTrashObject);
+            }
         }
     }
 }
