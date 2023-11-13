@@ -60,10 +60,10 @@ namespace Main
             }
         }
 
-        private void GenerateEasyLevel() => GenerateLevel(2, 2, 10);
-        private void GenerateMediumLevel() => GenerateLevel(3, 3, 10);
-        private void GenerateHardLevel() => GenerateLevel(4, 4, 10);
-        private void GenerateSuperHardLevel() => GenerateLevel(4, 5, 15);
+        private void GenerateEasyLevel() => GenerateLevel(2, 2, 5);
+        private void GenerateMediumLevel() => GenerateLevel(3, 3, 5);
+        private void GenerateHardLevel() => GenerateLevel(4, 4, 5);
+        private void GenerateSuperHardLevel() => GenerateLevel(4, 5, 7);
 
         private void GenerateLevel(int trashCanCount, int trashObjectForCanCount, int trashObjectMaxCount)
         {
