@@ -20,6 +20,7 @@ namespace Main
         [SerializeField] private Button _mediumLevel;
         [SerializeField] private Button _hardLevel;
         [SerializeField] private Button _superHardLevel;
+        [SerializeField] private Button _clearButton;
 
         private TrashData[] _trashDatas;
         private TrashCanData[] _trashCanDatas;
@@ -30,9 +31,33 @@ namespace Main
             _mediumLevel.onClick.AddListener(GenerateMediumLevel);
             _hardLevel.onClick.AddListener(GenerateHardLevel);
             _superHardLevel.onClick.AddListener(GenerateSuperHardLevel);
+            _clearButton.onClick.AddListener(ClearLevel);
 
             _trashDatas = Resources.LoadAll<TrashData>("ObjectsData/Trash");
             _trashCanDatas = Resources.LoadAll<TrashCanData>("ObjectsData/TrashCan");
+        }
+
+        private void OnDestroy()
+        {
+            _easyLevel.onClick.RemoveListener(GenerateEasyLevel);
+            _mediumLevel.onClick.RemoveListener(GenerateMediumLevel);
+            _hardLevel.onClick.RemoveListener(GenerateHardLevel);
+            _superHardLevel.onClick.RemoveListener(GenerateSuperHardLevel);
+            _clearButton.onClick.RemoveListener(ClearLevel);
+        }
+
+        private void ClearLevel()
+        {
+            var canSpawner = FindObjectOfType<TrashCanSpawner>();
+            if (canSpawner != null)
+                Destroy(canSpawner.gameObject);
+            
+            var objSpawners = FindObjectsOfType<TrashObjectSpawner>();
+            if (objSpawners!= null && objSpawners.Length > 0)
+            {
+                foreach (var objSpawner in objSpawners) 
+                    Destroy(objSpawner.gameObject);
+            }
         }
 
         private void GenerateEasyLevel() => GenerateLevel(2, 2, 10);
@@ -42,6 +67,8 @@ namespace Main
 
         private void GenerateLevel(int trashCanCount, int trashObjectForCanCount, int trashObjectMaxCount)
         {
+            ClearLevel();
+            
             var trashCanDatas = SpawnTrashCans(trashCanCount);
 
             foreach (var trashCanData in trashCanDatas)
@@ -64,7 +91,8 @@ namespace Main
                 trashCanDatasTemp.Remove(addingTrashCan);
             }
 
-            _trashCanSpawner.Init(trashCanDatas);
+            var trashCanSpawner = Instantiate(_trashCanSpawner);
+            trashCanSpawner.Init(trashCanDatas);
             return trashCanDatas;
         }
 
