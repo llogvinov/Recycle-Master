@@ -15,7 +15,6 @@ namespace Core
         [Range(1f, 3f)]
         [SerializeField] private float _objectFloatHeight;
         
-
         private Camera _camera;
         private TrashObject _dragged;
 
