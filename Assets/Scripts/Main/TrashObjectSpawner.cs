@@ -26,6 +26,10 @@ namespace Main
             for (int i = 0; i < count; i++)
             {
                 var trashObject = SpawnTrashObject();
+                
+                if (trashObject.TryGetComponent<MultiVariantTrashObject>(out var multiVariantTrashObject))
+                    multiVariantTrashObject.ChooseRandomMesh();
+                
                 trashObject.Init(_trashData);
                 _trashObjects.Add(trashObject);
             }

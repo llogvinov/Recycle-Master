@@ -14,15 +14,12 @@ namespace Main
 
         public void Init(TrashData trashData)
         {
+            _rigidbody = GetComponentInChildren<Rigidbody>();
+            _collider = GetComponentInChildren<Collider>();
+            
             TrashData = trashData;
             IsDragged = false;
             IsThrown = false;
-        }
-        
-        private void Awake()
-        {
-            _rigidbody = GetComponentInChildren<Rigidbody>();
-            _collider = GetComponentInChildren<Collider>();
         }
 
         public void OnStartDrag()

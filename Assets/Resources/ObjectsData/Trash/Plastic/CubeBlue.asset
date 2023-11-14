@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CubeBlue
   m_EditorClassIdentifier: 
   _type: 3
-  _title: CubeBlue
+  _title: CubeToy
   _model: {fileID: 2334254722082589748, guid: 53f62ff4799ff104382bee73190acf1d, type: 3}
