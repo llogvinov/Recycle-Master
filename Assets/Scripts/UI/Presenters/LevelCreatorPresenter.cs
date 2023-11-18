@@ -2,38 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using LevelData;
+using Main;
 using ObjectsData;
+using UI.Views;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace Main
+namespace UI.Presenters
 {
-    public class LevelCreator : MonoBehaviour
+    public class LevelCreatorPresenter : MonoBehaviour
     {
         public static Action AllObjectSpawned; 
         
+        [SerializeField] private LevelCreatorView _view;
         [SerializeField] private TrashCanSpawner _trashCanSpawner;
         [SerializeField] private TrashObjectSpawner _trashObjectSpawner;
         [SerializeField] private bool _allowSimilarObjects;
-        [Space]
-        [SerializeField] private Button _easyLevel;
-        [SerializeField] private Button _mediumLevel;
-        [SerializeField] private Button _hardLevel;
-        [SerializeField] private Button _superHardLevel;
-        [SerializeField] private Button _clearButton;
 
         private TrashData[] _trashDatas;
         private TrashCanData[] _trashCanDatas;
         private LevelDifficultyData[] _levelDifficultyDatas;
 
+        public LevelCreatorView View => _view;
+        
         private void Start()
         {
-            _easyLevel.onClick.AddListener(GenerateEasyLevel);
-            _mediumLevel.onClick.AddListener(GenerateMediumLevel);
-            _hardLevel.onClick.AddListener(GenerateHardLevel);
-            _superHardLevel.onClick.AddListener(GenerateSuperHardLevel);
-            _clearButton.onClick.AddListener(ClearLevel);
+            _view.EasyLevel.onClick.AddListener(GenerateEasyLevel);
+            _view.MediumLevel.onClick.AddListener(GenerateMediumLevel);
+            _view.HardLevel.onClick.AddListener(GenerateHardLevel);
+            _view.SuperHardLevel.onClick.AddListener(GenerateSuperHardLevel);
+            _view.ClearButton.onClick.AddListener(ClearLevel);
 
             _trashDatas = Resources.LoadAll<TrashData>("ObjectsData/Trash");
             _trashCanDatas = Resources.LoadAll<TrashCanData>("ObjectsData/TrashCan");
@@ -42,11 +40,11 @@ namespace Main
 
         private void OnDestroy()
         {
-            _easyLevel.onClick.RemoveListener(GenerateEasyLevel);
-            _mediumLevel.onClick.RemoveListener(GenerateMediumLevel);
-            _hardLevel.onClick.RemoveListener(GenerateHardLevel);
-            _superHardLevel.onClick.RemoveListener(GenerateSuperHardLevel);
-            _clearButton.onClick.RemoveListener(ClearLevel);
+            _view.EasyLevel.onClick.RemoveListener(GenerateEasyLevel);
+            _view.MediumLevel.onClick.RemoveListener(GenerateMediumLevel);
+            _view.HardLevel.onClick.RemoveListener(GenerateHardLevel);
+            _view.SuperHardLevel.onClick.RemoveListener(GenerateSuperHardLevel);
+            _view.ClearButton.onClick.RemoveListener(ClearLevel);
         }
 
         private void ClearLevel()

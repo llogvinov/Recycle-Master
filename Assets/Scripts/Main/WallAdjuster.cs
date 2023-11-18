@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Threading.Tasks;
+using UI.Presenters;
 using UnityEngine;
 
 namespace Main
@@ -32,7 +32,7 @@ namespace Main
 
             AdjustAllWalls();
 
-            LevelCreator.AllObjectSpawned += DisableTempWall;
+            LevelCreatorPresenter.AllObjectSpawned += DisableTempWall;
         }
 
         private async void DisableTempWall()
