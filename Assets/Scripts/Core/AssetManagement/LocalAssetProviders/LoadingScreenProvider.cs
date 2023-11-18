@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using UI.Views;
+using UI.Presenters;
 
 namespace Core.AssetManagement.LocalAssetProviders
 {
-    public class LoadingScreenProvider : LocalAssetLoader<LoadingScreenView>
+    public class LoadingScreenProvider : LocalAssetLoader<LoadingScreenPresenter>
     {
         /// <summary>
         /// Delay before unloading UI screen (in milliseconds)

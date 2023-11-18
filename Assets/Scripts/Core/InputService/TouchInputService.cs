@@ -6,9 +6,9 @@ namespace Core.InputService
     {
         private void Update()
         {
-            if (UnityEngine.Input.touchCount <= 0) return;
+            if (Input.touchCount <= 0) return;
             
-            var touch = UnityEngine.Input.GetTouch(0);
+            var touch = Input.GetTouch(0);
             InputPosition = touch.position;
             var ray = Camera.ScreenPointToRay(InputPosition);
                 

@@ -51,7 +51,7 @@ namespace Core.StateMachine
 
         private void OnGameSceneLoaded()
         {
-            _stateMachine.Enter<GameLoopState>();
+            _stateMachine.Enter<PrepareGameState>();
         }
 
         private void OnMenuSceneLoaded()

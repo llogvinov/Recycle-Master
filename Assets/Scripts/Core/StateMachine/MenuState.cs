@@ -1,28 +1,46 @@
-﻿namespace Core.StateMachine
+﻿using System.Threading.Tasks;
+using Core.AssetManagement.LocalAssetProviders;
+using UI.Views;
+
+namespace Core.StateMachine
 {
     public class MenuState : ISimpleState
     {
         private readonly GameStateMachine _stateMachine;
+        private readonly LoadingScreenProvider _loadingScreenProvider;
 
-        public MenuState(GameStateMachine stateMachine)
+        private MenuScreenProvider _menuScreenProvider;
+        private MenuScreenView MenuView => _menuScreenProvider.LoadedObject.View;
+
+        public MenuState(GameStateMachine stateMachine, LoadingScreenProvider loadingScreenProvider)
         {
             _stateMachine = stateMachine;
+            _loadingScreenProvider = loadingScreenProvider;
         }
 
-        public void Enter()
+        public async void Enter()
         {
-            //MenuPresenters.Instance.PlayButton.onClick.AddListener(LoadGame);
+            await LoadMenuScreen();
+            MenuView.PlayButton.onClick.AddListener(LoadGame);
+            _loadingScreenProvider.TryUnload();
         }
 
         public void Exit()
         {
-            
+            _menuScreenProvider.TryUnload();
+        }
+        
+        private async Task LoadMenuScreen()
+        {
+            _menuScreenProvider = new MenuScreenProvider();
+            var loadTask = _menuScreenProvider.Load();
+            await loadTask;
         }
         
         private void LoadGame()
         {
-            //MenuPresenters.Instance.PlayButton.onClick.RemoveListener(LoadGame);
-            //_stateMachine.Enter<LoadSceneState, string>(AssetPath.GameScene);
+            MenuView.PlayButton.onClick.RemoveListener(LoadGame);
+            _stateMachine.Enter<LoadSceneState, string>(AssetPath.GameScene);
         }
     }
 }

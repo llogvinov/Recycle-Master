@@ -18,8 +18,9 @@ namespace Core.StateMachine
             _states = new List<IState>
             {
                 new BootstrapState(this),
-                new MenuState(this),
+                new MenuState(this, loadingScreenProvider),
                 new LoadSceneState(this, sceneLoader, loadingScreenProvider),
+                new PrepareGameState(this, loadingScreenProvider),
                 new GameLoopState(this),
                 new GameOverState(this),
             };
