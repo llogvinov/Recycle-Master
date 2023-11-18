@@ -17,3 +17,4 @@ MonoBehaviour:
     _trashCanCount: 4
     _trashObjectForCanCount: 5
     _trashObjectMaxCount: 7
+  _countdownTime: 380

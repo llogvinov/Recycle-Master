@@ -49,6 +49,9 @@ namespace UI.Presenters
 
         private void ClearLevel()
         {
+            var timer = FindObjectOfType<TimerPresenter>();
+            timer.StopCountdown();
+            
             var canSpawner = FindObjectOfType<TrashCanSpawner>();
             if (canSpawner != null)
                 Destroy(canSpawner.gameObject);
@@ -87,6 +90,9 @@ namespace UI.Presenters
             }
             
             AllObjectSpawned?.Invoke();
+
+            var timer = FindObjectOfType<TimerPresenter>();
+            timer.StartCountdown(levelDifficultyData.CountdownTime);
         }
         
         private LevelDifficultyData GetLevelDifficultyData(LevelType levelType) => 

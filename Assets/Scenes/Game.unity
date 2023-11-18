@@ -612,14 +612,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b5d65451f94e5585f521099778bec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trashCanSpawner: {fileID: 4043347807307370164, guid: 69119f43f7f49c94aafe8819d875588c, type: 3}
-  _trashObjectSpawner: {fileID: 7841422674897555346, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
-  _allowSimilarObjects: 1
-  _easyLevel: {fileID: 1264752178}
-  _mediumLevel: {fileID: 1766846147}
-  _hardLevel: {fileID: 1840110117}
-  _superHardLevel: {fileID: 1523563469}
-  _clearButton: {fileID: 1726658933}
 --- !u!114 &1276714424
 MonoBehaviour:
   m_ObjectHideFlags: 0
