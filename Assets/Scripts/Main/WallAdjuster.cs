@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using UI.Presenters;
 using UnityEngine;
@@ -14,34 +15,34 @@ namespace Main
         [SerializeField] private BoxCollider _tempWall;
     
         private Camera _camera;
-        
         public static float HalfHeight;
         public static float HalfWidth;
         public static float TempWallHeight = -2f;
 
-        private const float DelayInSeconds = 1f;
+        private const float DelayInSeconds = 2f;
 
         private void Awake()
         {
             _camera = Camera.main;
-
-            float depth = _camera.transform.position.y;
-            float halfFieldOfView = _camera.fieldOfView * 0.5f * Mathf.Deg2Rad;
+            var depth = _camera.transform.position.y;
+            var halfFieldOfView = _camera.fieldOfView * 0.5f * Mathf.Deg2Rad;
             HalfHeight = depth * Mathf.Tan(halfFieldOfView);
             HalfWidth = _camera.aspect * HalfHeight;
+        }
 
+        private void Start()
+        {
             AdjustAllWalls();
 
-            LevelCreatorPresenter.AllObjectSpawned += DisableTempWall;
+            LevelCreator.AllObjectSpawned += DisableTempWall;
         }
 
-        private async void DisableTempWall()
+        private void OnDestroy()
         {
-            await Task.Delay((int)(DelayInSeconds * 1000));
-            _tempWall.gameObject.SetActive(false);
+            LevelCreator.AllObjectSpawned -= DisableTempWall;
         }
 
-        private void AdjustAllWalls()
+        public void AdjustAllWalls()
         {
             AdjustBoundWall(_leftWall, Vector3.left, HalfWidth, HalfHeight);
             AdjustBoundWall(_rightWall, Vector3.right, HalfWidth, HalfHeight);
@@ -58,8 +59,17 @@ namespace Main
                 wallCollider.size = new Vector3(wallCollider.size.x, wallCollider.size.y, scale * 2);
             }
             
-            void AdjustTempWall() => 
+            void AdjustTempWall()
+            {
+                _tempWall.gameObject.SetActive(true);
                 AdjustBoundWall(_tempWall, Vector3.forward, TempWallHeight, HalfWidth);
+            }
+        }
+
+        private async void DisableTempWall()
+        {
+            await Task.Delay((int)(DelayInSeconds * 1000));
+            _tempWall.gameObject.SetActive(false);
         }
     }
 }
