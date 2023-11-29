@@ -13,48 +13,43 @@ namespace Main
         [SerializeField] private BoxCollider _tempWall;
     
         private Camera _camera;
-        private static float HalfHeight;
-        private static float HalfWidth;
-
-        public static float[] SpawnBounds;
-        private float _topWallHeight;
-        private float _bottomWallHeight;
-        private float _tempWallHeight;
-
-        private const float DelayInSeconds = 2f;
+        private static float _halfHeight;
+        private static float _halfWidth;
 
         private void Awake()
         {
             _camera = Camera.main;
-            var depth = _camera.transform.position.y;
+            var depth = _camera!.transform.position.y;
             var halfFieldOfView = _camera.fieldOfView * 0.5f * Mathf.Deg2Rad;
-            HalfHeight = depth * Mathf.Tan(halfFieldOfView);
-            HalfWidth = _camera.aspect * HalfHeight;
-            
-            _topWallHeight = HalfHeight - 2f;
-            _bottomWallHeight = -HalfHeight + 1.5f;
-            _tempWallHeight = -HalfHeight + 3.5f;
-            SpawnBounds = new[] {-HalfWidth, _topWallHeight, HalfWidth, _tempWallHeight};
+            _halfHeight = depth * Mathf.Tan(halfFieldOfView);
+            _halfWidth = _camera.aspect * _halfHeight;
         }
 
         private void Start()
         {
+            SetSpawnBounds();
             AdjustAllWalls();
-
-            LevelCreator.AllObjectSpawned += DisableTempWall;
         }
 
-        private void OnDestroy()
+        private static void SetSpawnBounds()
         {
-            LevelCreator.AllObjectSpawned -= DisableTempWall;
+            const float topWallOffset = -2f;
+            const float bottomWallOffset = 1.5f;
+            const float tempWallOffset = 3.5f;
+            
+            SpawnBounds.LeftBound = -_halfWidth;
+            SpawnBounds.RightBound = _halfWidth;
+            SpawnBounds.TopBound = _halfHeight + topWallOffset;
+            SpawnBounds.BottomBound = -_halfHeight + bottomWallOffset;
+            SpawnBounds.TempBound = -_halfHeight + tempWallOffset;
         }
 
         public void AdjustAllWalls()
         {
-            AdjustBoundWall(_leftWall, Vector3.left, HalfWidth, HalfHeight);
-            AdjustBoundWall(_rightWall, Vector3.right, HalfWidth, HalfHeight);
-            AdjustBoundWall(_topWall, Vector3.forward, _topWallHeight, HalfWidth);
-            AdjustBoundWall(_bottomWall, Vector3.forward, _bottomWallHeight, HalfWidth);
+            AdjustBoundWall(_leftWall, Vector3.left, _halfWidth, _halfHeight);
+            AdjustBoundWall(_rightWall, Vector3.right, _halfWidth, _halfHeight);
+            AdjustBoundWall(_topWall, Vector3.forward, SpawnBounds.TopBound, _halfWidth);
+            AdjustBoundWall(_bottomWall, Vector3.forward, SpawnBounds.BottomBound, _halfWidth);
             AdjustTempWall();
         
             void AdjustBoundWall(BoxCollider wallCollider, Vector3 orientation, float value, float scale)
@@ -66,14 +61,8 @@ namespace Main
             void AdjustTempWall()
             {
                 _tempWall.gameObject.SetActive(true);
-                AdjustBoundWall(_tempWall, Vector3.forward, _tempWallHeight, HalfWidth);
+                AdjustBoundWall(_tempWall, Vector3.forward, SpawnBounds.TempBound, _halfWidth);
             }
-        }
-
-        private async void DisableTempWall()
-        {
-            await Task.Delay((int)(DelayInSeconds * 1000));
-            //_tempWall.gameObject.SetActive(false);
         }
     }
 }

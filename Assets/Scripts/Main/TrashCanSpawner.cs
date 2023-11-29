@@ -34,7 +34,7 @@ namespace Main
             Instantiate(_trashCanPrefab, GetCanPosition(xPosition), Quaternion.identity, transform);
 
         private Vector3 GetCanPosition(float xPosition) => 
-            new(xPosition, 0f, WallAdjuster.SpawnBounds[3] - 1f);
+            new(xPosition, 0f, SpawnBounds.TempBound - (SpawnBounds.TempBound - SpawnBounds.BottomBound) / 2);
 
         private float[] GetCanXPositions(int count)
         {
