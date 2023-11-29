@@ -11,7 +11,7 @@ namespace Main
         private TrashData _trashData;
         private List<TrashObject> _trashObjects;
 
-        private const float SpawnOffset = 1f;
+        private const float SpawnOffset = 1.5f;
         
         public void Init(TrashData trashData, int count)
         {

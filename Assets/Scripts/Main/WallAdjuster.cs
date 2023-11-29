@@ -31,7 +31,7 @@ namespace Main
             HalfHeight = depth * Mathf.Tan(halfFieldOfView);
             HalfWidth = _camera.aspect * HalfHeight;
             
-            _topWallHeight = HalfHeight - 1.5f;
+            _topWallHeight = HalfHeight - 2f;
             _bottomWallHeight = -HalfHeight + 1.5f;
             _tempWallHeight = -HalfHeight + 3.5f;
             SpawnBounds = new[] {-HalfWidth, _topWallHeight, HalfWidth, _tempWallHeight};
