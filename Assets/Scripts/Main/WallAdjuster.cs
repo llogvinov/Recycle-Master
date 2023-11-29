@@ -17,7 +17,11 @@ namespace Main
         private Camera _camera;
         public static float HalfHeight;
         public static float HalfWidth;
-        public static float TempWallHeight = -2f;
+
+        public static float[] SpawnBounds;
+        private float _topWallHeight;
+        private float _bottomWallHeight;
+        private float _tempWallHeight;
 
         private const float DelayInSeconds = 2f;
 
@@ -28,6 +32,11 @@ namespace Main
             var halfFieldOfView = _camera.fieldOfView * 0.5f * Mathf.Deg2Rad;
             HalfHeight = depth * Mathf.Tan(halfFieldOfView);
             HalfWidth = _camera.aspect * HalfHeight;
+            
+            _topWallHeight = HalfHeight - 1.5f;
+            _bottomWallHeight = -HalfHeight + 1.5f;
+            _tempWallHeight = -HalfHeight + 3.5f;
+            SpawnBounds = new[] {-HalfWidth, _topWallHeight, HalfWidth, _tempWallHeight};
         }
 
         private void Start()
@@ -46,12 +55,9 @@ namespace Main
         {
             AdjustBoundWall(_leftWall, Vector3.left, HalfWidth, HalfHeight);
             AdjustBoundWall(_rightWall, Vector3.right, HalfWidth, HalfHeight);
-            AdjustBoundWall(_topWall, Vector3.forward, HalfHeight, HalfWidth);
-            AdjustBoundWall(_bottomWall, Vector3.back, HalfHeight, HalfWidth);
-
+            AdjustBoundWall(_topWall, Vector3.forward, _topWallHeight, HalfWidth);
+            AdjustBoundWall(_bottomWall, Vector3.forward, _bottomWallHeight, HalfWidth);
             AdjustTempWall();
-
-            _tempWall.size = new Vector3(_tempWall.size.x, _tempWall.size.y, HalfWidth * 2);
         
             void AdjustBoundWall(BoxCollider wallCollider, Vector3 orientation, float value, float scale)
             {
@@ -62,14 +68,15 @@ namespace Main
             void AdjustTempWall()
             {
                 _tempWall.gameObject.SetActive(true);
-                AdjustBoundWall(_tempWall, Vector3.forward, TempWallHeight, HalfWidth);
+                AdjustBoundWall(_tempWall, Vector3.forward, _tempWallHeight, HalfWidth);
+                //_tempWall.size = new Vector3(_tempWall.size.x, _tempWall.size.y, HalfWidth * 2);
             }
         }
 
         private async void DisableTempWall()
         {
             await Task.Delay((int)(DelayInSeconds * 1000));
-            _tempWall.gameObject.SetActive(false);
+            //_tempWall.gameObject.SetActive(false);
         }
     }
 }

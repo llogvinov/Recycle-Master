@@ -39,9 +39,9 @@ namespace Main
             Instantiate(_trashData.Model, GetRandomPosition(), GetRandomRotation(), transform);
 
         private Vector3 GetRandomPosition() =>
-            new (Random.Range(-WallAdjuster.HalfWidth + SpawnOffset, WallAdjuster.HalfWidth - SpawnOffset),
+            new (Random.Range(WallAdjuster.SpawnBounds[0] + SpawnOffset, WallAdjuster.SpawnBounds[2] - SpawnOffset),
                 Random.Range(1f, 2f),
-                Random.Range(WallAdjuster.TempWallHeight + SpawnOffset, WallAdjuster.HalfHeight - SpawnOffset));
+                Random.Range(WallAdjuster.SpawnBounds[3] + SpawnOffset, WallAdjuster.SpawnBounds[1] - SpawnOffset));
 
         private Quaternion GetRandomRotation() =>
             Random.rotation;
