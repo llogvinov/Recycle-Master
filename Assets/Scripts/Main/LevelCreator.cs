@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LevelData;
 using ObjectsData;
-using UI.Presenters;
+using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -42,7 +42,7 @@ namespace Main
             
             AllObjectSpawned?.Invoke();
 
-            var timer = FindObjectOfType<TimerPresenter>();
+            var timer = FindObjectOfType<UITimer>();
             timer.StartCountdown(levelDifficultyData.CountdownTime);
         }
         
@@ -85,7 +85,7 @@ namespace Main
         
         public void ClearLevel()
         {
-            var timer = FindObjectOfType<TimerPresenter>();
+            var timer = FindObjectOfType<UITimer>();
             timer.StopCountdown();
             
             var canSpawner = FindObjectOfType<TrashCanSpawner>();

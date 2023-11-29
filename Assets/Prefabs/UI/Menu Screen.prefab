@@ -203,8 +203,7 @@ GameObject:
   - component: {fileID: 2419861346779628196}
   - component: {fileID: 5154120439947774146}
   - component: {fileID: 697589853517549429}
-  - component: {fileID: 7405386396451413875}
-  - component: {fileID: 5411184134490616445}
+  - component: {fileID: 5751897422806590281}
   m_Layer: 5
   m_Name: Menu Screen
   m_TagString: Untagged
@@ -295,7 +294,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7405386396451413875
+--- !u!114 &5751897422806590281
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -304,20 +303,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6230124768372331174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3a48bf7166d4076b84b0b1338dc7887, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _view: {fileID: 5411184134490616445}
---- !u!114 &5411184134490616445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6230124768372331174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25c41bec8bc342aa846a3e338bf83625, type: 3}
+  m_Script: {fileID: 11500000, guid: 0450ae7844ab45a5ad32c0442bbe39f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _playButton: {fileID: 5043112945400427981}

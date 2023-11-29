@@ -12,15 +12,15 @@ namespace Core.StateMachine
         
         private IState _activeState;
         
-        public GameStateMachine(Game game, SceneLoader sceneLoader, LoadingScreenProvider loadingScreenProvider)
+        public GameStateMachine(Game game, SceneLoader sceneLoader, UILoadingProvider uiLoadingProvider)
         {
             _game = game;
             _states = new List<IState>
             {
                 new BootstrapState(this),
-                new MenuState(this, loadingScreenProvider),
-                new LoadSceneState(this, sceneLoader, loadingScreenProvider),
-                new PrepareGameState(this, loadingScreenProvider),
+                new MenuState(this, uiLoadingProvider),
+                new LoadSceneState(this, sceneLoader, uiLoadingProvider),
+                new PrepareGameState(this, uiLoadingProvider),
                 new GameLoopState(this),
                 new GameOverState(this),
             };

@@ -49,8 +49,7 @@ GameObject:
   - component: {fileID: 361760816086670482}
   - component: {fileID: 5012040211948658890}
   - component: {fileID: 4456813239037556706}
-  - component: {fileID: 1895062136623033815}
-  - component: {fileID: 3677716047945606084}
+  - component: {fileID: 1039631835938264887}
   m_Layer: 5
   m_Name: Loading Screen
   m_TagString: Untagged
@@ -141,7 +140,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1895062136623033815
+--- !u!114 &1039631835938264887
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,20 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7678901200528867318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa07fbdda27a49d6b6e9c0a71776d4ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _view: {fileID: 3677716047945606084}
---- !u!114 &3677716047945606084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7678901200528867318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8b9f55c8aed4e8d895b3708df36a2a3, type: 3}
+  m_Script: {fileID: 11500000, guid: dcf622ac736242e4b7a110cc3fad41b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7808448094247888128

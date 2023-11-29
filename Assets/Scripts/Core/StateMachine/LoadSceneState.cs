@@ -7,21 +7,21 @@ namespace Core.StateMachine
     {
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
-        private readonly LoadingScreenProvider _loadingScreenProvider;
+        private readonly UILoadingProvider _uiLoadingProvider;
 
         private string _loadingScene;
 
-        public LoadSceneState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingScreenProvider loadingScreenProvider)
+        public LoadSceneState(GameStateMachine stateMachine, SceneLoader sceneLoader, UILoadingProvider uiLoadingProvider)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
-            _loadingScreenProvider = loadingScreenProvider;
+            _uiLoadingProvider = uiLoadingProvider;
         }
 
         public async void Enter(string sceneName)
         {
             _loadingScene = sceneName;
-            await LoadLoadingScreen();
+            await LoadUILoading();
             _sceneLoader.LoadScene(sceneName, OnSceneLoaded);
         }
 
@@ -30,9 +30,9 @@ namespace Core.StateMachine
             
         }
         
-        private async Task LoadLoadingScreen()
+        private async Task LoadUILoading()
         {
-            var loadTask = _loadingScreenProvider.Load();
+            var loadTask = _uiLoadingProvider.Load();
             await loadTask;
         }
 

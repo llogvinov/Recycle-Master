@@ -1,45 +1,45 @@
 ﻿using System.Threading.Tasks;
 using Core.AssetManagement.LocalAssetProviders;
-using UI.Views;
+using UI;
 
 namespace Core.StateMachine
 {
     public class MenuState : ISimpleState
     {
         private readonly GameStateMachine _stateMachine;
-        private readonly LoadingScreenProvider _loadingScreenProvider;
+        private readonly UILoadingProvider _uiLoadingProvider;
 
-        private MenuScreenProvider _menuScreenProvider;
-        private MenuScreenView MenuView => _menuScreenProvider.LoadedObject.View;
+        private UIMenuProvider _uiMenuProvider;
+        private UIMenu UIMenu => _uiMenuProvider.LoadedObject;
 
-        public MenuState(GameStateMachine stateMachine, LoadingScreenProvider loadingScreenProvider)
+        public MenuState(GameStateMachine stateMachine, UILoadingProvider uiLoadingProvider)
         {
             _stateMachine = stateMachine;
-            _loadingScreenProvider = loadingScreenProvider;
+            _uiLoadingProvider = uiLoadingProvider;
         }
 
         public async void Enter()
         {
-            await LoadMenuScreen();
-            MenuView.PlayButton.onClick.AddListener(LoadGame);
-            _loadingScreenProvider.TryUnload();
+            await LoadUIMenu();
+            UIMenu.PlayButton.onClick.AddListener(LoadGame);
+            _uiLoadingProvider.TryUnload();
         }
 
         public void Exit()
         {
-            _menuScreenProvider.TryUnload();
+            _uiMenuProvider.TryUnload();
         }
         
-        private async Task LoadMenuScreen()
+        private async Task LoadUIMenu()
         {
-            _menuScreenProvider = new MenuScreenProvider();
-            var loadTask = _menuScreenProvider.Load();
+            _uiMenuProvider = new UIMenuProvider();
+            var loadTask = _uiMenuProvider.Load();
             await loadTask;
         }
         
         private void LoadGame()
         {
-            MenuView.PlayButton.onClick.RemoveListener(LoadGame);
+            UIMenu.PlayButton.onClick.RemoveListener(LoadGame);
             _stateMachine.Enter<LoadSceneState, string>(AssetPath.GameScene);
         }
     }

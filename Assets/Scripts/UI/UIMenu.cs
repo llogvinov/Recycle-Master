@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Views
+namespace UI
 {
-    public class MenuScreenView : MonoBehaviour
+    public class UIMenu : UIBase
     {
         [SerializeField] private Button _playButton;
 

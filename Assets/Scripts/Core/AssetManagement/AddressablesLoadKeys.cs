@@ -2,7 +2,8 @@
 {
     public static class AddressablesLoadKeys
     {
-        public static string LoadingScreen => "LoadingScreen";
-        public static string MenuScreen => "MenuScreen";
+        public static string UILoading => "UILoading";
+        public static string UIMenu => "UIMenu";
+        public static string UITimer => "UITimer";
     }
 }

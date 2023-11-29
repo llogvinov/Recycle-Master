@@ -48,8 +48,7 @@ GameObject:
   - component: {fileID: 3637079245567825248}
   - component: {fileID: 5875378739858608652}
   - component: {fileID: 5233771476777804812}
-  - component: {fileID: 5085070833399370313}
-  - component: {fileID: 6127691897284047586}
+  - component: {fileID: 1981267743298479969}
   m_Layer: 5
   m_Name: Timer Screen
   m_TagString: Untagged
@@ -140,7 +139,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5085070833399370313
+--- !u!114 &1981267743298479969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,20 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4185320640779700346}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce87a335e33ae51468831fd27867d166, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _view: {fileID: 6127691897284047586}
---- !u!114 &6127691897284047586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4185320640779700346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b7eccaa1b4de884eb07f94b1b540f97, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b26bdc08a784c189136478d858e2046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _timerText: {fileID: 2430903547871208572}

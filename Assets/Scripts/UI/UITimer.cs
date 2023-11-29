@@ -1,16 +1,14 @@
-using System.Collections;
-using UI.Views;
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace UI.Presenters
+namespace UI
 {
-    public class TimerPresenter : BasePresenter
+    public class UITimer : UIBase
     {
-        [SerializeField] private TimerScreenView _view;
-    
+        [SerializeField] private Text _timerText;
+        
         private Coroutine _countdownCoroutine;
-
-        public TimerScreenView View => _view;
 
         public void StartCountdown(float seconds) =>
             _countdownCoroutine = StartCoroutine(Countdown(seconds));
@@ -32,7 +30,7 @@ namespace UI.Presenters
         { 
             float minutes = Mathf.FloorToInt(remainingTime / 60);  
             float seconds = Mathf.FloorToInt(remainingTime % 60);
-            _view.TimerText.text = $"{minutes:0}:{seconds:00}";
+            _timerText.text = $"{minutes:0}:{seconds:00}";
         }
 
         public void StopCountdown()
@@ -40,6 +38,5 @@ namespace UI.Presenters
             if (_countdownCoroutine != null) 
                 StopCoroutine(_countdownCoroutine);
         }
-    
     }
 }

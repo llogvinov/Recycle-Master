@@ -15,7 +15,7 @@ namespace Core
         {
             _stateMachine = new GameStateMachine(this, 
                 new SceneLoader(coroutineRunner), 
-                new LoadingScreenProvider());
+                new UILoadingProvider());
         }
     }
 }
