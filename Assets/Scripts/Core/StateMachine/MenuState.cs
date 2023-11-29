@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Core.AssetManagement.LocalAssetProviders;
+﻿using Core.AssetManagement.LocalAssetProviders;
 using UI;
+using UnityEngine;
 
 namespace Core.StateMachine
 {
@@ -9,8 +9,7 @@ namespace Core.StateMachine
         private readonly GameStateMachine _stateMachine;
         private readonly UILoadingProvider _uiLoadingProvider;
 
-        private UIMenuProvider _uiMenuProvider;
-        private UIMenu UIMenu => _uiMenuProvider.LoadedObject;
+        private UIMenu _uiMenu;
 
         public MenuState(GameStateMachine stateMachine, UILoadingProvider uiLoadingProvider)
         {
@@ -18,28 +17,21 @@ namespace Core.StateMachine
             _uiLoadingProvider = uiLoadingProvider;
         }
 
-        public async void Enter()
+        public void Enter()
         {
-            await LoadUIMenu();
-            UIMenu.PlayButton.onClick.AddListener(LoadGame);
+            _uiMenu = GameObject.FindObjectOfType<UIMenu>();
+            _uiMenu.PlayButton.onClick.AddListener(LoadGame);
             _uiLoadingProvider.TryUnload();
         }
 
         public void Exit()
         {
-            _uiMenuProvider.TryUnload();
-        }
-        
-        private async Task LoadUIMenu()
-        {
-            _uiMenuProvider = new UIMenuProvider();
-            var loadTask = _uiMenuProvider.Load();
-            await loadTask;
+            
         }
         
         private void LoadGame()
         {
-            UIMenu.PlayButton.onClick.RemoveListener(LoadGame);
+            _uiMenu.PlayButton.onClick.RemoveListener(LoadGame);
             _stateMachine.Enter<LoadSceneState, string>(AssetPath.GameScene);
         }
     }

@@ -13,8 +13,8 @@ namespace Main
         [SerializeField] private BoxCollider _tempWall;
     
         private Camera _camera;
-        public static float HalfHeight;
-        public static float HalfWidth;
+        private static float HalfHeight;
+        private static float HalfWidth;
 
         public static float[] SpawnBounds;
         private float _topWallHeight;
@@ -67,7 +67,6 @@ namespace Main
             {
                 _tempWall.gameObject.SetActive(true);
                 AdjustBoundWall(_tempWall, Vector3.forward, _tempWallHeight, HalfWidth);
-                //_tempWall.size = new Vector3(_tempWall.size.x, _tempWall.size.y, HalfWidth * 2);
             }
         }
 

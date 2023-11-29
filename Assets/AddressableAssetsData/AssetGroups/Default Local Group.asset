@@ -22,11 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c391f8f0b68b7ef42b9912a42d22694a
-    m_Address: UIMenu
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cbd19570dbdeac542a47e29c9186d7f6
     m_Address: UITimer
     m_ReadOnly: 0

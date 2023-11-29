@@ -53,6 +53,9 @@ namespace Core.StateMachine
             var random = new Random();
             var randomType = (LevelType)values.GetValue(random.Next(values.Length));
             
+            // exclude Undefined type
+            if (randomType == 0) randomType++; 
+            
             _levelCreator.GenerateLevel(randomType);
         }
     }
