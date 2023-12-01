@@ -8,8 +8,9 @@ namespace UI
     public class UITimer : UIBase
     {
         [SerializeField] private Text _timerText;
-        
+
         private Coroutine _countdownCoroutine;
+        private bool _pause;
 
         public void StartCountdown(float seconds) =>
             _countdownCoroutine = StartCoroutine(Countdown(seconds));
@@ -20,6 +21,8 @@ namespace UI
             while (counter > 0)
             {
                 yield return null;
+                if (_pause) continue;
+                
                 counter -= Time.deltaTime;
                 UpdateRemainingTime(counter);
             }
@@ -39,5 +42,8 @@ namespace UI
             if (_countdownCoroutine != null) 
                 StopCoroutine(_countdownCoroutine);
         }
+
+        public void PauseTimer() => _pause = true;
+        public void ContinueTimer() => _pause = false;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Core.AssetManagement.LocalAssetProviders;
-using Main;
+using UI;
+using UnityEngine;
 
 namespace Core.StateMachine
 {
@@ -20,6 +20,8 @@ namespace Core.StateMachine
 
         private async Task Test()
         {
+            await Task.Delay(2000);
+            GameObject.FindObjectOfType<UITimer>().PauseTimer();
             await Task.Delay(4000);
             _stateMachine.Enter<GameOverState, bool>(false);
         }

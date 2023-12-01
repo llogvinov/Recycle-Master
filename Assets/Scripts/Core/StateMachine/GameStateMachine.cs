@@ -28,14 +28,12 @@ namespace Core.StateMachine
 
         public void Enter<TState>() where TState : class, ISimpleState
         {
-            Debug.Log($"enter {typeof(TState)} state");
             var state = ChangeState<TState>();
             state.Enter();
         }
         
         public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadState<TPayload>
         {
-            Debug.Log($"enter {typeof(TState)} state");
             var state = ChangeState<TState>();
             state.Enter(payload);
         }
@@ -43,7 +41,7 @@ namespace Core.StateMachine
         private TState ChangeState<TState>() where TState : class, IState
         {
             _activeState?.Exit();
-            TState state = GetState<TState>();
+            var state = GetState<TState>();
             _activeState = state;
             return state;
         }
