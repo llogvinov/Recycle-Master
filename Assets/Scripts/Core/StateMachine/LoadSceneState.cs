@@ -51,7 +51,8 @@ namespace Core.StateMachine
 
         private void OnGameSceneLoaded()
         {
-            _stateMachine.Enter<PrepareGameState>();
+            // todo change passing level
+            _stateMachine.Enter<PrepareGameState, int>(0);
         }
 
         private void OnMenuSceneLoaded()

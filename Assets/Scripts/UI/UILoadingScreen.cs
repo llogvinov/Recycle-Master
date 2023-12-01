@@ -1,6 +1,8 @@
-﻿namespace UI
+﻿using UI.Base;
+
+namespace UI
 {
-    public class UILoadingScreen : UIBase
+    public class UILoadingScreen : UIScreen
     {
         
     }

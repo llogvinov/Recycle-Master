@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using UI.Base;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
 {
-    public class UIMenu : UIBase
+    public class UIMenu : UIScreen
     {
         [SerializeField] private Button _playButton;
 

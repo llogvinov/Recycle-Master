@@ -1,4 +1,8 @@
-﻿namespace Core.StateMachine
+﻿using System.Threading.Tasks;
+using Core.AssetManagement.LocalAssetProviders;
+using Main;
+
+namespace Core.StateMachine
 {
     public class GameLoopState : ISimpleState
     {
@@ -9,9 +13,15 @@
             _stateMachine = stateMachine;
         }
 
-        public void Enter()
+        public async void Enter()
         {
-            
+            await Test();
+        }
+
+        private async Task Test()
+        {
+            await Task.Delay(4000);
+            _stateMachine.Enter<GameOverState, bool>(false);
         }
 
         public void Exit()

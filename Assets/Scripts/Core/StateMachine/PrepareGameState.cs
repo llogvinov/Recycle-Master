@@ -8,7 +8,7 @@ using Random = System.Random;
 
 namespace Core.StateMachine
 {
-    public class PrepareGameState : ISimpleState
+    public class PrepareGameState : IPayloadState<int>
     {
         private readonly GameStateMachine _gameStateMachine;
         private readonly UILoadingProvider _uiLoadingProvider;
@@ -22,7 +22,7 @@ namespace Core.StateMachine
             _uiLoadingProvider = uiLoadingProvider;
         }
 
-        public async void Enter()
+        public async void Enter(int level)
         {
             _levelCreator = GameObject.FindObjectOfType<LevelCreator>();
             await LoadUITimer();
