@@ -58,7 +58,7 @@ namespace Core.StateMachine
 
         // todo: change level type choosing
         private void BuildLevel() => 
-            BuildRandomLevel();
+            BuildEasyLevel();
 
         private void BuildRandomLevel()
         {
@@ -71,5 +71,12 @@ namespace Core.StateMachine
             
             _levelCreator.GenerateLevel(randomType);
         }
+        
+#if UNITY_EDITOR
+        private void BuildEasyLevel() => _levelCreator.GenerateLevel(LevelType.Easy);
+        private void BuildMediumLevel() => _levelCreator.GenerateLevel(LevelType.Medium);
+        private void BuildHardLevel() => _levelCreator.GenerateLevel(LevelType.Hard);
+        private void BuildSuperHardLevel() => _levelCreator.GenerateLevel(LevelType.SuperHard);
+#endif
     }
 }
