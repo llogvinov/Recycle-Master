@@ -11,9 +11,7 @@ namespace LevelData
         [SerializeField] private int _trashObjectMaxCount;
 
         public int TrashCanCount => _trashCanCount;
-
         public int TrashObjectForCanCount => _trashObjectForCanCount;
-
         public int TrashObjectMaxCount => _trashObjectMaxCount;
     }
 }

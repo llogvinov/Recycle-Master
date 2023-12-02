@@ -12,7 +12,6 @@ namespace LevelData
 
         public LevelType LevelType => _levelType;
         public LevelObjectsData ObjectsData => _levelObjectsData;
-
         public float CountdownTime => _countdownTime;
     }
 }
