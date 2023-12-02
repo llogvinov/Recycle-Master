@@ -459,6 +459,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Creator UI
       objectReference: {fileID: 0}
+    - target: {fileID: 1551292863319310322, guid: cdfb3f9e885228740a7e17c0956c6ab5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5663199384849307853, guid: cdfb3f9e885228740a7e17c0956c6ab5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
