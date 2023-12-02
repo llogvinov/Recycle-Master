@@ -51,8 +51,7 @@ namespace Main
 
             AllObjectSpawned?.Invoke();
 
-            var timer = FindObjectOfType<UITimer>();
-            timer.StartCountdown(levelDifficultyData.CountdownTime);
+            Timer.Instance.StartCountdown(levelDifficultyData.CountdownTime);
         }
 
         private LevelDifficultyData GetLevelDifficultyData(LevelType levelType) => 
@@ -99,8 +98,7 @@ namespace Main
 
         public void ClearLevel()
         {
-            var timer = FindObjectOfType<UITimer>();
-            timer.StopCountdown();
+            Timer.Instance.StopCountdown();
             
             var canSpawner = FindObjectOfType<TrashCanSpawner>();
             if (canSpawner != null)

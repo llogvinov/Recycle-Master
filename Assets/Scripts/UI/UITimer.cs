@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UI.Base;
+﻿using UI.Base;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,41 +8,17 @@ namespace UI
     {
         [SerializeField] private Text _timerText;
 
-        private Coroutine _countdownCoroutine;
-        private bool _pause;
-
-        public void StartCountdown(float seconds) =>
-            _countdownCoroutine = StartCoroutine(Countdown(seconds));
-
-        private IEnumerator Countdown(float seconds)
+        public void UpdateRemainingTime(float remainingTime)
         {
-            var counter = seconds;
-            while (counter > 0)
+            var minutes = 0f;
+            var seconds = 0f;
+            
+            if (remainingTime > 0f)
             {
-                yield return null;
-                if (_pause) continue;
-                
-                counter -= Time.deltaTime;
-                UpdateRemainingTime(counter);
+                minutes = Mathf.FloorToInt(remainingTime / 60);
+                seconds = Mathf.CeilToInt(remainingTime % 60);
             }
-
-            gameObject.SetActive(false);
-        }
-
-        private void UpdateRemainingTime(float remainingTime)
-        { 
-            float minutes = Mathf.FloorToInt(remainingTime / 60);  
-            float seconds = Mathf.FloorToInt(remainingTime % 60);
             _timerText.text = $"{minutes:0}:{seconds:00}";
         }
-
-        public void StopCountdown()
-        {
-            if (_countdownCoroutine != null) 
-                StopCoroutine(_countdownCoroutine);
-        }
-
-        public void PauseTimer() => _pause = true;
-        public void ContinueTimer() => _pause = false;
     }
 }

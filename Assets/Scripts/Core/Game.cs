@@ -9,7 +9,7 @@ namespace Core
         private readonly GameStateMachine _stateMachine;
         public GameStateMachine StateMachine => _stateMachine;
 
-        public Action GameOver;
+        public Action<bool> GameOver;
 
         public Game(ICoroutineRunner coroutineRunner)
         {

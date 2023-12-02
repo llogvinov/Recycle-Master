@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Core.AssetManagement.LocalAssetProviders;
 using LevelData;
 using Main;
+using UI;
 using UnityEngine;
 using Random = System.Random;
 
@@ -11,21 +12,23 @@ namespace Core.StateMachine
     public class PrepareGameState : IPayloadState<int>
     {
         private readonly GameStateMachine _gameStateMachine;
+        private readonly Game _game;
         private readonly UILoadingProvider _uiLoadingProvider;
 
         private LevelCreator _levelCreator;
         private UITimerProvider _uiTimerProvider;
 
-        public PrepareGameState(GameStateMachine gameStateMachine, UILoadingProvider uiLoadingProvider)
+        public PrepareGameState(GameStateMachine gameStateMachine, Game game, UILoadingProvider uiLoadingProvider)
         {
             _gameStateMachine = gameStateMachine;
+            _game = game;
             _uiLoadingProvider = uiLoadingProvider;
         }
 
         public async void Enter(int level)
         {
             _levelCreator = GameObject.FindObjectOfType<LevelCreator>();
-            await LoadUITimer();
+            await PrepareUITimer();
             BuildLevel();
             
             _gameStateMachine.Enter<GameLoopState>();
@@ -36,11 +39,21 @@ namespace Core.StateMachine
             _uiLoadingProvider.TryUnload();
         }
 
-        private async Task LoadUITimer()
+        private async Task PrepareUITimer()
         {
-            _uiTimerProvider = new UITimerProvider();
-            var loadTask = _uiTimerProvider.Load();
-            await loadTask;
+            if (GameObject.FindObjectOfType<UITimer>() is not null) return;
+            
+            await LoadUITimer();
+            Timer.Instance.OnFinish += OnTimerFinished;
+
+            async Task LoadUITimer()
+            {
+                _uiTimerProvider = new UITimerProvider();
+                await _uiTimerProvider.Load();
+            }
+
+            void OnTimerFinished() => 
+                _game.GameOver?.Invoke(false);
         }
 
         // todo: change level type choosing

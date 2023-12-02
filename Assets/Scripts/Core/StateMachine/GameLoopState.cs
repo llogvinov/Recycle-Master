@@ -1,34 +1,29 @@
-﻿using System.Threading.Tasks;
-using UI;
-using UnityEngine;
-
-namespace Core.StateMachine
+﻿namespace Core.StateMachine
 {
     public class GameLoopState : ISimpleState
     {
         private readonly GameStateMachine _stateMachine;
+        private readonly Game _game;
 
-        public GameLoopState(GameStateMachine stateMachine)
+        public GameLoopState(GameStateMachine stateMachine, Game game)
         {
             _stateMachine = stateMachine;
+            _game = game;
         }
 
-        public async void Enter()
+        public void Enter()
         {
-            await Test();
+            _game.GameOver += OnGameOver;
         }
 
-        private async Task Test()
+        private void OnGameOver(bool won)
         {
-            await Task.Delay(2000);
-            GameObject.FindObjectOfType<UITimer>().PauseTimer();
-            await Task.Delay(4000);
-            _stateMachine.Enter<GameOverState, bool>(false);
+            _stateMachine.Enter<GameOverState, bool>(won);
         }
 
         public void Exit()
         {
-            
+            _game.GameOver -= OnGameOver;
         }
     }
 }

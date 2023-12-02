@@ -20,8 +20,8 @@ namespace Core.StateMachine
                 new BootstrapState(this),
                 new MenuState(this, uiLoadingProvider),
                 new LoadSceneState(this, sceneLoader, uiLoadingProvider),
-                new PrepareGameState(this, uiLoadingProvider),
-                new GameLoopState(this),
+                new PrepareGameState(this, _game, uiLoadingProvider),
+                new GameLoopState(this, _game),
                 new GameOverState(this),
             };
         }
