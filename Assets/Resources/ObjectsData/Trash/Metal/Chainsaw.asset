@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9127c3f4f8724a23a2686c7a38479935, type: 3}
-  m_Name: Meatbone
+  m_Name: Chainsaw
   m_EditorClassIdentifier: 
-  _type: 5
-  _title: Meatbone
-  _model: {fileID: 1552052833404465932, guid: bd6db1fa038de6842817e9a44aab6fb8, type: 3}
+  _type: 2
+  _title: Chainsaw
+  _model: {fileID: 1552052833404465932, guid: 296e03a5e0a32b84b87277eadea21d83, type: 3}
