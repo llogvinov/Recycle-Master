@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Core.Data;
-using Core.SaveService;
+using System.Text;
 using LevelData;
 using ObjectsData;
 using UI;
@@ -11,7 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace Main
 {
-    public class LevelCreator : MonoBehaviour, ISavedProgress
+    public class LevelCreator : MonoBehaviour
     {
         public static Action AllObjectSpawned;
 
@@ -114,31 +113,16 @@ namespace Main
 
         private void LogDetails()
         {
-            var s = "";
+            var s = new StringBuilder();
             foreach (var detail in _levelDetails)
             {
                 var d = "";
                 foreach (var trashData in detail.Value)
                     d += $"{trashData.Title}, ";
-                s += $"{detail.Key.Type} - {d}";
+                s.Append($"{detail.Key.Type} - {d}");
             }
 
-            Debug.Log(s);
-        }
-
-        public void LoadProgress(PlayerProgress playerProgress)
-        {
-            if (playerProgress.LevelProgressData == null) return;
-
-            _currentLevel = playerProgress.LevelProgressData.CurrentLevel;
-            _levelType = playerProgress.LevelProgressData.LevelType;
-            _levelDetails = playerProgress.LevelProgressData.LevelDetails;
-        }
-
-        public void UpdateProgress(PlayerProgress playerProgress)
-        {
-            playerProgress.LevelProgressData = 
-                new LevelProgressData(_currentLevel, _levelType, _levelDetails);
+            Debug.Log(s.ToString());
         }
     }
 }

@@ -1,7 +1,10 @@
-﻿namespace Core.Data
+﻿using System;
+
+namespace Core.Data
 {
+    [Serializable]
     public class PlayerProgress
     {
-        public LevelProgressData LevelProgressData;
+        public int CurrentLevel;
     }
 }
