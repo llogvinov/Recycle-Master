@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9127c3f4f8724a23a2686c7a38479935, type: 3}
-  m_Name: Meatbone 1
+  m_Name: PickleJar
   m_EditorClassIdentifier: 
-  _type: 5
-  _title: Fish
-  _model: {fileID: 2334254722082589748, guid: f982199b40dd992478d56b1f71a82b04, type: 3}
+  _type: 4
+  _title: PickleJar
+  _model: {fileID: 2334254722082589748, guid: 19a2c02d79578fb4fb85cc3d9bffbfb0, type: 3}
