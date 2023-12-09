@@ -18,7 +18,9 @@ namespace Core.StateMachine
         private LevelCreator _levelCreator;
         private UITimerProvider _uiTimerProvider;
 
-        public PrepareGameState(GameStateMachine gameStateMachine, Game game, UILoadingProvider uiLoadingProvider)
+        public PrepareGameState(GameStateMachine gameStateMachine, 
+            Game game,
+            UILoadingProvider uiLoadingProvider)
         {
             _gameStateMachine = gameStateMachine;
             _game = game;
@@ -27,6 +29,7 @@ namespace Core.StateMachine
 
         public async void Enter(int level)
         {
+            Debug.Log($"current level - {level}");
             _levelCreator = GameObject.FindObjectOfType<LevelCreator>();
             await PrepareUITimer();
             BuildLevel();

@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Core.AssetManagement.LocalAssetProviders;
+using Core.Data;
+using Core.SaveService;
 
 namespace Core.StateMachine
 {
@@ -7,13 +9,18 @@ namespace Core.StateMachine
     {
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
+        private readonly ISaveService<PlayerProgressService> _saveService;
         private readonly UILoadingProvider _uiLoadingProvider;
 
         private string _loadingScene;
 
-        public LoadSceneState(GameStateMachine stateMachine, SceneLoader sceneLoader, UILoadingProvider uiLoadingProvider)
+        public LoadSceneState(GameStateMachine stateMachine, 
+            ISaveService<PlayerProgressService> saveService, 
+            SceneLoader sceneLoader,
+            UILoadingProvider uiLoadingProvider)
         {
             _stateMachine = stateMachine;
+            _saveService = saveService;
             _sceneLoader = sceneLoader;
             _uiLoadingProvider = uiLoadingProvider;
         }
@@ -51,8 +58,8 @@ namespace Core.StateMachine
 
         private void OnGameSceneLoaded()
         {
-            // todo change passing level
-            _stateMachine.Enter<PrepareGameState, int>(0);
+            var currentLevel = _saveService.SaveData.CurrentLevel;
+            _stateMachine.Enter<PrepareGameState, int>(currentLevel);
         }
 
         private void OnMenuSceneLoaded()

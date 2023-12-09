@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Core.AssetManagement.LocalAssetProviders;
+using Core.Data;
+using Core.SaveService;
 
 namespace Core.StateMachine
 {
@@ -21,10 +23,10 @@ namespace Core.StateMachine
             {
                 new BootstrapState(this, services),
                 new MenuState(this, uiLoadingProvider),
-                new LoadSceneState(this, sceneLoader, uiLoadingProvider),
+                new LoadSceneState(this, services.Single<ISaveService<PlayerProgressService>>(), sceneLoader, uiLoadingProvider),
                 new PrepareGameState(this, _game, uiLoadingProvider),
                 new GameLoopState(this, _game),
-                new GameOverState(this),
+                new GameOverState(this, services.Single<ISaveService<PlayerProgressService>>()),
             };
         }
 

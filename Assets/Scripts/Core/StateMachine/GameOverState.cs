@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Core.AssetManagement.LocalAssetProviders;
+using Core.Data;
+using Core.SaveService;
 using UI.Base;
 
 namespace Core.StateMachine
@@ -10,13 +12,15 @@ namespace Core.StateMachine
         private const float Additional = 0.5f;
         
         private readonly GameStateMachine _stateMachine;
+        private readonly ISaveService<PlayerProgressService> _saveService;
 
         private UIWinLevelProvider _uiWinLevel;
         private UILostLevelProvider _uiLostLevel;
 
-        public GameOverState(GameStateMachine stateMachine)
+        public GameOverState(GameStateMachine stateMachine, ISaveService<PlayerProgressService> saveService)
         {
             _stateMachine = stateMachine;
+            _saveService = saveService;
         }
 
         public async void Enter(bool won)
@@ -87,8 +91,8 @@ namespace Core.StateMachine
             {
                 _uiLostLevel.LoadedObject.Close();
                 await Task.Delay((int)(UIPanel.AnimationDuration + Additional) * MillisecondsPerSeconds);
-                // todo change to get current level
-                _stateMachine.Enter<PrepareGameState, int>(0);
+                var currentLevel = _saveService.SaveData.CurrentLevel;
+                _stateMachine.Enter<PrepareGameState, int>(currentLevel);
             }
         }
 
