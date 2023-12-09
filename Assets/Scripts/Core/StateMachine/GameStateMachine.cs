@@ -10,21 +10,24 @@ namespace Core.StateMachine
     {
         private readonly List<IState> _states;
         private readonly Game _game;
-        
+        private readonly ICoroutineRunner _coroutineRunner;
+
         private IState _activeState;
         
-        public GameStateMachine(Game game, 
-            AllServices services, 
+        public GameStateMachine(Game game,
+            AllServices services,
+            ICoroutineRunner coroutineRunner,
             SceneLoader sceneLoader,
             UILoadingProvider uiLoadingProvider)
         {
             _game = game;
+            _coroutineRunner = coroutineRunner;
             _states = new List<IState>
             {
                 new BootstrapState(this, services),
                 new MenuState(this, uiLoadingProvider),
                 new LoadSceneState(this, services.Single<ISaveService<PlayerProgressService>>(), sceneLoader, uiLoadingProvider),
-                new PrepareGameState(this, _game, uiLoadingProvider),
+                new PrepareGameState(this, _game, _coroutineRunner, uiLoadingProvider),
                 new GameLoopState(this, _game),
                 new GameOverState(this, services.Single<ISaveService<PlayerProgressService>>()),
             };

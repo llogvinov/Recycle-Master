@@ -13,17 +13,20 @@ namespace Core.StateMachine
     {
         private readonly GameStateMachine _gameStateMachine;
         private readonly Game _game;
+        private readonly ICoroutineRunner _coroutineRunner;
         private readonly UILoadingProvider _uiLoadingProvider;
 
         private LevelCreator _levelCreator;
         private UITimerProvider _uiTimerProvider;
 
-        public PrepareGameState(GameStateMachine gameStateMachine, 
+        public PrepareGameState(GameStateMachine gameStateMachine,
             Game game,
+            ICoroutineRunner coroutineRunner,
             UILoadingProvider uiLoadingProvider)
         {
             _gameStateMachine = gameStateMachine;
             _game = game;
+            _coroutineRunner = coroutineRunner;
             _uiLoadingProvider = uiLoadingProvider;
         }
 
@@ -47,6 +50,7 @@ namespace Core.StateMachine
             if (GameObject.FindObjectOfType<UITimer>() is not null) return;
             
             await LoadUITimer();
+            Timer.Initialize(_coroutineRunner, _uiTimerProvider.LoadedObject);
             Timer.Instance.OnFinish += OnTimerFinished;
 
             async Task LoadUITimer()
