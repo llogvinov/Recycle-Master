@@ -13,6 +13,7 @@ namespace UI
         [SerializeField] private Button _hardLevel;
         [SerializeField] private Button _superHardLevel;
         [SerializeField] private Button _clearButton;
+        [SerializeField] private Button _specificLevelButton;
         [Space]
         [SerializeField] private LevelCreator _levelCreator;
 
@@ -23,6 +24,7 @@ namespace UI
             _hardLevel.onClick.AddListener(GenerateHardLevel);
             _superHardLevel.onClick.AddListener(GenerateSuperHardLevel);
             _clearButton.onClick.AddListener(_levelCreator.ClearLevel);
+            _specificLevelButton.onClick.AddListener(_levelCreator.GenerateLevel);
         }
 
         private void OnDestroy()
@@ -32,6 +34,7 @@ namespace UI
             _hardLevel.onClick.RemoveListener(GenerateHardLevel);
             _superHardLevel.onClick.RemoveListener(GenerateSuperHardLevel);
             _clearButton.onClick.RemoveListener(_levelCreator.ClearLevel);
+            _specificLevelButton.onClick.RemoveListener(_levelCreator.GenerateLevel);
         }
 
         private void GenerateEasyLevel() => _levelCreator.GenerateLevel(LevelType.Easy);

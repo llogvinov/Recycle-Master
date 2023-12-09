@@ -47,4 +47,5 @@ MonoBehaviour:
   _wallAdjuster: {fileID: 0}
   _trashCanSpawner: {fileID: 4043347807307370164, guid: 69119f43f7f49c94aafe8819d875588c, type: 3}
   _trashObjectSpawner: {fileID: 7841422674897555346, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
+  _levelDetailsData: {fileID: 0}
   _allowSimilarObjects: 1

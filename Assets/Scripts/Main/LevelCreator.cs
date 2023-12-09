@@ -17,12 +17,21 @@ namespace Main
         [SerializeField] private WallAdjuster _wallAdjuster;
         [SerializeField] private TrashCanSpawner _trashCanSpawner;
         [SerializeField] private TrashObjectSpawner _trashObjectSpawner;
+        [Space]
+        [SerializeField] private LevelDetailsData _levelDetailsData;
         [SerializeField] private bool _allowSimilarObjects;
 
         private int _currentLevel;
-        private LevelType _levelType;
         private Dictionary<TrashCanData, List<TrashData>> _levelDetails;
-
+        
+        public void GenerateLevel()
+        {
+            if (_levelDetailsData is null)
+                Debug.LogError($"Set the {nameof(_levelDetailsData)} to generate level");
+                
+            GenerateLevel(_levelDetailsData);
+        }
+        
         public void GenerateLevel(LevelType levelType)
         {
             ClearLevel();
@@ -36,7 +45,6 @@ namespace Main
                 Debug.LogError($"Level difficulty data of type {levelType} not found!");
             }
 
-            _levelType = levelType;
             _levelDetails = new Dictionary<TrashCanData, List<TrashData>>();
             var trashCanDatas = SpawnTrashCans(levelDifficultyData.ObjectsData.TrashCanCount);
 
@@ -51,6 +59,30 @@ namespace Main
             AllObjectSpawned?.Invoke();
 
             Timer.Instance.StartCountdown(levelDifficultyData.CountdownTime);
+        }
+
+        public void GenerateLevel(LevelDetailsData levelDetailsData)
+        {
+            ClearLevel();
+            
+            _wallAdjuster.AdjustAllWalls();
+
+            _levelDetails = new Dictionary<TrashCanData, List<TrashData>>();
+            
+            // spawn trash cans
+            var trashCanSpawner = Instantiate(_trashCanSpawner);
+            trashCanSpawner.Init(levelDetailsData.TrashCanDatas);
+            
+            // spawn trash objects
+            foreach (var trashData in levelDetailsData.TrashDatas)
+            {
+                var trashObjectSpawner = Instantiate(_trashObjectSpawner);
+                trashObjectSpawner.Init(trashData, GetLevelDifficultyData(levelDetailsData.Type).ObjectsData.TrashObjectMaxCount);
+            }
+
+            AllObjectSpawned?.Invoke();
+
+            Timer.Instance.StartCountdown(GetLevelDifficultyData(levelDetailsData.Type).CountdownTime);
         }
 
         private LevelDifficultyData GetLevelDifficultyData(LevelType levelType) => 
@@ -111,6 +143,7 @@ namespace Main
             }
         }
 
+#if UNITY_EDITOR
         private void LogDetails()
         {
             var s = new StringBuilder();
@@ -124,5 +157,6 @@ namespace Main
 
             Debug.Log(s.ToString());
         }
+#endif
     }
 }
