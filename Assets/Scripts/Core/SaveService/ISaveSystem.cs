@@ -2,9 +2,9 @@
 
 namespace Core.SaveService
 {
-    public interface ISaveSystem
+    public interface ISaveSystem<T>
     {
-        void Save(PlayerProgress data);
-        PlayerProgress Load();
+        void Save(T data);
+        T Load();
     }
 }

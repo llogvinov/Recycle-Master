@@ -1,11 +1,10 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Core.Data;
 using UnityEngine;
 
 namespace Core.SaveService
 {
-    public class BinarySaveSystem : ISaveSystem
+    public class BinarySaveSystem<T> : ISaveSystem<T>
     {
         private readonly string _filePath;
 
@@ -14,7 +13,7 @@ namespace Core.SaveService
             _filePath = Application.persistentDataPath + "/PlayerProgress.dat";
         }
         
-        public void Save(PlayerProgress data)
+        public void Save(T data)
         {
             using (FileStream fileStream = File.Create(_filePath))
             {
@@ -22,13 +21,13 @@ namespace Core.SaveService
             }
         }
 
-        public PlayerProgress Load()
+        public T Load()
         {
-            PlayerProgress result;
+            T result;
             using (FileStream fileStream = File.Open(_filePath, FileMode.Open))
             {
                 var loaded = new BinaryFormatter().Deserialize(fileStream);
-                result = (PlayerProgress) loaded;
+                result = (T) loaded;
             }
 
             return result;

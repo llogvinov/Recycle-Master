@@ -15,12 +15,12 @@ namespace UI
         [SerializeField] private Button _saveButton;
         [SerializeField] private Button _loadButton;
 
-        private ISaveSystem _saveSystem;
+        private ISaveSystem<PlayerProgress> _saveSystem;
         private PlayerProgress _playerProgress;
         
         private void Start()
         {
-            _saveSystem = new BinarySaveSystem();
+            _saveSystem = new BinarySaveSystem<PlayerProgress>();
 
             CreateStartDate();
             UpdateUI();
