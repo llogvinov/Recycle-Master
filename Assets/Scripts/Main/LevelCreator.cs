@@ -35,11 +35,9 @@ namespace Main
         public void GenerateLevel(LevelType levelType)
         {
             ClearLevel();
-            
             _wallAdjuster.AdjustAllWalls();
             
             var levelDifficultyData = GetLevelDifficultyData(levelType);
-
             if (levelDifficultyData == null)
             {
                 Debug.LogError($"Level difficulty data of type {levelType} not found!");
@@ -47,84 +45,93 @@ namespace Main
 
             _levelDetails = new Dictionary<TrashCanData, List<TrashData>>();
             var trashCanDatas = SpawnTrashCans(levelDifficultyData.ObjectsData.TrashCanCount);
-
             foreach (var trashCanData in trashCanDatas)
             {
-                var trashDatas = SpawnTrashObject(trashCanData, 
-                    levelDifficultyData.ObjectsData.TrashObjectForCanCount, 
-                    levelDifficultyData.ObjectsData.TrashObjectMaxCount);
+                var trashDatas = SpawnTrashObject(trashCanData, levelDifficultyData);
                 _levelDetails.TryAdd(trashCanData, trashDatas);
             }
 
             AllObjectSpawned?.Invoke();
-
             Timer.Instance.StartCountdown(levelDifficultyData.CountdownTime);
         }
 
-        public void GenerateLevel(LevelDetailsData levelDetailsData)
+        private void GenerateLevel(LevelDetailsData levelDetailsData)
         {
             ClearLevel();
-            
             _wallAdjuster.AdjustAllWalls();
-
             _levelDetails = new Dictionary<TrashCanData, List<TrashData>>();
-            
-            // spawn trash cans
-            var trashCanSpawner = Instantiate(_trashCanSpawner);
-            trashCanSpawner.Init(levelDetailsData.TrashCanDatas);
-            
-            // spawn trash objects
-            foreach (var trashData in levelDetailsData.TrashDatas)
-            {
-                var trashObjectSpawner = Instantiate(_trashObjectSpawner);
-                trashObjectSpawner.Init(trashData, GetLevelDifficultyData(levelDetailsData.Type).ObjectsData.TrashObjectMaxCount);
-            }
-
+            var levelDifficultyData = GetLevelDifficultyData(levelDetailsData.Type);
+            SpawnTrashCans(levelDetailsData.TrashCanDatas);
+            SpawnTrashObjects(levelDetailsData.TrashDatas, levelDifficultyData.ObjectsData.TrashObjectMaxCount);
             AllObjectSpawned?.Invoke();
-
-            Timer.Instance.StartCountdown(GetLevelDifficultyData(levelDetailsData.Type).CountdownTime);
+            Timer.Instance.StartCountdown(levelDifficultyData.CountdownTime);
         }
 
         private LevelDifficultyData GetLevelDifficultyData(LevelType levelType) => 
             ResourceLoader.LevelDifficultyDatas.FirstOrDefault(l => l.LevelType == levelType);
 
-        private List<TrashCanData> SpawnTrashCans(int trashCanCount)
+        private void SpawnTrashCans(List<TrashCanData> trashCanDatas)
         {
-            var trashCanDatas = new List<TrashCanData>();
-            var trashCanDatasTemp = new List<TrashCanData>();
-            trashCanDatasTemp.AddRange(ResourceLoader.TrashCanDatas);
-
-            for (var i = 0; i < trashCanCount; i++)
-            {
-                var addingTrashCanIndex = Random.Range(0, trashCanDatasTemp.Count);
-                var addingTrashCan = trashCanDatasTemp[addingTrashCanIndex];
-                trashCanDatas.Add(addingTrashCan);
-                trashCanDatasTemp.Remove(addingTrashCan);
-            }
-
             var trashCanSpawner = Instantiate(_trashCanSpawner);
             trashCanSpawner.Init(trashCanDatas);
-            return trashCanDatas;
         }
 
-        private List<TrashData> SpawnTrashObject(TrashCanData trashCanData, int trashObjectForCanCount, int trashObjectMaxCount)
+        private List<TrashCanData> SpawnTrashCans(int trashCanCount)
         {
-            var trashObjectDatasOfType = 
-                ResourceLoader.TrashDatas.Where(data => data.Type == trashCanData.Type).ToList();
-            var trashDatas = new List<TrashData>();
+            var trashCanDatas = GetTrashCanDatas();
+            SpawnTrashCans(trashCanDatas);
+            return trashCanDatas;
 
-            for (var i = 0; i < trashObjectForCanCount; i++)
+            List<TrashCanData> GetTrashCanDatas()
             {
-                var addingTrashObjectIndex = Random.Range(0, trashObjectDatasOfType.Count);
-                var addingTrashObject = trashObjectDatasOfType[addingTrashObjectIndex];
-                var trashObjectSpawner = Instantiate(_trashObjectSpawner);
-                trashObjectSpawner.Init(addingTrashObject, trashObjectMaxCount);
-                trashDatas.Add(addingTrashObject);
-                if (!_allowSimilarObjects) 
-                    trashObjectDatasOfType.Remove(addingTrashObject);
-            }
+                var trashCanDatas = new List<TrashCanData>();
+                var trashCanDatasTemp = new List<TrashCanData>();
+                trashCanDatasTemp.AddRange(ResourceLoader.TrashCanDatas);
+                
+                for (var i = 0; i < trashCanCount; i++)
+                {
+                    var addingTrashCanIndex = Random.Range(0, trashCanDatasTemp.Count);
+                    var addingTrashCan = trashCanDatasTemp[addingTrashCanIndex];
+                    trashCanDatas.Add(addingTrashCan);
+                    trashCanDatasTemp.Remove(addingTrashCan);
+                }
 
+                return trashCanDatas;
+            }
+        }
+
+        private void SpawnTrashObjects(List<TrashData> trashDatas, int trashObjectMaxCount)
+        {
+            foreach (var trashData in trashDatas)
+            {
+                var trashObjectSpawner = Instantiate(_trashObjectSpawner);
+                trashObjectSpawner.Init(trashData, trashObjectMaxCount);
+            }
+        }
+
+        private List<TrashData> SpawnTrashObject(TrashCanData trashCanData, LevelDifficultyData levelDifficultyData)
+        {
+            var trashDatas = GetTrashDatas();
+            SpawnTrashObjects(trashDatas, levelDifficultyData.ObjectsData.TrashObjectMaxCount);
             return trashDatas;
+
+            List<TrashData> GetTrashDatas()
+            {
+                var trashObjectDatasOfType =
+                    ResourceLoader.TrashDatas.Where(data => data.Type == trashCanData.Type).ToList();
+                var trashDatas = new List<TrashData>();
+
+                for (var i = 0; i < levelDifficultyData.ObjectsData.TrashObjectForCanCount; i++)
+                {
+                    var addingTrashObjectIndex = Random.Range(0, trashObjectDatasOfType.Count);
+                    var addingTrashObject = trashObjectDatasOfType[addingTrashObjectIndex];
+                    trashDatas.Add(addingTrashObject);
+                    if (!_allowSimilarObjects)
+                        trashObjectDatasOfType.Remove(addingTrashObject);
+                }
+
+                return trashDatas;
+            }
         }
 
         public void ClearLevel()
