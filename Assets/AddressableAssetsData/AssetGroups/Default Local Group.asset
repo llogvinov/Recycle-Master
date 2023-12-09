@@ -27,12 +27,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0c71fc25b35b13d40838662d4c6e836c
+  - m_GUID: 58f18bc29fb562644997167ea73f45a4
     m_Address: UILostLevel
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1e3c824a5a4b9764a921d8e52c1621ac
+  - m_GUID: dbd3070bdb185d444a32c88e83e32204
     m_Address: UIWinLevel
     m_ReadOnly: 0
     m_SerializedLabels: []
