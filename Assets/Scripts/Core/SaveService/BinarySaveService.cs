@@ -4,15 +4,18 @@ using UnityEngine;
 
 namespace Core.SaveService
 {
-    public class BinarySaveSystem<T> : ISaveSystem<T>
+    public class BinarySaveService<T> : ISaveService<T> where T : new()
     {
         private readonly string _filePath;
 
-        public BinarySaveSystem()
+        public T SaveData { get; private set; }
+
+        public BinarySaveService()
         {
+            SaveData = new T();
             _filePath = Application.persistentDataPath + "/PlayerProgress.dat";
         }
-        
+
         public void Save(T data)
         {
             using (FileStream fileStream = File.Create(_filePath))
@@ -23,14 +26,13 @@ namespace Core.SaveService
 
         public T Load()
         {
-            T result;
             using (FileStream fileStream = File.Open(_filePath, FileMode.Open))
             {
                 var loaded = new BinaryFormatter().Deserialize(fileStream);
-                result = (T) loaded;
+                SaveData = (T) loaded;
             }
-
-            return result;
+            
+            return SaveData;
         }
     }
 }

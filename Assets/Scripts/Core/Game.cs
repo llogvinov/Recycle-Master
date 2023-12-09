@@ -14,6 +14,7 @@ namespace Core
         public Game(ICoroutineRunner coroutineRunner)
         {
             _stateMachine = new GameStateMachine(this, 
+                AllServices.Container,
                 new SceneLoader(coroutineRunner), 
                 new UILoadingProvider());
         }

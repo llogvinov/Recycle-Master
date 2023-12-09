@@ -3,7 +3,7 @@
 namespace Core.Data
 {
     [Serializable]
-    public class PlayerProgress
+    public class PlayerProgressService : IPlayerProgressService
     {
         public int CurrentLevel;
     }

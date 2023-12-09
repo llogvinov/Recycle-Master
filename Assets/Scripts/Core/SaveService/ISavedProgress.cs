@@ -4,11 +4,11 @@ namespace Core.SaveService
 {
     public interface ISavedProgressReader
     {
-        void LoadProgress(PlayerProgress playerProgress);
+        void LoadProgress(PlayerProgressService playerProgressService);
     }
 
     public interface ISavedProgress : ISavedProgressReader
     {
-        void UpdateProgress(PlayerProgress playerProgress);
+        void UpdateProgress(PlayerProgressService playerProgressService);
     }
 }
