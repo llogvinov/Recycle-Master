@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Core;
+using TMPro;
 using UI;
 using UnityEngine;
 
@@ -11,9 +12,13 @@ namespace Main
         public Action OnStart;
         public Action OnFinish;
 
-        private readonly ICoroutineRunner _coroutineRunner;
-        private readonly UITimer _uiTimer;
+        private const float MinCounter = 0f;
+        private const float MaxCounter = 100000f;
         
+        private ICoroutineRunner _coroutineRunner;
+        private UITimer _uiTimer;
+
+        private float _counter;
         private Coroutine _countdownCoroutine;
         private bool _pause;
 
@@ -30,6 +35,8 @@ namespace Main
             }
         }
 
+        public static bool HasInstance => _instance is not null;
+
         public static void Initialize(ICoroutineRunner coroutineRunner, UITimer uiTimer)
         {
             if (_instance is not null)
@@ -40,12 +47,36 @@ namespace Main
 
         private Timer(ICoroutineRunner coroutineRunner, UITimer uiTimer)
         {
+            UpdateReferences(coroutineRunner, uiTimer);
+        }
+
+        public void UpdateReferences(ICoroutineRunner coroutineRunner, UITimer uiTimer)
+        {
             _coroutineRunner = coroutineRunner;
             _uiTimer = uiTimer;
         }
 
-        public void StartCountdown(float seconds) =>
+        public void StartCountdown(float seconds)
+        {
             _countdownCoroutine = _coroutineRunner.StartCoroutine(Countdown(seconds));
+            
+            IEnumerator Countdown(float seconds)
+            {
+                OnStart?.Invoke();
+            
+                _counter = seconds;
+                while (_counter > 0)
+                {
+                    yield return null;
+                    if (_pause) continue;
+                
+                    _counter -= Time.deltaTime;
+                    _uiTimer.UpdateRemainingTime(_counter);
+                }
+
+                OnFinish?.Invoke();
+            }
+        }
 
         public void StopCountdown()
         {
@@ -53,24 +84,14 @@ namespace Main
                 _coroutineRunner.StopCoroutine(_countdownCoroutine);
         }
 
-        private IEnumerator Countdown(float seconds)
-        {
-            OnStart?.Invoke();
-            
-            var counter = seconds;
-            while (counter > 0)
-            {
-                yield return null;
-                if (_pause) continue;
-                
-                counter -= Time.deltaTime;
-                _uiTimer.UpdateRemainingTime(counter);
-            }
-
-            OnFinish?.Invoke();
-        }
+        public void ReduceTime(float value) => 
+            _counter = Mathf.Clamp(_counter - value, MinCounter, MaxCounter);
+        
+        public void AddTime(float value) => 
+            _counter = Mathf.Clamp(_counter + value, MinCounter, MaxCounter);
 
         public void PauseTimer() => _pause = true;
+        
         public void ContinueTimer() => _pause = false;
     }
 }

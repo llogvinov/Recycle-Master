@@ -19,6 +19,8 @@ namespace Core.StateMachine
         private LevelCreator _levelCreator;
         private UITimerProvider _uiTimerProvider;
 
+        private UITimer UITimer => _uiTimerProvider.LoadedObject;
+
         public PrepareGameState(GameStateMachine gameStateMachine,
             Game game,
             ICoroutineRunner coroutineRunner,
@@ -50,7 +52,12 @@ namespace Core.StateMachine
             if (GameObject.FindObjectOfType<UITimer>() is not null) return;
             
             await LoadUITimer();
-            Timer.Initialize(_coroutineRunner, _uiTimerProvider.LoadedObject);
+
+            if (Timer.HasInstance)
+                Timer.Instance.UpdateReferences(_coroutineRunner, UITimer);
+            else
+                Timer.Initialize(_coroutineRunner, UITimer);
+            
             Timer.Instance.OnFinish += OnTimerFinished;
 
             async Task LoadUITimer()
@@ -59,8 +66,11 @@ namespace Core.StateMachine
                 await _uiTimerProvider.Load();
             }
 
-            void OnTimerFinished() => 
+            void OnTimerFinished()
+            {
+                Timer.Instance.StopCountdown();
                 _game.GameOver?.Invoke(false);
+            }
         }
 
         // todo: change level type choosing
