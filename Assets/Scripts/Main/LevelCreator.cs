@@ -51,7 +51,9 @@ namespace Main
             }
 
             AllObjectSpawned?.Invoke();
-            Timer.Instance.StartCountdown(levelDifficultyData.CountdownTime);
+            
+            if (Timer.HasInstance)
+                Timer.Instance.StartCountdown(levelDifficultyData.CountdownTime);
         }
 
         private void GenerateLevel(LevelDetailsData levelDetailsData)
@@ -62,8 +64,11 @@ namespace Main
             var levelDifficultyData = GetLevelDifficultyData(levelDetailsData.Type);
             SpawnTrashCans(levelDetailsData.TrashCanDatas);
             SpawnTrashObjects(levelDetailsData.TrashDatas, levelDifficultyData.ObjectsData.TrashObjectMaxCount);
+            
             AllObjectSpawned?.Invoke();
-            Timer.Instance.StartCountdown(levelDifficultyData.CountdownTime);
+           
+            if (Timer.HasInstance)
+                Timer.Instance.StartCountdown(levelDifficultyData.CountdownTime);
         }
 
         private LevelDifficultyData GetLevelDifficultyData(LevelType levelType) => 
@@ -135,7 +140,8 @@ namespace Main
 
         public void ClearLevel()
         {
-            Timer.Instance.StopCountdown();
+            if (Timer.HasInstance)
+                Timer.Instance.StopCountdown();
             
             var canSpawner = FindObjectOfType<TrashCanSpawner>();
             if (canSpawner != null)
