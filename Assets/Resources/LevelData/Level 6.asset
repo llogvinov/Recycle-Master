@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b480d0dd464b08949686631742023b, type: 3}
+  m_Name: Level 6
+  m_EditorClassIdentifier: 
+  _levelNumber: 6
+  _levelType: 1
+  _trashCanDatas:
+  - {fileID: 11400000, guid: b2733e4c3ed630e47af8c2708c09fdca, type: 2}
+  - {fileID: 11400000, guid: fa92eb58d955c584eafe0d84d55e63d6, type: 2}
+  _trashDatas:
+  - {fileID: 11400000, guid: 769d2a9fb068a0d4e80248af64b10bd6, type: 2}
+  - {fileID: 11400000, guid: 9c4e5208ac00012438bc60ee69e13986, type: 2}
+  - {fileID: 11400000, guid: b3fb23be1d50a3f448f76f7e907dd87b, type: 2}
+  - {fileID: 11400000, guid: f5ffb55c33bce074fb280aaf937af91a, type: 2}
+  - {fileID: 11400000, guid: 33c48ba3f81d5c34ebc9c7556398af1c, type: 2}
+  - {fileID: 11400000, guid: 28854a65c32381f418db3405db7f7d19, type: 2}
+  _allowSimilarObjects: 1
