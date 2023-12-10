@@ -21,7 +21,6 @@ namespace Main
         [SerializeField] private bool _allowSimilarObjects;
 
         private int _currentLevel;
-        private Dictionary<TrashCanData, List<TrashData>> _levelDetails;
         
         public void GenerateLevel()
         {
@@ -42,12 +41,10 @@ namespace Main
                 Debug.LogError($"Level difficulty data of type {levelType} not found!");
             }
 
-            _levelDetails = new Dictionary<TrashCanData, List<TrashData>>();
             var trashCanDatas = SpawnTrashCans(levelDifficultyData.ObjectsData.TrashCanCount);
             foreach (var trashCanData in trashCanDatas)
             {
-                var trashDatas = SpawnTrashObject(trashCanData, levelDifficultyData);
-                _levelDetails.TryAdd(trashCanData, trashDatas);
+                SpawnTrashObject(trashCanData, levelDifficultyData);
             }
 
             AllObjectSpawned?.Invoke();
@@ -60,7 +57,6 @@ namespace Main
         {
             ClearLevel();
             _wallAdjuster.AdjustAllWalls();
-            _levelDetails = new Dictionary<TrashCanData, List<TrashData>>();
             var levelDifficultyData = GetLevelDifficultyData(levelDetailsData.Type);
             SpawnTrashCans(levelDetailsData.TrashCanDatas);
             SpawnTrashObjects(levelDetailsData.TrashDatas, levelDifficultyData.ObjectsData.TrashObjectMaxCount);
@@ -154,21 +150,5 @@ namespace Main
                     Destroy(objSpawner.gameObject);
             }
         }
-
-#if UNITY_EDITOR
-        private void LogDetails()
-        {
-            var s = new StringBuilder();
-            foreach (var detail in _levelDetails)
-            {
-                var d = "";
-                foreach (var trashData in detail.Value)
-                    d += $"{trashData.Title}, ";
-                s.Append($"{detail.Key.Type} - {d}");
-            }
-
-            Debug.Log(s.ToString());
-        }
-#endif
     }
 }

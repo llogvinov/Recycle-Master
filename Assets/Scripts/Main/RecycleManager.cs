@@ -32,7 +32,9 @@ namespace Main
                 c => c.TrashCanData.Type == trashObject.TrashData.Type);
             if (trashCan == null) return;
             
-            Timer.Instance.ReduceTime(5f); // todo: change this
+            if (Timer.HasInstance)
+                Timer.Instance.ReduceTime(5f); // todo: change this
+            
             DoAnimation(trashObject, trashCan);
         }
 
