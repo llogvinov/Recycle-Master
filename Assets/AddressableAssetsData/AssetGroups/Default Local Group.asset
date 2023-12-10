@@ -18,7 +18,22 @@ MonoBehaviour:
   m_GUID: ce2a17b0fbf9d9c499b9ca74cacb5f56
   m_SerializeEntries:
   - m_GUID: ec93888e5f890a44ca27df8734155d80
-    m_Address: LoadingScreen
+    m_Address: UILoading
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cbd19570dbdeac542a47e29c9186d7f6
+    m_Address: UITimer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58f18bc29fb562644997167ea73f45a4
+    m_Address: UILostLevel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbd3070bdb185d444a32c88e83e32204
+    m_Address: UIWinLevel
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

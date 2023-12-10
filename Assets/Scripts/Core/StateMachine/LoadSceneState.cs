@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Core.AssetManagement.LocalAssetProviders;
+using Core.Data;
+using Core.SaveService;
 
 namespace Core.StateMachine
 {
@@ -7,21 +9,26 @@ namespace Core.StateMachine
     {
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
-        private readonly LoadingScreenProvider _loadingScreenProvider;
+        private readonly ISaveService<PlayerProgressService> _saveService;
+        private readonly UILoadingProvider _uiLoadingProvider;
 
         private string _loadingScene;
 
-        public LoadSceneState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingScreenProvider loadingScreenProvider)
+        public LoadSceneState(GameStateMachine stateMachine, 
+            ISaveService<PlayerProgressService> saveService, 
+            SceneLoader sceneLoader,
+            UILoadingProvider uiLoadingProvider)
         {
             _stateMachine = stateMachine;
+            _saveService = saveService;
             _sceneLoader = sceneLoader;
-            _loadingScreenProvider = loadingScreenProvider;
+            _uiLoadingProvider = uiLoadingProvider;
         }
 
         public async void Enter(string sceneName)
         {
             _loadingScene = sceneName;
-            await LoadLoadingScreen();
+            await LoadUILoading();
             _sceneLoader.LoadScene(sceneName, OnSceneLoaded);
         }
 
@@ -30,9 +37,9 @@ namespace Core.StateMachine
             
         }
         
-        private async Task LoadLoadingScreen()
+        private async Task LoadUILoading()
         {
-            var loadTask = _loadingScreenProvider.Load();
+            var loadTask = _uiLoadingProvider.Load();
             await loadTask;
         }
 
@@ -51,7 +58,8 @@ namespace Core.StateMachine
 
         private void OnGameSceneLoaded()
         {
-            _stateMachine.Enter<GameLoopState>();
+            var currentLevel = _saveService.SaveData.CurrentLevel;
+            _stateMachine.Enter<PrepareGameState, int>(currentLevel);
         }
 
         private void OnMenuSceneLoaded()

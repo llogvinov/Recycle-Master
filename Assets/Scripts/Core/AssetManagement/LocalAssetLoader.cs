@@ -16,7 +16,7 @@ namespace Core.AssetManagement
         public T LoadedObject => _loadedObject;
         protected abstract string AssetId { get; }
 
-        public async Task<T> Load()
+        public async Task<T> Load(bool disableOnInit = false)
         {
             var handle = Addressables.InstantiateAsync(AssetId);
 
@@ -32,7 +32,11 @@ namespace Core.AssetManagement
                         throw new NullReferenceException(
                             $"Object of type {typeof(T)} is null on attempt to load it from addressables with key {AssetId}");
                     }
-                    
+
+                    if (disableOnInit)
+                    {
+                        loadedObject.SetActive(false);
+                    }
                     return _loadedObject;
                 }
 

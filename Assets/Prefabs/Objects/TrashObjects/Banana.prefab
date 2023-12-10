@@ -8,13 +8,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5021614919708238060, guid: 17a84713d6728254197c206cdf2986a3, type: 3}
+      propertyPath: _dragRotation.y
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 5215529919568124037, guid: 17a84713d6728254197c206cdf2986a3, type: 3}
       propertyPath: m_Name
       value: Banana
       objectReference: {fileID: 0}
     - target: {fileID: 7720425540370146128, guid: 17a84713d6728254197c206cdf2986a3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.85
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7720425540370146128, guid: 17a84713d6728254197c206cdf2986a3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -103,6 +107,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4259795989321838768}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 39fd5c79acce6644686015fd6997bfe6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 85
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39fd5c79acce6644686015fd6997bfe6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Core.AssetManagement.LocalAssetProviders;
-using UnityEngine;
+using Core.Data;
+using Core.SaveService;
 
 namespace Core.StateMachine
 {
@@ -9,32 +10,37 @@ namespace Core.StateMachine
     {
         private readonly List<IState> _states;
         private readonly Game _game;
-        
+        private readonly ICoroutineRunner _coroutineRunner;
+
         private IState _activeState;
         
-        public GameStateMachine(Game game, SceneLoader sceneLoader, LoadingScreenProvider loadingScreenProvider)
+        public GameStateMachine(Game game,
+            AllServices services,
+            ICoroutineRunner coroutineRunner,
+            SceneLoader sceneLoader,
+            UILoadingProvider uiLoadingProvider)
         {
             _game = game;
+            _coroutineRunner = coroutineRunner;
             _states = new List<IState>
             {
-                new BootstrapState(this),
-                new MenuState(this),
-                new LoadSceneState(this, sceneLoader, loadingScreenProvider),
-                new GameLoopState(this),
-                new GameOverState(this),
+                new BootstrapState(this, services),
+                new MenuState(this, uiLoadingProvider),
+                new LoadSceneState(this, services.Single<ISaveService<PlayerProgressService>>(), sceneLoader, uiLoadingProvider),
+                new PrepareGameState(this, _game, _coroutineRunner, uiLoadingProvider),
+                new GameLoopState(this, _game),
+                new GameOverState(this, services.Single<ISaveService<PlayerProgressService>>()),
             };
         }
 
         public void Enter<TState>() where TState : class, ISimpleState
         {
-            Debug.Log($"enter {typeof(TState)} state");
             var state = ChangeState<TState>();
             state.Enter();
         }
         
         public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadState<TPayload>
         {
-            Debug.Log($"enter {typeof(TState)} state");
             var state = ChangeState<TState>();
             state.Enter(payload);
         }
@@ -42,7 +48,7 @@ namespace Core.StateMachine
         private TState ChangeState<TState>() where TState : class, IState
         {
             _activeState?.Exit();
-            TState state = GetState<TState>();
+            var state = GetState<TState>();
             _activeState = state;
             return state;
         }

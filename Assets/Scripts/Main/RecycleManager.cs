@@ -30,9 +30,12 @@ namespace Main
             var trashCans = FindObjectsOfType<TrashCan>();
             var trashCan = trashCans.FirstOrDefault(
                 c => c.TrashCanData.Type == trashObject.TrashData.Type);
-
-            if (trashCan != null) 
-                DoAnimation(trashObject, trashCan);
+            if (trashCan == null) return;
+            
+            if (Timer.HasInstance)
+                Timer.Instance.ReduceTime(5f); // todo: change this
+            
+            DoAnimation(trashObject, trashCan);
         }
 
         private static void DoAnimation(TrashObject trashObject, TrashCan trashCan)

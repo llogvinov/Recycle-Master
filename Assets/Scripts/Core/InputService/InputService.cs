@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core.InputService
 {
-    public class InputService : MonoBehaviour
+    public class InputService : MonoBehaviour, IService
     {
         [SerializeField] protected float _speed;
         [Space]
@@ -11,7 +11,6 @@ namespace Core.InputService
         [SerializeField] protected LayerMask _rayCheckerLayerMask;
         [Space]
         [SerializeField] protected GameObject _rayCheckerPlane;
-        
         [Range(1f, 3f)]
         [SerializeField] protected float _objectFloatHeight;
         
@@ -27,19 +26,16 @@ namespace Core.InputService
         
         protected void OnInputBegan(Ray ray)
         {
-            if (Physics.Raycast(ray, out var hit, 50f, _interactableLayerMask))
-            {
-                if (hit.collider.transform.parent.TryGetComponent<TrashObject>(out var trashObject))
-                {
-                    Dragged = trashObject;
-                    Dragged.OnStartDrag();
-                }
-            }
+            if (!Physics.Raycast(ray, out var hit, 50f, _interactableLayerMask.value)) return;
+            if (!hit.collider.transform.parent.TryGetComponent<TrashObject>(out var trashObject)) return;
+            
+            Dragged = trashObject;
+            Dragged.OnStartDrag();
         }
 
         protected void OnInputMoved(Ray ray)
         {
-            if (Physics.Raycast(ray, out var hit, 50f, _rayCheckerLayerMask))
+            if (Physics.Raycast(ray, out var hit, 50f, _rayCheckerLayerMask.value))
             {
                 Dragged.transform.position =
                     Vector3.Lerp(Dragged.transform.position, hit.point, _speed * Time.deltaTime);
@@ -48,11 +44,10 @@ namespace Core.InputService
 
         protected void OnInputEnded()
         {
-            if (Dragged != null)
-            {
-                Dragged.OnEndDrag();
-                Dragged = null;
-            }
+            if (Dragged == null) return;
+            
+            Dragged.OnEndDrag();
+            Dragged = null;
         }
     }
 }

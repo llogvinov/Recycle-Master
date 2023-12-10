@@ -11,7 +11,7 @@ namespace Main
         private TrashData _trashData;
         private List<TrashObject> _trashObjects;
 
-        private const float SpawnOffset = 1f;
+        private const float SpawnOffset = 1.5f;
         
         public void Init(TrashData trashData, int count)
         {
@@ -39,9 +39,9 @@ namespace Main
             Instantiate(_trashData.Model, GetRandomPosition(), GetRandomRotation(), transform);
 
         private Vector3 GetRandomPosition() =>
-            new (Random.Range(-WallAdjuster.HalfWidth + SpawnOffset, WallAdjuster.HalfWidth - SpawnOffset),
+            new (Random.Range(SpawnBounds.LeftBound + SpawnOffset, SpawnBounds.RightBound - SpawnOffset),
                 Random.Range(1f, 2f),
-                Random.Range(WallAdjuster.TempWallHeight + SpawnOffset, WallAdjuster.HalfHeight - SpawnOffset));
+                Random.Range(SpawnBounds.TempBound + SpawnOffset, SpawnBounds.TopBound - SpawnOffset));
 
         private Quaternion GetRandomRotation() =>
             Random.rotation;

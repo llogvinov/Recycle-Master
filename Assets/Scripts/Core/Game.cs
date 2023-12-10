@@ -9,13 +9,15 @@ namespace Core
         private readonly GameStateMachine _stateMachine;
         public GameStateMachine StateMachine => _stateMachine;
 
-        public Action GameOver;
+        public Action<bool> GameOver;
 
         public Game(ICoroutineRunner coroutineRunner)
         {
             _stateMachine = new GameStateMachine(this, 
+                AllServices.Container,
+                coroutineRunner,
                 new SceneLoader(coroutineRunner), 
-                new LoadingScreenProvider());
+                new UILoadingProvider());
         }
     }
 }
