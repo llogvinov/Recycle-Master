@@ -921,7 +921,7 @@ PrefabInstance:
     - target: {fileID: 7876264603194656934, guid: bd2c4f12006979642a6d5cf50c1968bd, type: 3}
       propertyPath: _levelDetailsData
       value: 
-      objectReference: {fileID: 11400000, guid: c5729f6e0a8f6154eaad4bdb50cec2df, type: 2}
+      objectReference: {fileID: 11400000, guid: 7a16d8f0802c5b04e950743e3ccd0509, type: 2}
     - target: {fileID: 9181832413782948376, guid: bd2c4f12006979642a6d5cf50c1968bd, type: 3}
       propertyPath: m_Name
       value: Level Creator

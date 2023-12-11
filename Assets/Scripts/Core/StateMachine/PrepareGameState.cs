@@ -11,22 +11,23 @@ namespace Core.StateMachine
 {
     public class PrepareGameState : IPayloadState<int>
     {
-        private readonly GameStateMachine _gameStateMachine;
+        private readonly GameStateMachine _stateMachine;
         private readonly Game _game;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly UILoadingProvider _uiLoadingProvider;
 
         private LevelCreator _levelCreator;
         private UITimerProvider _uiTimerProvider;
+        private UILeaveProvider _uiLeaveProvider;
 
         private UITimer UITimer => _uiTimerProvider.LoadedObject;
 
-        public PrepareGameState(GameStateMachine gameStateMachine,
+        public PrepareGameState(GameStateMachine stateMachine,
             Game game,
             ICoroutineRunner coroutineRunner,
             UILoadingProvider uiLoadingProvider)
         {
-            _gameStateMachine = gameStateMachine;
+            _stateMachine = stateMachine;
             _game = game;
             _coroutineRunner = coroutineRunner;
             _uiLoadingProvider = uiLoadingProvider;
@@ -35,11 +36,13 @@ namespace Core.StateMachine
         public async void Enter(int level)
         {
             Debug.Log($"current level - {level}");
+            
             _levelCreator = GameObject.FindObjectOfType<LevelCreator>();
             await PrepareUITimer();
+            await PrepareUILeave();
             BuildLevel();
             
-            _gameStateMachine.Enter<GameLoopState>();
+            _stateMachine.Enter<GameLoopState>();
         }
 
         public void Exit()
@@ -47,6 +50,16 @@ namespace Core.StateMachine
             _uiLoadingProvider.TryUnload();
         }
 
+        private async Task PrepareUILeave()
+        {
+            _uiLeaveProvider = new UILeaveProvider();
+            await _uiLeaveProvider.Load();
+            _uiLeaveProvider.LoadedObject.LeaveButton.onClick.AddListener(GameOver);
+            
+            void GameOver() => 
+                _stateMachine.Enter<GameOverState, bool>(false);
+        }
+        
         private async Task PrepareUITimer()
         {
             if (GameObject.FindObjectOfType<UITimer>() is not null) return;
