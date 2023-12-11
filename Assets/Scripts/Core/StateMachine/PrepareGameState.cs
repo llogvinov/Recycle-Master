@@ -16,9 +16,10 @@ namespace Core.StateMachine
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly UILoadingProvider _uiLoadingProvider;
 
-        private LevelCreator _levelCreator;
+        private LevelManager _levelManager;
         private UITimerProvider _uiTimerProvider;
         private UILeaveProvider _uiLeaveProvider;
+        private RecycleManager _recycleManager;
 
         private UITimer UITimer => _uiTimerProvider.LoadedObject;
 
@@ -36,8 +37,11 @@ namespace Core.StateMachine
         public async void Enter(int level)
         {
             Debug.Log($"current level - {level}");
-            
-            _levelCreator = GameObject.FindObjectOfType<LevelCreator>();
+
+            _levelManager = GameObject.FindObjectOfType<LevelManager>();
+            if (_levelManager is not null)
+                _levelManager.Game = _game;
+
             await PrepareUITimer();
             await PrepareUILeave();
             BuildLevel();
@@ -72,6 +76,7 @@ namespace Core.StateMachine
                 Timer.Initialize(_coroutineRunner, UITimer);
             
             Timer.Instance.OnFinish += OnTimerFinished;
+            _game.GameOver += (b) => Timer.Instance.StopCountdown();
 
             async Task LoadUITimer()
             {
@@ -81,7 +86,6 @@ namespace Core.StateMachine
 
             void OnTimerFinished()
             {
-                Timer.Instance.StopCountdown();
                 _game.GameOver?.Invoke(false);
             }
         }
@@ -99,14 +103,14 @@ namespace Core.StateMachine
             // exclude Undefined type
             if (randomType == 0) randomType++; 
             
-            _levelCreator.GenerateLevel(randomType);
+            _levelManager.GenerateRandomLevel(randomType);
         }
         
 #if UNITY_EDITOR
-        private void BuildEasyLevel() => _levelCreator.GenerateLevel(LevelType.Easy);
-        private void BuildMediumLevel() => _levelCreator.GenerateLevel(LevelType.Medium);
-        private void BuildHardLevel() => _levelCreator.GenerateLevel(LevelType.Hard);
-        private void BuildSuperHardLevel() => _levelCreator.GenerateLevel(LevelType.SuperHard);
+        private void BuildEasyLevel() => _levelManager.GenerateRandomLevel(LevelType.Easy);
+        private void BuildMediumLevel() => _levelManager.GenerateRandomLevel(LevelType.Medium);
+        private void BuildHardLevel() => _levelManager.GenerateRandomLevel(LevelType.Hard);
+        private void BuildSuperHardLevel() => _levelManager.GenerateRandomLevel(LevelType.SuperHard);
 #endif
     }
 }

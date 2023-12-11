@@ -38,6 +38,7 @@ namespace Core.StateMachine
                 _uiWinLevel.LoadedObject.MenuButton.onClick.RemoveAllListeners();
                 _uiWinLevel.LoadedObject.NextButton.onClick.RemoveAllListeners();
                 _uiWinLevel.TryUnload();
+                _uiWinLevel = null;
             }
 
             if (_uiLostLevel is not null)
@@ -45,6 +46,7 @@ namespace Core.StateMachine
                 _uiLostLevel.LoadedObject.MenuButton.onClick.RemoveAllListeners();
                 _uiLostLevel.LoadedObject.RestartButton.onClick.RemoveAllListeners();
                 _uiLostLevel.TryUnload();
+                _uiLostLevel = null;
             }
         }
 
@@ -67,8 +69,7 @@ namespace Core.StateMachine
             {
                 _uiWinLevel.LoadedObject.Close();
                 await Task.Delay((int)(UIPanel.AnimationDuration + Additional) * MillisecondsPerSeconds);
-                // todo change to get next level
-                _stateMachine.Enter<PrepareGameState, int>(0);
+                _stateMachine.Enter<PrepareGameState, int>(++_saveService.SaveData.CurrentLevel);
             }
         }
 

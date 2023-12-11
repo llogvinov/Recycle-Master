@@ -342,6 +342,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9134b2b9ae024a64ebb59aadda0ff20c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &983113363
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1370510507174090985, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370510507174090985, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370510507174090985, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370510507174090985, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370510507174090985, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370510507174090985, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370510507174090985, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370510507174090985, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370510507174090985, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370510507174090985, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1573766570578866886, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: _wallAdjuster
+      value: 
+      objectReference: {fileID: 768863553}
+    - target: {fileID: 7547767672739263627, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
+      propertyPath: m_Name
+      value: Level Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bafbce7a13388cc408f3e49bfa351e7c, type: 3}
 --- !u!1 &1555736587
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +713,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Creator
       objectReference: {fileID: 0}
+    - target: {fileID: 9181832413782948376, guid: bd2c4f12006979642a6d5cf50c1968bd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -817,4 +882,5 @@ SceneRoots:
   - {fileID: 1814656627}
   - {fileID: 1583570118}
   - {fileID: 1833473029}
+  - {fileID: 983113363}
   - {fileID: 768863552}

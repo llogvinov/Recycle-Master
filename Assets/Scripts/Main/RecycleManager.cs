@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,8 +7,10 @@ namespace Main
 {
     public class RecycleManager : MonoBehaviour
     {
+        public static Action AllObjectsOfSpawnerThrown;
+
         private const float AnimationDuration = 0.5f;
-        
+
         private void Start()
         {
             TrashCanColliderChecker.Success += OnSuccess;
@@ -50,7 +53,13 @@ namespace Main
             animationTween.Append(trashObject.transform.DOMove(trashCan.ObjectEndPoint.position, animationDurationPart));
             animationTween.Insert(animationDurationPart,
                 trashObject.transform.DOScale(Vector3.zero, animationDurationPart));
-            animationTween.OnComplete(() => trashObject.gameObject.SetActive(false));
+            animationTween.OnComplete(() =>
+            {
+                trashObject.gameObject.SetActive(false);
+                trashObject.TrashObjectSpawner.ObjectThrown(trashObject);
+                if (trashObject.TrashObjectSpawner.AllObjectsThrown)
+                    AllObjectsOfSpawnerThrown?.Invoke();
+            });
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Main
     {
         [SerializeField] private Vector3 _dragRotation;
 
+        public TrashObjectSpawner TrashObjectSpawner { get; private set; }
         public TrashData TrashData { get; private set; }
         public bool IsDragged { get; private set; }
         public bool IsThrown { get; set; }
@@ -17,11 +18,12 @@ namespace Main
 
         private Tween _rotateTween;
 
-        public void Init(TrashData trashData)
+        public void Init(TrashData trashData, TrashObjectSpawner trashObjectSpawner)
         {
             _rigidbody = GetComponentInChildren<Rigidbody>();
             _collider = GetComponentInChildren<Collider>();
-            
+
+            TrashObjectSpawner = trashObjectSpawner;
             TrashData = trashData;
             IsDragged = false;
             IsThrown = false;
