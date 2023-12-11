@@ -280,7 +280,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5021614919708238060, guid: 17a84713d6728254197c206cdf2986a3, type: 3}
       propertyPath: _dragRotation.x
-      value: 60
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 5215529919568124037, guid: 17a84713d6728254197c206cdf2986a3, type: 3}
       propertyPath: m_Name
