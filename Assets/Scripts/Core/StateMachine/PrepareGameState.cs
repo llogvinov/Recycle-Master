@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Core.AssetManagement.LocalAssetProviders;
 using LevelData;
 using Main;
+using Main.Level;
 using UI;
 using UnityEngine;
 using Random = System.Random;
@@ -56,6 +57,8 @@ namespace Core.StateMachine
 
         private async Task PrepareUILeave()
         {
+            if (GameObject.FindObjectOfType<UILeave>() is not null) return;
+            
             _uiLeaveProvider = new UILeaveProvider();
             await _uiLeaveProvider.Load();
             _uiLeaveProvider.LoadedObject.LeaveButton.onClick.AddListener(GameOver);

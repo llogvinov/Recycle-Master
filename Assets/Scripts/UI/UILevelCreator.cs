@@ -1,5 +1,6 @@
 ﻿using LevelData;
 using Main;
+using Main.Level;
 using UI.Base;
 using UnityEngine;
 using UnityEngine.UI;

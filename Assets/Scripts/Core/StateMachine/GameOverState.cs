@@ -13,14 +13,18 @@ namespace Core.StateMachine
         
         private readonly GameStateMachine _stateMachine;
         private readonly ISaveService<PlayerProgressService> _saveService;
+        private readonly UILoadingProvider _uiLoadingProvider;
 
         private UIWinLevelProvider _uiWinLevel;
         private UILostLevelProvider _uiLostLevel;
 
-        public GameOverState(GameStateMachine stateMachine, ISaveService<PlayerProgressService> saveService)
+        public GameOverState(GameStateMachine stateMachine, 
+            ISaveService<PlayerProgressService> saveService,
+            UILoadingProvider uiLoadingProvider)
         {
             _stateMachine = stateMachine;
             _saveService = saveService;
+            _uiLoadingProvider = uiLoadingProvider;
         }
 
         public async void Enter(bool won)
@@ -69,6 +73,7 @@ namespace Core.StateMachine
             {
                 _uiWinLevel.LoadedObject.Close();
                 await Task.Delay((int)(UIPanel.AnimationDuration + Additional) * MillisecondsPerSeconds);
+                await LoadUILoading();
                 _stateMachine.Enter<PrepareGameState, int>(++_saveService.SaveData.CurrentLevel);
             }
         }
@@ -92,10 +97,13 @@ namespace Core.StateMachine
             {
                 _uiLostLevel.LoadedObject.Close();
                 await Task.Delay((int)(UIPanel.AnimationDuration + Additional) * MillisecondsPerSeconds);
-                var currentLevel = _saveService.SaveData.CurrentLevel;
-                _stateMachine.Enter<PrepareGameState, int>(currentLevel);
+                await LoadUILoading();
+                _stateMachine.Enter<PrepareGameState, int>(_saveService.SaveData.CurrentLevel);
             }
         }
+        
+        private async Task LoadUILoading() => 
+            await _uiLoadingProvider.Load();
 
         private void LoadMenu() => 
             _stateMachine.Enter<LoadSceneState, string>(AssetPath.MenuScene);

@@ -37,11 +37,8 @@ namespace Core.StateMachine
             
         }
         
-        private async Task LoadUILoading()
-        {
-            var loadTask = _uiLoadingProvider.Load();
-            await loadTask;
-        }
+        private async Task LoadUILoading() => 
+            await _uiLoadingProvider.Load();
 
         private void OnSceneLoaded()
         {

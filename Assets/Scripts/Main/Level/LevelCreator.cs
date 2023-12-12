@@ -6,7 +6,7 @@ using ObjectsData;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Main
+namespace Main.Level
 {
     public class LevelCreator
     {
@@ -35,18 +35,6 @@ namespace Main
             return this;
         }
 
-        public LevelCreator SpawnTrashObjects()
-        {
-            foreach (var trashData in _trashDatas)
-            {
-                var trashObjectSpawner = GameObject.Instantiate(_levelManager.TrashObjectSpawnerPrefab);
-                trashObjectSpawner.Init(trashData, LevelDifficultyData.ObjectsData.TrashObjectMaxCount);
-                _levelManager.TrashObjectSpawners.Add(trashObjectSpawner);
-            }
-            
-            return this;
-        }
-
         public LevelCreator GetRandomTrashCanDatas()
         {
             var trashCanDatas = new List<TrashCanData>();
@@ -62,6 +50,18 @@ namespace Main
             }
 
             _trashCanDatas = trashCanDatas;
+            return this;
+        }
+
+        public LevelCreator SpawnTrashObjects()
+        {
+            foreach (var trashData in _trashDatas)
+            {
+                var trashObjectSpawner = GameObject.Instantiate(_levelManager.TrashObjectSpawnerPrefab);
+                trashObjectSpawner.Init(trashData, LevelDifficultyData.ObjectsData.TrashObjectMaxCount);
+                _levelManager.TrashObjectSpawners.Add(trashObjectSpawner);
+            }
+            
             return this;
         }
 

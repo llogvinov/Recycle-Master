@@ -4,7 +4,7 @@ using Core;
 using LevelData;
 using UnityEngine;
 
-namespace Main
+namespace Main.Level
 {
     public class LevelManager : MonoBehaviour
     {

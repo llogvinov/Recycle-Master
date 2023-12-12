@@ -29,7 +29,7 @@ namespace Core.StateMachine
                 new LoadSceneState(this, services.Single<ISaveService<PlayerProgressService>>(), sceneLoader, uiLoadingProvider),
                 new PrepareGameState(this, _game, _coroutineRunner, uiLoadingProvider),
                 new GameLoopState(this, _game),
-                new GameOverState(this, services.Single<ISaveService<PlayerProgressService>>()),
+                new GameOverState(this, services.Single<ISaveService<PlayerProgressService>>(), uiLoadingProvider),
             };
         }
 
