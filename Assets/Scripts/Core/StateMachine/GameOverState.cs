@@ -74,8 +74,15 @@ namespace Core.StateMachine
                 _uiWinLevel.LoadedObject.Close();
                 await Task.Delay((int)(UIPanel.AnimationDuration + Additional) * MillisecondsPerSeconds);
                 await LoadUILoading();
-                _stateMachine.Enter<PrepareGameState, int>(++_saveService.SaveData.CurrentLevel);
+                UpdateSaveData();
+                _stateMachine.Enter<PrepareGameState, int>(_saveService.SaveData.CurrentLevel);
             }
+        }
+
+        private void UpdateSaveData()
+        {
+            _saveService.SaveData.CurrentLevel++;
+            _saveService.Save();
         }
 
         private async Task PrepareUILostLevel()

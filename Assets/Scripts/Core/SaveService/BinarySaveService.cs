@@ -16,11 +16,11 @@ namespace Core.SaveService
             _filePath = Application.persistentDataPath + "/PlayerProgress.dat";
         }
 
-        public void Save(T data)
+        public void Save(T data = default)
         {
             using (FileStream fileStream = File.Create(_filePath))
             {
-                new BinaryFormatter().Serialize(fileStream, data);
+                new BinaryFormatter().Serialize(fileStream, data ?? SaveData);
             }
         }
 
