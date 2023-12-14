@@ -19,7 +19,6 @@ namespace Core.StateMachine
 
         private LevelManager _levelManager;
         private UITimerProvider _uiTimerProvider;
-        private UILeaveProvider _uiLeaveProvider;
         private RecycleManager _recycleManager;
 
         private UITimer UITimer => _uiTimerProvider.LoadedObject;
@@ -44,7 +43,8 @@ namespace Core.StateMachine
                 _levelManager.Game = _game;
 
             await PrepareUITimer();
-            await PrepareUILeave();
+            Timer.Instance.ContinueTimer(); // todo: change this
+            AddPauseActions();
             BuildLevel();
             
             _stateMachine.Enter<GameLoopState>();
@@ -55,18 +55,24 @@ namespace Core.StateMachine
             _uiLoadingProvider.TryUnload();
         }
 
-        private async Task PrepareUILeave()
+        private void AddPauseActions()
         {
-            if (GameObject.FindObjectOfType<UILeave>() is not null) return;
+            UIPause.PauseButtonClicked += OnPauseClicked;
+            UIPause.LeaveButtonClicked += OnLeaveClicked;
+            UIPause.ContinueButtonClicked += OnContinueClicked;
             
-            _uiLeaveProvider = new UILeaveProvider();
-            await _uiLeaveProvider.Load();
-            _uiLeaveProvider.LoadedObject.LeaveButton.onClick.AddListener(GameOver);
-            
-            void GameOver() => 
-                _stateMachine.Enter<GameOverState, bool>(false);
+            void OnPauseClicked() => 
+                Timer.Instance.PauseTimer();
+
+            void OnLeaveClicked()
+            {
+                _stateMachine.Enter<LoadSceneState, string>(AssetPath.MenuScene); 
+            }
+
+            void OnContinueClicked() => 
+                Timer.Instance.ContinueTimer();
         }
-        
+
         private async Task PrepareUITimer()
         {
             if (GameObject.FindObjectOfType<UITimer>() is not null) return;

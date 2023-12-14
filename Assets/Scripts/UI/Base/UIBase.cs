@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UI.Base
 {
@@ -10,12 +11,13 @@ namespace UI.Base
 
         public virtual void Open()
         {
-            gameObject.SetActive(true);
+            _content.gameObject.SetActive(true);
         }
 
-        public virtual void Close()
+        public virtual void Close(Action onComplete = default)
         {
-            gameObject.SetActive(false);
+            _content.gameObject.SetActive(false);
+            onComplete?.Invoke();
         }
     }
 }
