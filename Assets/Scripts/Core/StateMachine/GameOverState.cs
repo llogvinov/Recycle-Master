@@ -30,9 +30,14 @@ namespace Core.StateMachine
         public async void Enter(bool won)
         {
             if (won)
+            {
+                UpdateSaveData();
                 await PrepareUIWinLevel();
-            else 
+            }
+            else
+            {
                 await PrepareUILostLevel();
+            }
         }
 
         public void Exit()
@@ -52,6 +57,12 @@ namespace Core.StateMachine
                 _uiLostLevel.TryUnload();
                 _uiLostLevel = null;
             }
+        }
+
+        private void UpdateSaveData()
+        {
+            _saveService.SaveData.CurrentLevel++;
+            _saveService.Save();
         }
 
         private async Task PrepareUIWinLevel()
@@ -74,15 +85,8 @@ namespace Core.StateMachine
                 _uiWinLevel.LoadedObject.Close();
                 await Task.Delay((int)(UIPanel.AnimationDuration + Additional) * MillisecondsPerSeconds);
                 await LoadUILoading();
-                UpdateSaveData();
                 _stateMachine.Enter<PrepareGameState, int>(_saveService.SaveData.CurrentLevel);
             }
-        }
-
-        private void UpdateSaveData()
-        {
-            _saveService.SaveData.CurrentLevel++;
-            _saveService.Save();
         }
 
         private async Task PrepareUILostLevel()

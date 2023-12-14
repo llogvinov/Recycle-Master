@@ -38,6 +38,9 @@ namespace Core.StateMachine
         {
             Debug.Log($"current level - {level}");
 
+            _game.GameOver = null;
+            _game.GameOver += (won) =>  _stateMachine.Enter<GameOverState, bool>(won);
+
             _levelManager = GameObject.FindObjectOfType<LevelManager>();
             if (_levelManager is not null)
                 _levelManager.Game = _game;

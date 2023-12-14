@@ -11,6 +11,7 @@ namespace UI.Base
         public override void Open()
         {
             Content.localScale = Vector3.zero;
+            gameObject.SetActive(true);
             base.Open();
             Content.DOScale(Vector3.one, AnimationDuration);
         }
