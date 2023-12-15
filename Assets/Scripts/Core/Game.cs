@@ -9,7 +9,7 @@ namespace Core
         private readonly GameStateMachine _stateMachine;
         public GameStateMachine StateMachine => _stateMachine;
         
-        public Action<bool> GameOver;
+        public Action<GameOverCondition> GameOver;
 
         public Game(ICoroutineRunner coroutineRunner)
         {
@@ -19,5 +19,12 @@ namespace Core
                 new SceneLoader(coroutineRunner), 
                 new UILoadingProvider());
         }
+    }
+
+    public enum GameOverCondition
+    {
+        Won,
+        LostByTime,
+        Left,
     }
 }

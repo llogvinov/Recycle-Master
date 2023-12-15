@@ -39,7 +39,7 @@ namespace Core.StateMachine
             Debug.Log($"current level - {level}");
 
             _game.GameOver = null;
-            _game.GameOver += (won) =>  _stateMachine.Enter<GameOverState, bool>(won);
+            _game.GameOver += (condition) =>  _stateMachine.Enter<GameOverState, GameOverCondition>(condition);
 
             _levelManager = GameObject.FindObjectOfType<LevelManager>();
             if (_levelManager is not null)
@@ -67,10 +67,8 @@ namespace Core.StateMachine
             void OnPauseClicked() => 
                 Timer.Instance.PauseTimer();
 
-            void OnLeaveClicked()
-            {
-                _stateMachine.Enter<LoadSceneState, string>(AssetPath.MenuScene); 
-            }
+            void OnLeaveClicked() => 
+                _stateMachine.Enter<GameOverState, GameOverCondition>(GameOverCondition.Left);
 
             void OnContinueClicked() => 
                 Timer.Instance.ContinueTimer();
@@ -98,7 +96,7 @@ namespace Core.StateMachine
 
             void OnTimerFinished()
             {
-                _game.GameOver?.Invoke(false);
+                _game.GameOver?.Invoke(GameOverCondition.LostByTime);
             }
         }
 

@@ -6,7 +6,7 @@ using UI.Base;
 
 namespace Core.StateMachine
 {
-    public class GameOverState : IPayloadState<bool>
+    public class GameOverState : IPayloadState<GameOverCondition>
     {
         private const int MillisecondsPerSeconds = 1000;
         private const float Additional = 0.5f;
@@ -27,16 +27,20 @@ namespace Core.StateMachine
             _uiLoadingProvider = uiLoadingProvider;
         }
 
-        public async void Enter(bool won)
+        public async void Enter(GameOverCondition condition)
         {
-            if (won)
+            switch (condition)
             {
-                UpdateSaveData();
-                await PrepareUIWinLevel();
-            }
-            else
-            {
-                await PrepareUILostLevel();
+                case GameOverCondition.Won:
+                    UpdateSaveData();
+                    await PrepareUIWinLevel();
+                    break;
+                case GameOverCondition.LostByTime:
+                    await PrepareUILostLevel();
+                    break;
+                case GameOverCondition.Left:
+                    _stateMachine.Enter<LoadSceneState, string>(AssetPath.MenuScene);
+                    break;
             }
         }
 

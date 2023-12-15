@@ -8,11 +8,11 @@ using Random = UnityEngine.Random;
 
 namespace Main.Level
 {
-    public class LevelCreator
+    public class LevelBuilder
     {
         private Action AllObjectSpawned;
         
-        public LevelCreator InvokeAllObjectSpawned()
+        public LevelBuilder InvokeAllObjectSpawned()
         {
             AllObjectSpawned?.Invoke();
             return this;
@@ -24,10 +24,10 @@ namespace Main.Level
         private List<TrashCanData> _trashCanDatas;
         private readonly LevelManager _levelManager;
 
-        public LevelCreator(LevelManager levelManager) => 
+        public LevelBuilder(LevelManager levelManager) => 
             _levelManager = levelManager;
 
-        public LevelCreator SpawnTrashCans()
+        public LevelBuilder SpawnTrashCans()
         {
             var trashCanSpawner = GameObject.Instantiate(_levelManager.TrashCanSpawnerPrefab);
             trashCanSpawner.Init(_trashCanDatas);
@@ -35,7 +35,7 @@ namespace Main.Level
             return this;
         }
 
-        public LevelCreator GetRandomTrashCanDatas()
+        public LevelBuilder GetRandomTrashCanDatas()
         {
             var trashCanDatas = new List<TrashCanData>();
             var trashCanDatasTemp = new List<TrashCanData>();
@@ -53,7 +53,7 @@ namespace Main.Level
             return this;
         }
 
-        public LevelCreator SpawnTrashObjects()
+        public LevelBuilder SpawnTrashObjects()
         {
             foreach (var trashData in _trashDatas)
             {
@@ -65,7 +65,7 @@ namespace Main.Level
             return this;
         }
 
-        public LevelCreator GetRandomTrashDatas()
+        public LevelBuilder GetRandomTrashDatas()
         {
             _trashDatas = new List<TrashData>();
             foreach (var trashCanData in _trashCanDatas) 
@@ -92,7 +92,7 @@ namespace Main.Level
             return trashDatas;
         }
 
-        public LevelCreator SetLevelDetails(LevelDetailsData levelDetailsData)
+        public LevelBuilder SetLevelDetails(LevelDetailsData levelDetailsData)
         {
             _trashCanDatas = levelDetailsData.TrashCanDatas;
             _trashDatas = levelDetailsData.TrashDatas;
@@ -100,7 +100,7 @@ namespace Main.Level
             return this;
         }
 
-        public LevelCreator SetLevelDifficultyData(LevelType levelType)
+        public LevelBuilder SetLevelDifficultyData(LevelType levelType)
         {
             LevelDifficultyData = ResourceLoader.LevelDifficultyDatas
                 .FirstOrDefault(l => l.LevelType == levelType);
@@ -111,7 +111,7 @@ namespace Main.Level
             return this;
         }
 
-        public LevelCreator ClearLevel()
+        public LevelBuilder ClearLevel()
         {
             if (Timer.HasInstance)
                 Timer.Instance.StopCountdown();

@@ -21,7 +21,7 @@ namespace Main.Level
         public bool AllowSimilarObjects => _allowSimilarObjects;
         public Game Game { get; set; }
 
-        private LevelCreator _levelCreator;
+        private LevelBuilder _levelBuilder;
         private List<TrashObjectSpawner> _trashObjectSpawners;
 
         private void OnEnable() => 
@@ -35,16 +35,16 @@ namespace Main.Level
             if (Game is null) return;
 
             if (_trashObjectSpawners.All(spawner => spawner.AllObjectsThrown)) 
-                Game.GameOver(true);
+                Game.GameOver(GameOverCondition.Won);
         }
 
         public void GenerateSpecificLevel()
         {
-            _levelCreator = new LevelCreator(this);
+            _levelBuilder = new LevelBuilder(this);
             _wallAdjuster.AdjustAllWalls();
             _trashObjectSpawners = new List<TrashObjectSpawner>();
 
-            _levelCreator
+            _levelBuilder
                 .ClearLevel()
                 .SetLevelDetails(_levelDetailsData)
                 .SetLevelDifficultyData(_levelDetailsData.Type)
@@ -53,16 +53,16 @@ namespace Main.Level
                 .InvokeAllObjectSpawned();
            
             if (Timer.HasInstance)
-                Timer.Instance.StartCountdown(_levelCreator.LevelDifficultyData.CountdownTime);
+                Timer.Instance.StartCountdown(_levelBuilder.LevelDifficultyData.CountdownTime);
         }
 
         public void GenerateRandomLevel(LevelType levelType)
         {
-            _levelCreator = new LevelCreator(this);
+            _levelBuilder = new LevelBuilder(this);
             _wallAdjuster.AdjustAllWalls();
             _trashObjectSpawners = new List<TrashObjectSpawner>();
 
-            _levelCreator
+            _levelBuilder
                 .ClearLevel()
                 .SetLevelDifficultyData(levelType)
                 .GetRandomTrashCanDatas()
@@ -72,10 +72,10 @@ namespace Main.Level
                 .InvokeAllObjectSpawned();
 
             if (Timer.HasInstance)
-                Timer.Instance.StartCountdown(_levelCreator.LevelDifficultyData.CountdownTime);
+                Timer.Instance.StartCountdown(_levelBuilder.LevelDifficultyData.CountdownTime);
         }
 
         public void ClearLevel() => 
-            _levelCreator.ClearLevel();
+            _levelBuilder.ClearLevel();
     }
 }
