@@ -15,7 +15,8 @@ namespace Core.StateMachine
             
             RegisterServices();
 
-            _services.Single<ISaveService<PlayerProgressService>>().Load();
+            _services.Single<ISaveService<PlayerProgressData>>().Load();
+            _services.Single<ISaveService<PlayerSettingsData>>().Load();
         }
 
         public void Enter()
@@ -30,8 +31,10 @@ namespace Core.StateMachine
         
         private void RegisterServices()
         {
-            _services.RegisterSingle<ISaveService<PlayerProgressService>>(
-                new BinarySaveService<PlayerProgressService>());
+            _services.RegisterSingle<ISaveService<PlayerProgressData>>(
+                new BinarySaveService<PlayerProgressData>());
+            _services.RegisterSingle<ISaveService<PlayerSettingsData>>(
+                new BinarySaveService<PlayerSettingsData>());
         }
     }
 }

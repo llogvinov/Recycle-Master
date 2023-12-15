@@ -9,13 +9,13 @@ namespace Core.StateMachine
     {
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
-        private readonly ISaveService<PlayerProgressService> _saveService;
+        private readonly ISaveService<PlayerProgressData> _saveService;
         private readonly UILoadingProvider _uiLoadingProvider;
 
         private string _loadingScene;
 
         public LoadSceneState(GameStateMachine stateMachine, 
-            ISaveService<PlayerProgressService> saveService, 
+            ISaveService<PlayerProgressData> saveService, 
             SceneLoader sceneLoader,
             UILoadingProvider uiLoadingProvider)
         {

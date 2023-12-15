@@ -1,5 +1,7 @@
 using System.Collections;
 using System.ComponentModel;
+using Core.Data;
+using Core.SaveService;
 using UnityEngine;
 
 namespace Core.Audio
@@ -9,6 +11,9 @@ namespace Core.Audio
         [SerializeField] private AudioSource _musicSource;
         [SerializeField] private AudioSource _soundsSource;
 
+        private PlayerSettingsData SaveData =>
+            AllServices.Container.Single<ISaveService<PlayerSettingsData>>().SaveData;
+        
         private const float SwitchTransitionTime = 0.5f;
 
         #region Singleton
@@ -67,13 +72,17 @@ namespace Core.Audio
     
         private void PlayMusic(AudioData audioData)
         {
+            if (SaveData.PlayMusic == false) return;
             _musicSource.clip = audioData.Clip;
             _musicSource.volume = audioData.Volume;
             StartCoroutine(SmoothSwitchMusic(audioData, true));
         }
 
-        private void PlaySound(AudioData audioData) => 
+        private void PlaySound(AudioData audioData)
+        {
+            if (SaveData.PlaySounds == false) return;
             _soundsSource.PlayOneShot(audioData.Clip, audioData.Volume);
+        }
 
         public void Stop(AudioData audioData)
         {
@@ -90,10 +99,8 @@ namespace Core.Audio
             }
         }
 
-        private void StopMusic(AudioData audioData)
-        {
+        private void StopMusic(AudioData audioData) => 
             StartCoroutine(SmoothSwitchMusic(audioData, false));
-        }
 
         private void StopSound(AudioData audioData) => 
             _soundsSource.Stop();

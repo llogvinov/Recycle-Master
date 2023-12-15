@@ -26,10 +26,10 @@ namespace Core.StateMachine
             {
                 new BootstrapState(this, services),
                 new MenuState(this, uiLoadingProvider),
-                new LoadSceneState(this, services.Single<ISaveService<PlayerProgressService>>(), sceneLoader, uiLoadingProvider),
+                new LoadSceneState(this, services.Single<ISaveService<PlayerProgressData>>(), sceneLoader, uiLoadingProvider),
                 new PrepareGameState(this, _game, _coroutineRunner, uiLoadingProvider),
                 new GameLoopState(this, _game),
-                new GameOverState(this, services.Single<ISaveService<PlayerProgressService>>(), uiLoadingProvider),
+                new GameOverState(this, services.Single<ISaveService<PlayerProgressData>>(), uiLoadingProvider),
             };
         }
 

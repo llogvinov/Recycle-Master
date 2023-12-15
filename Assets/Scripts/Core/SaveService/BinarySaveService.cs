@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -13,25 +14,48 @@ namespace Core.SaveService
         public BinarySaveService()
         {
             SaveData = new T();
-            _filePath = Application.persistentDataPath + "/PlayerProgress.dat";
+            _filePath = ConstructFilePath();
         }
+        
+        private string ConstructFilePath() => 
+            Path.Combine(Application.persistentDataPath, $"{typeof(T).Name}.dat");
 
         public void Save(T data = default)
         {
-            using (FileStream fileStream = File.Create(_filePath))
+            try
             {
-                new BinaryFormatter().Serialize(fileStream, data ?? SaveData);
+                using (FileStream fileStream = File.Create(_filePath))
+                {
+                    new BinaryFormatter().Serialize(fileStream, data ?? SaveData);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error saving data: {ex.Message}");
             }
         }
 
         public T Load()
         {
-            using (FileStream fileStream = File.Open(_filePath, FileMode.Open))
+            try
             {
-                var loaded = new BinaryFormatter().Deserialize(fileStream);
-                SaveData = (T) loaded;
+                if (!File.Exists(_filePath))
+                {
+                    Save();
+                    return SaveData;
+                }
+
+                using (FileStream fileStream = File.Open(_filePath, FileMode.Open))
+                {
+                    var loaded = new BinaryFormatter().Deserialize(fileStream);
+                    SaveData = (T)loaded;
+                }
             }
-            
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error loading data: {ex.Message}");
+            }
+
             return SaveData;
         }
     }

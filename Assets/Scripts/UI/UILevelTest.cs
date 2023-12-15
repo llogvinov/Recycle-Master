@@ -15,25 +15,25 @@ namespace UI
         [SerializeField] private Button _saveButton;
         [SerializeField] private Button _loadButton;
 
-        private ISaveService<PlayerProgressService> _saveService;
-        private PlayerProgressService _playerProgressService;
+        private ISaveService<PlayerProgressData> _saveService;
+        private PlayerProgressData _playerProgressData;
         
         private void Start()
         {
-            _saveService = new BinarySaveService<PlayerProgressService>();
+            _saveService = new BinarySaveService<PlayerProgressData>();
 
             CreateStartDate();
             UpdateUI();
             
             _plusButton.onClick.AddListener(() =>
             {
-                _playerProgressService.CurrentLevel++;
+                _playerProgressData.CurrentLevel++;
                 UpdateUI();
             });
             
             _minusButton.onClick.AddListener(() =>
             {
-                _playerProgressService.CurrentLevel--;
+                _playerProgressData.CurrentLevel--;
                 UpdateUI();
             });
             
@@ -51,7 +51,7 @@ namespace UI
 
         private void CreateStartDate()
         {
-            _playerProgressService = new PlayerProgressService()
+            _playerProgressData = new PlayerProgressData()
             {
                 CurrentLevel = 0
             };
@@ -59,17 +59,17 @@ namespace UI
 
         private void UpdateUI()
         {
-            _title.text = $"LEVEL {_playerProgressService.CurrentLevel}";
+            _title.text = $"LEVEL {_playerProgressData.CurrentLevel}";
         }
 
         private void OnSaveButtonClicked()
         {
-            _saveService.Save(_playerProgressService);
+            _saveService.Save(_playerProgressData);
         }
 
         private void OnLoadButtonClicked()
         {
-            _playerProgressService = _saveService.Load();
+            _playerProgressData = _saveService.Load();
             UpdateUI();
         }
     }

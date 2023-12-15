@@ -13,14 +13,14 @@ namespace Core.StateMachine
         private const float Additional = 0.5f;
         
         private readonly GameStateMachine _stateMachine;
-        private readonly ISaveService<PlayerProgressService> _saveService;
+        private readonly ISaveService<PlayerProgressData> _saveService;
         private readonly UILoadingProvider _uiLoadingProvider;
 
         private UIWinLevelProvider _uiWinLevel;
         private UILostLevelProvider _uiLostLevel;
 
         public GameOverState(GameStateMachine stateMachine, 
-            ISaveService<PlayerProgressService> saveService,
+            ISaveService<PlayerProgressData> saveService,
             UILoadingProvider uiLoadingProvider)
         {
             _stateMachine = stateMachine;
