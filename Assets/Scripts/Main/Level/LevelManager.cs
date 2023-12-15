@@ -20,6 +20,7 @@ namespace Main.Level
         public List<TrashObjectSpawner> TrashObjectSpawners => _trashObjectSpawners;
         public bool AllowSimilarObjects => _allowSimilarObjects;
         public Game Game { get; set; }
+        public LevelDifficultyData LevelDifficultyData { get; set; }
 
         private LevelBuilder _levelBuilder;
         private List<TrashObjectSpawner> _trashObjectSpawners;

@@ -17,9 +17,10 @@ namespace Main.Level
             AllObjectSpawned?.Invoke();
             return this;
         }
-
-        public LevelDifficultyData LevelDifficultyData;
         
+        private LevelObjectsData _levelObjectsData => 
+            _levelManager.LevelDifficultyData.ObjectsData;
+
         private List<TrashData> _trashDatas;
         private List<TrashCanData> _trashCanDatas;
         private readonly LevelManager _levelManager;
@@ -41,7 +42,7 @@ namespace Main.Level
             var trashCanDatasTemp = new List<TrashCanData>();
             trashCanDatasTemp.AddRange(ResourceLoader.TrashCanDatas);
                 
-            for (var i = 0; i < LevelDifficultyData.ObjectsData.TrashCanCount; i++)
+            for (var i = 0; i < _levelObjectsData.TrashCanCount; i++)
             {
                 var addingTrashCanIndex = Random.Range(0, trashCanDatasTemp.Count);
                 var addingTrashCan = trashCanDatasTemp[addingTrashCanIndex];
@@ -58,7 +59,7 @@ namespace Main.Level
             foreach (var trashData in _trashDatas)
             {
                 var trashObjectSpawner = GameObject.Instantiate(_levelManager.TrashObjectSpawnerPrefab);
-                trashObjectSpawner.Init(trashData, LevelDifficultyData.ObjectsData.TrashObjectMaxCount);
+                trashObjectSpawner.Init(trashData, _levelObjectsData.TrashObjectMaxCount);
                 _levelManager.TrashObjectSpawners.Add(trashObjectSpawner);
             }
             
@@ -80,7 +81,7 @@ namespace Main.Level
                 ResourceLoader.TrashDatas.Where(data => data.Type == trashCanData.Type).ToList();
             var trashDatas = new List<TrashData>();
 
-            for (var i = 0; i < LevelDifficultyData.ObjectsData.TrashObjectForCanCount; i++)
+            for (var i = 0; i < _levelObjectsData.TrashObjectForCanCount; i++)
             {
                 var addingTrashObjectIndex = Random.Range(0, trashObjectDatasOfType.Count);
                 var addingTrashObject = trashObjectDatasOfType[addingTrashObjectIndex];
@@ -102,10 +103,10 @@ namespace Main.Level
 
         public LevelBuilder SetLevelDifficultyData(LevelType levelType)
         {
-            LevelDifficultyData = ResourceLoader.LevelDifficultyDatas
+            _levelManager.LevelDifficultyData = ResourceLoader.LevelDifficultyDatas
                 .FirstOrDefault(l => l.LevelType == levelType);
             
-            if (LevelDifficultyData == null) 
+            if (_levelManager.LevelDifficultyData == null) 
                 Debug.LogError($"Level difficulty data of type {levelType} not found!");
             
             return this;

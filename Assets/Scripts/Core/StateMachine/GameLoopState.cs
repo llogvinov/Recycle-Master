@@ -1,8 +1,9 @@
 ﻿using Main;
+using Main.Level;
 
 namespace Core.StateMachine
 {
-    public class GameLoopState : ISimpleState
+    public class GameLoopState : IPayloadState<LevelManager>
     {
         private readonly GameStateMachine _stateMachine;
         private readonly Game _game;
@@ -13,9 +14,9 @@ namespace Core.StateMachine
             _game = game;
         }
 
-        public void Enter()
+        public void Enter(LevelManager levelManager)
         {
-            Timer.Instance.StartCountdown(150f); // todo: change 
+            Timer.Instance.StartCountdown(levelManager.LevelDifficultyData.CountdownTime);
         }
 
         public void Exit()

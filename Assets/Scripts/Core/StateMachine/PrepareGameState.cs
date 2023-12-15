@@ -46,7 +46,7 @@ namespace Core.StateMachine
             await PrepareUITimer();
             PrepareUIPause();
 
-            _stateMachine.Enter<GameLoopState>();
+            _stateMachine.Enter<GameLoopState, LevelManager>(_levelManager);
         }
 
         public void Exit()
