@@ -41,15 +41,11 @@ namespace Core.StateMachine
             _game.GameOver = null;
             _game.GameOver += (condition) =>  _stateMachine.Enter<GameOverState, GameOverCondition>(condition);
 
-            _levelManager = GameObject.FindObjectOfType<LevelManager>();
-            if (_levelManager is not null)
-                _levelManager.Game = _game;
-
-            await PrepareUITimer();
-            Timer.Instance.ContinueTimer(); // todo: change this
-            AddPauseActions();
+            PrepareLevelManager();
             BuildLevel();
-            
+            await PrepareUITimer();
+            PrepareUIPause();
+
             _stateMachine.Enter<GameLoopState>();
         }
 
@@ -58,35 +54,27 @@ namespace Core.StateMachine
             _uiLoadingProvider.TryUnload();
         }
 
-        private void AddPauseActions()
+        private void PrepareLevelManager()
         {
-            UIPause.PauseButtonClicked += OnPauseClicked;
-            UIPause.LeaveButtonClicked += OnLeaveClicked;
-            UIPause.ContinueButtonClicked += OnContinueClicked;
-            
-            void OnPauseClicked() => 
-                Timer.Instance.PauseTimer();
-
-            void OnLeaveClicked() => 
-                _stateMachine.Enter<GameOverState, GameOverCondition>(GameOverCondition.Left);
-
-            void OnContinueClicked() => 
-                Timer.Instance.ContinueTimer();
+            _levelManager = GameObject.FindObjectOfType<LevelManager>();
+            if (_levelManager is not null)
+                _levelManager.Game = _game;
         }
+
+        // todo: change level type choosing
+        private void BuildLevel() => 
+            BuildEasyLevel();
 
         private async Task PrepareUITimer()
         {
-            if (GameObject.FindObjectOfType<UITimer>() is not null) return;
-            
-            await LoadUITimer();
-
-            if (Timer.HasInstance)
-                Timer.Instance.UpdateReferences(_coroutineRunner, UITimer);
-            else
+            if (GameObject.FindObjectOfType<UITimer>() is null)
+            {
+                await LoadUITimer();
                 Timer.Initialize(_coroutineRunner, UITimer);
-            
+            }
+
+            Timer.Instance.OnFinish = null;
             Timer.Instance.OnFinish += OnTimerFinished;
-            _game.GameOver += (b) => Timer.Instance.StopCountdown();
 
             async Task LoadUITimer()
             {
@@ -94,15 +82,25 @@ namespace Core.StateMachine
                 await _uiTimerProvider.Load();
             }
 
-            void OnTimerFinished()
-            {
+            void OnTimerFinished() => 
                 _game.GameOver?.Invoke(GameOverCondition.LostByTime);
-            }
         }
 
-        // todo: change level type choosing
-        private void BuildLevel() => 
-            BuildEasyLevel();
+        private void PrepareUIPause()
+        {
+            UIPause.PauseButtonClicked += OnPauseClicked;
+            UIPause.LeaveButtonClicked += OnLeaveClicked;
+            UIPause.ContinueButtonClicked += OnContinueClicked;
+            
+            void OnPauseClicked() => 
+                Timer.PauseTimer();
+
+            void OnLeaveClicked() => 
+                _stateMachine.Enter<GameOverState, GameOverCondition>(GameOverCondition.Left);
+
+            void OnContinueClicked() => 
+                Timer.ContinueTimer();
+        }
 
         private void BuildRandomLevel()
         {

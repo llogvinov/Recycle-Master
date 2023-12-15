@@ -20,7 +20,7 @@ namespace Main
 
         private float _counter;
         private Coroutine _countdownCoroutine;
-        private bool _pause;
+        private static bool _pause;
 
         private static Timer _instance = null;
         
@@ -43,12 +43,14 @@ namespace Main
                 throw new InvalidOperationException($"Singleton already created exists");
             
             _instance = new Timer(coroutineRunner, uiTimer);
+            _pause = false;
         }
 
-        private Timer(ICoroutineRunner coroutineRunner, UITimer uiTimer)
-        {
+        public static void ClearInstance() => 
+            _instance = null;
+
+        private Timer(ICoroutineRunner coroutineRunner, UITimer uiTimer) => 
             UpdateReferences(coroutineRunner, uiTimer);
-        }
 
         public void UpdateReferences(ICoroutineRunner coroutineRunner, UITimer uiTimer)
         {
@@ -90,8 +92,8 @@ namespace Main
         public void AddTime(float value) => 
             _counter = Mathf.Clamp(_counter + value, MinCounter, MaxCounter);
 
-        public void PauseTimer() => _pause = true;
+        public static void PauseTimer() => _pause = true;
         
-        public void ContinueTimer() => _pause = false;
+        public static void ContinueTimer() => _pause = false;
     }
 }

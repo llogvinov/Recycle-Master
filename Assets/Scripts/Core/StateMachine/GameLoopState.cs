@@ -1,4 +1,6 @@
-﻿namespace Core.StateMachine
+﻿using Main;
+
+namespace Core.StateMachine
 {
     public class GameLoopState : ISimpleState
     {
@@ -13,12 +15,12 @@
 
         public void Enter()
         {
-            
+            Timer.Instance.StartCountdown(150f); // todo: change 
         }
 
         public void Exit()
         {
-            
+            Timer.Instance.StopCountdown();
         }
     }
 }

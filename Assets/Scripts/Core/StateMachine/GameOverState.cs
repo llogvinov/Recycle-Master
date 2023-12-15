@@ -2,6 +2,7 @@
 using Core.AssetManagement.LocalAssetProviders;
 using Core.Data;
 using Core.SaveService;
+using Main;
 using UI.Base;
 
 namespace Core.StateMachine
@@ -39,7 +40,7 @@ namespace Core.StateMachine
                     await PrepareUILostLevel();
                     break;
                 case GameOverCondition.Left:
-                    _stateMachine.Enter<LoadSceneState, string>(AssetPath.MenuScene);
+                    LoadMenu();
                     break;
             }
         }
@@ -120,7 +121,10 @@ namespace Core.StateMachine
         private async Task LoadUILoading() => 
             await _uiLoadingProvider.Load();
 
-        private void LoadMenu() => 
+        private void LoadMenu()
+        {
+            Timer.ClearInstance();
             _stateMachine.Enter<LoadSceneState, string>(AssetPath.MenuScene);
+        }
     }
 }

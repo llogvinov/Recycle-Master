@@ -51,9 +51,6 @@ namespace Main.Level
                 .SpawnTrashCans()
                 .SpawnTrashObjects()
                 .InvokeAllObjectSpawned();
-           
-            if (Timer.HasInstance)
-                Timer.Instance.StartCountdown(_levelBuilder.LevelDifficultyData.CountdownTime);
         }
 
         public void GenerateRandomLevel(LevelType levelType)
@@ -70,9 +67,6 @@ namespace Main.Level
                 .GetRandomTrashDatas()
                 .SpawnTrashObjects()
                 .InvokeAllObjectSpawned();
-
-            if (Timer.HasInstance)
-                Timer.Instance.StartCountdown(_levelBuilder.LevelDifficultyData.CountdownTime);
         }
 
         public void ClearLevel() => 
