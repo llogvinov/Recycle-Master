@@ -305,6 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _musicSource: {fileID: 2176850870887123125}
   _soundsSource: {fileID: 7944570024254092247}
+  _musicPlayer: {fileID: 981747590340561139}
 --- !u!114 &981747590340561139
 MonoBehaviour:
   m_ObjectHideFlags: 0

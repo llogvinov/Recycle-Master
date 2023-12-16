@@ -10,16 +10,20 @@ namespace Core.Audio
     {
         [SerializeField] private AudioSource _musicSource;
         [SerializeField] private AudioSource _soundsSource;
+        [Space] 
+        [SerializeField] private AudioPlayer _musicPlayer;
 
         private PlayerSettingsData SaveData =>
             AllServices.Container.Single<ISaveService<PlayerSettingsData>>().SaveData;
         
         private const float SwitchTransitionTime = 0.5f;
 
+        public AudioPlayer MusicPlayer => _musicPlayer;
+
         #region Singleton
 
         private static AudioManager _instance = null;
-        
+
         public static AudioManager Instance
         {
             get
@@ -27,11 +31,7 @@ namespace Core.Audio
                 if (_instance is null)
                 {
                     _instance = FindObjectOfType<AudioManager>();
-                    if (_instance is null)
-                    {
-                        var singletonObject = new GameObject("AudioManager");
-                        _instance = singletonObject.AddComponent<AudioManager>();
-                    }
+                    DontDestroyOnLoad(_instance);
                 }
 
                 return _instance;
@@ -40,19 +40,6 @@ namespace Core.Audio
 
         public static bool HasInstance => _instance is not null;
 
-        private void Awake()
-        {
-            if (_instance == null)
-            {
-                _instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
-    
         #endregion
 
         public void Play(AudioData audioData)

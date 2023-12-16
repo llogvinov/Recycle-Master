@@ -1,4 +1,5 @@
-﻿using Core.Data;
+﻿using Core.Audio;
+using Core.Data;
 using Core.SaveService;
 
 namespace Core.StateMachine
@@ -7,6 +8,7 @@ namespace Core.StateMachine
     {
         private readonly GameStateMachine _stateMachine;
         private readonly AllServices _services;
+        private readonly PlayerSettingsData _settingsData;
 
         public BootstrapState(GameStateMachine stateMachine, AllServices services)
         {
@@ -16,11 +18,12 @@ namespace Core.StateMachine
             RegisterServices();
 
             _services.Single<ISaveService<PlayerProgressData>>().Load();
-            _services.Single<ISaveService<PlayerSettingsData>>().Load();
+            _settingsData = _services.Single<ISaveService<PlayerSettingsData>>().Load();
         }
 
         public void Enter()
         {
+            AudioManager.Instance.MusicPlayer.Switch(_settingsData.PlayMusic);
             _stateMachine.Enter<MenuState>();
         }
 
