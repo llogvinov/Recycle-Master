@@ -735,6 +735,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1814656627}
   - component: {fileID: 1814656626}
+  - component: {fileID: 1814656628}
+  - component: {fileID: 1814656629}
   m_Layer: 0
   m_Name: Recycle Manager
   m_TagString: Untagged
@@ -754,6 +756,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576b31b5d75f44769ee77f41df9b9f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _throwAwayAudioPlayer: {fileID: 1814656628}
+  _throwTrashAudioPlayer: {fileID: 1814656629}
 --- !u!4 &1814656627
 Transform:
   m_ObjectHideFlags: 0
@@ -769,6 +773,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1814656628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814656625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc618c153d9deb4da3b26368e4c751f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioData: {fileID: 11400000, guid: f44f9cd3dfc855344be29a3603dd4135, type: 2}
+--- !u!114 &1814656629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814656625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc618c153d9deb4da3b26368e4c751f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioData: {fileID: 11400000, guid: 77144580d90d85245acb680b1e935274, type: 2}
 --- !u!1 &1896891943
 GameObject:
   m_ObjectHideFlags: 0
