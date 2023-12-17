@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Background
   m_EditorClassIdentifier: 
   _type: 0
-  _clip: {fileID: 8300000, guid: fdcd0d2949abff8498f4998b56512806, type: 3}
-  _volume: 1
+  _clip: {fileID: 8300000, guid: c82f9ddb86bac694b88ae9af91e1d8eb, type: 3}
+  _volume: 0.7
