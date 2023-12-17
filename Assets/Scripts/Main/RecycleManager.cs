@@ -29,7 +29,11 @@ namespace Main
 
         private void OnSuccess(TrashObject trashObject, TrashCan trashCan)
         {
-            DoAnimation(trashObject, trashCan, () => _throwTrashAudioPlayer.Switch(play: true));
+            DoAnimation(trashObject, trashCan, () =>
+            {
+                _throwTrashAudioPlayer.Switch(play: true);
+                trashCan.FXDust.Play();
+            });
         }
 
         private void OnFail(TrashObject trashObject)
