@@ -39,31 +39,36 @@ namespace Core.StateMachine
         
         public void Exit()
         {
-            
+            _levelManager.LevelComplete = null;
         }
 
         private IEnumerator ProceedTutorial()
         {
             foreach (var trashCanData in ResourceLoader.TrashCanDatas)
             {
-                var levelCompleted = false;
-                _levelManager.LevelComplete += () => levelCompleted = true;
+                var tutorialPartCompleted = false;
+                _levelManager.LevelComplete = null;
+                _levelManager.LevelComplete += () => tutorialPartCompleted = true;
                 GenerateTutorialLevel(trashCanData);
-                while (!levelCompleted)
+                while (!tutorialPartCompleted)
                 {
                     yield return new WaitForSeconds(1f);
                 }
-                _levelManager.LevelComplete = null;
             }
+            UpdateProgressData();
             _game.GameOver(GameOverCondition.Won);
         }
+
+        private void PrepareLevelManager() => 
+            _levelManager = GameObject.FindObjectOfType<LevelManager>();
 
         private void GenerateTutorialLevel(TrashCanData trashCanData) => 
             _levelManager.GenerateTutorialLevel(trashCanData);
 
-        private void PrepareLevelManager()
+        private void UpdateProgressData()
         {
-            _levelManager = GameObject.FindObjectOfType<LevelManager>();
+            _playerProgressData.SaveData.TutorialCompleted = true;
+            _playerProgressData.Save();
         }
     }
 }
