@@ -58,7 +58,11 @@ namespace Core.StateMachine
         {
             _levelManager = GameObject.FindObjectOfType<LevelManager>();
             if (_levelManager is not null)
-                _levelManager.Game = _game;
+            {
+                _levelManager.LevelComplete = null;
+                _levelManager.LevelComplete += () 
+                    => _game.GameOver(GameOverCondition.Won);
+            }
         }
 
         // todo: change level type choosing

@@ -29,7 +29,7 @@ namespace Core.StateMachine
             _states = new List<IState>
             {
                 new BootstrapState(this, services),
-                new TutorialState(this, _game, services.Single<ISaveService<PlayerProgressData>>()),
+                new TutorialState(this, _game, _coroutineRunner, services.Single<ISaveService<PlayerProgressData>>()),
                 new MenuState(this, uiLoadingProvider),
                 new LoadSceneState(this, services.Single<ISaveService<PlayerProgressData>>(), sceneLoader, uiLoadingProvider),
                 new PrepareGameState(this, _game, _coroutineRunner, uiLoadingProvider),

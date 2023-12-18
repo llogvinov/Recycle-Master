@@ -1,7 +1,9 @@
-﻿using Core.Data;
+﻿using System.Collections;
+using Core.Data;
 using Core.SaveService;
 using Main;
 using Main.Level;
+using ObjectsData;
 using UnityEngine;
 
 namespace Core.StateMachine
@@ -10,36 +12,58 @@ namespace Core.StateMachine
     {
         private readonly GameStateMachine _stateMachine;
         private readonly Game _game;
+        private readonly ICoroutineRunner _coroutineRunner;
         private readonly ISaveService<PlayerProgressData> _playerProgressData;
         
         private LevelManager _levelManager;
 
-        public TutorialState(GameStateMachine stateMachine, Game game, ISaveService<PlayerProgressData> playerProgressData)
+        public TutorialState(GameStateMachine stateMachine, 
+            Game game, 
+            ICoroutineRunner coroutineRunner, 
+            ISaveService<PlayerProgressData> playerProgressData)
         {
             _stateMachine = stateMachine;
             _game = game;
+            _coroutineRunner = coroutineRunner;
             _playerProgressData = playerProgressData;
         }
 
         public void Enter()
         {
             PrepareLevelManager();
-            _levelManager.GenerateTutorialLevel(ResourceLoader.TrashCanDatas[0]);
-            
+            _coroutineRunner.StartCoroutine(ProceedTutorial());
+
             _game.GameOver = null;
             _game.GameOver += (condition) =>  _stateMachine.Enter<GameOverState, GameOverCondition>(condition);
         }
-
+        
         public void Exit()
         {
             
         }
-        
+
+        private IEnumerator ProceedTutorial()
+        {
+            foreach (var trashCanData in ResourceLoader.TrashCanDatas)
+            {
+                var levelCompleted = false;
+                _levelManager.LevelComplete += () => levelCompleted = true;
+                GenerateTutorialLevel(trashCanData);
+                while (!levelCompleted)
+                {
+                    yield return new WaitForSeconds(1f);
+                }
+                _levelManager.LevelComplete = null;
+            }
+            _game.GameOver(GameOverCondition.Won);
+        }
+
+        private void GenerateTutorialLevel(TrashCanData trashCanData) => 
+            _levelManager.GenerateTutorialLevel(trashCanData);
+
         private void PrepareLevelManager()
         {
             _levelManager = GameObject.FindObjectOfType<LevelManager>();
-            if (_levelManager is not null)
-                _levelManager.Game = _game;
         }
     }
 }

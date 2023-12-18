@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Core;
 using LevelData;
@@ -9,6 +10,8 @@ namespace Main.Level
 {
     public class LevelManager : MonoBehaviour
     {
+        public Action LevelComplete;
+        
         [SerializeField] private WallAdjuster _wallAdjuster;
         [SerializeField] private TrashCanSpawner _trashCanSpawnerPrefab;
         [SerializeField] private TrashObjectSpawner _trashObjectSpawnerPrefab;
@@ -20,7 +23,6 @@ namespace Main.Level
         public TrashObjectSpawner TrashObjectSpawnerPrefab => _trashObjectSpawnerPrefab;
         public List<TrashObjectSpawner> TrashObjectSpawners => _trashObjectSpawners;
         public bool AllowSimilarObjects => _allowSimilarObjects;
-        public Game Game { get; set; }
         public LevelDifficultyData LevelDifficultyData { get; set; }
 
         private LevelBuilder _levelBuilder;
@@ -34,10 +36,8 @@ namespace Main.Level
 
         private void CheckAllSpawners()
         {
-            if (Game is null) return;
-
             if (_trashObjectSpawners.All(spawner => spawner.AllObjectsThrown)) 
-                Game.GameOver(GameOverCondition.Won);
+                LevelComplete?.Invoke();
         }
 
         public void GenerateTutorialLevel(TrashCanData trashCanData)
