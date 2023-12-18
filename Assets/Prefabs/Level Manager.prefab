@@ -48,4 +48,4 @@ MonoBehaviour:
   _trashCanSpawnerPrefab: {fileID: 4043347807307370164, guid: 69119f43f7f49c94aafe8819d875588c, type: 3}
   _trashObjectSpawnerPrefab: {fileID: 7841422674897555346, guid: 04aebc5a6c1de5544918bc692aa8b0c9, type: 3}
   _levelDetailsData: {fileID: 11400000, guid: 7a16d8f0802c5b04e950743e3ccd0509, type: 2}
-  _allowSimilarObjects: 1
+  _allowSimilarObjects: 0
