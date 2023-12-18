@@ -9,20 +9,24 @@ namespace Core.StateMachine
     {
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
-        private readonly ISaveService<PlayerProgressData> _saveService;
+        private readonly ISaveService<PlayerProgressData> _progressDataSaveService;
         private readonly UILoadingProvider _uiLoadingProvider;
+        
+        private readonly PlayerProgressData _progressData;
 
         private string _loadingScene;
 
         public LoadSceneState(GameStateMachine stateMachine, 
-            ISaveService<PlayerProgressData> saveService, 
+            ISaveService<PlayerProgressData> progressDataSaveService, 
             SceneLoader sceneLoader,
             UILoadingProvider uiLoadingProvider)
         {
             _stateMachine = stateMachine;
-            _saveService = saveService;
+            _progressDataSaveService = progressDataSaveService;
             _sceneLoader = sceneLoader;
             _uiLoadingProvider = uiLoadingProvider;
+            
+            _progressData = _progressDataSaveService.Load();
         }
 
         public async void Enter(string sceneName)
@@ -55,8 +59,15 @@ namespace Core.StateMachine
 
         private void OnGameSceneLoaded()
         {
-            var currentLevel = _saveService.SaveData.CurrentLevel;
-            _stateMachine.Enter<PrepareGameState, int>(currentLevel);
+            if (_progressData.TutorialCompleted)
+            {
+                var currentLevel = _progressDataSaveService.SaveData.CurrentLevel;
+                _stateMachine.Enter<PrepareGameState, int>(currentLevel);
+            }
+            else
+            {
+                _stateMachine.Enter<TutorialState>();
+            }
         }
 
         private void OnMenuSceneLoaded()

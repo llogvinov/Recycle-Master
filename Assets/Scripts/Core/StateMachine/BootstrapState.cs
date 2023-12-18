@@ -8,6 +8,7 @@ namespace Core.StateMachine
     {
         private readonly GameStateMachine _stateMachine;
         private readonly AllServices _services;
+        private readonly PlayerProgressData _progressData;
         private readonly PlayerSettingsData _settingsData;
 
         public BootstrapState(GameStateMachine stateMachine, AllServices services)
@@ -17,7 +18,7 @@ namespace Core.StateMachine
             
             RegisterServices();
 
-            _services.Single<ISaveService<PlayerProgressData>>().Load();
+            _progressData = _services.Single<ISaveService<PlayerProgressData>>().Load();
             _settingsData = _services.Single<ISaveService<PlayerSettingsData>>().Load();
         }
 

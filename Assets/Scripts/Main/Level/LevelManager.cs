@@ -2,6 +2,7 @@
 using System.Linq;
 using Core;
 using LevelData;
+using ObjectsData;
 using UnityEngine;
 
 namespace Main.Level
@@ -37,6 +38,19 @@ namespace Main.Level
 
             if (_trashObjectSpawners.All(spawner => spawner.AllObjectsThrown)) 
                 Game.GameOver(GameOverCondition.Won);
+        }
+
+        public void GenerateTutorialLevel(TrashCanData trashCanData)
+        {
+            _levelBuilder = new LevelBuilder(this);
+            _wallAdjuster.AdjustAllWalls();
+            _trashObjectSpawners = new List<TrashObjectSpawner>();
+
+            _levelBuilder
+                .ClearLevel()
+                .SpawnTrashCans(trashCanData)
+                .SpawnTrashObjects(trashCanData)
+                .InvokeAllObjectSpawned();
         }
 
         public void GenerateSpecificLevel()
