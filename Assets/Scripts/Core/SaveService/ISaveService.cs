@@ -5,5 +5,6 @@
         T SaveData { get; }
         void Save(T data = default);
         T Load();
+        void Clear();
     }
 }

@@ -58,5 +58,8 @@ namespace Core.SaveService
 
             return SaveData;
         }
+
+        public void Clear() => 
+            File.Delete(_filePath);
     }
 }
