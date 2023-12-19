@@ -4,6 +4,7 @@ using Core.SaveService;
 using Main;
 using Main.Level;
 using ObjectsData;
+using UI;
 using UnityEngine;
 
 namespace Core.StateMachine
@@ -16,6 +17,7 @@ namespace Core.StateMachine
         private readonly ISaveService<PlayerProgressData> _playerProgressData;
         
         private LevelManager _levelManager;
+        private UIMessage _uiMessage;
 
         public TutorialState(GameStateMachine stateMachine, 
             Game game, 
@@ -31,6 +33,7 @@ namespace Core.StateMachine
         public void Enter()
         {
             PrepareLevelManager();
+            PrepareUIMessage();
             _coroutineRunner.StartCoroutine(ProceedTutorial());
 
             _game.GameOver = null;
@@ -44,15 +47,30 @@ namespace Core.StateMachine
 
         private IEnumerator ProceedTutorial()
         {
+            const float checkDelay = 0.5f;
+            
             foreach (var trashCanData in ResourceLoader.TrashCanDatas)
             {
+                GenerateTutorialLevel(trashCanData);
+                
+                // message
+                var messageRead = false;
+                _uiMessage.MessageRead = null;
+                _uiMessage.MessageRead += () => messageRead = true;
+                _uiMessage.SetMessage("tutorial", $"dispose all {trashCanData.Type} trash");
+                _uiMessage.Open();
+                while (!messageRead)
+                {
+                    yield return new WaitForSeconds(checkDelay);
+                }
+
+                // level
                 var tutorialPartCompleted = false;
                 _levelManager.LevelComplete = null;
                 _levelManager.LevelComplete += () => tutorialPartCompleted = true;
-                GenerateTutorialLevel(trashCanData);
                 while (!tutorialPartCompleted)
                 {
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(checkDelay);
                 }
             }
             UpdateProgressData();
@@ -61,6 +79,9 @@ namespace Core.StateMachine
 
         private void PrepareLevelManager() => 
             _levelManager = GameObject.FindObjectOfType<LevelManager>();
+        
+        private void PrepareUIMessage() => 
+            _uiMessage = GameObject.FindObjectOfType<UIMessage>();
 
         private void GenerateTutorialLevel(TrashCanData trashCanData) => 
             _levelManager.GenerateTutorialLevel(trashCanData);
