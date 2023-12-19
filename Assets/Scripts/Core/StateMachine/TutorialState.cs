@@ -51,13 +51,22 @@ namespace Core.StateMachine
             
             foreach (var trashCanData in ResourceLoader.TrashCanDatas)
             {
+                var tutorialPartCompleted = false;
                 GenerateTutorialLevel(trashCanData);
-                
+                _uiMessage.SetMessage("tutorial", $"dispose all {trashCanData.Type} trash");
+
                 // message
                 var messageRead = false;
                 _uiMessage.MessageRead = null;
                 _uiMessage.MessageRead += () => messageRead = true;
-                _uiMessage.SetMessage("tutorial", $"dispose all {trashCanData.Type} trash");
+                
+                _uiMessage.MessageRead = null;
+                _uiMessage.MessageSkiped += () =>
+                {
+                    messageRead = true;
+                    tutorialPartCompleted = true;
+                };
+                
                 _uiMessage.Open();
                 while (!messageRead)
                 {
@@ -65,7 +74,6 @@ namespace Core.StateMachine
                 }
 
                 // level
-                var tutorialPartCompleted = false;
                 _levelManager.LevelComplete = null;
                 _levelManager.LevelComplete += () => tutorialPartCompleted = true;
                 while (!tutorialPartCompleted)
