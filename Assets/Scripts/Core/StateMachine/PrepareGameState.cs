@@ -6,7 +6,7 @@ using Main;
 using Main.Level;
 using UI;
 using UnityEngine;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 namespace Core.StateMachine
 {
@@ -65,8 +65,13 @@ namespace Core.StateMachine
             }
         }
         
-        private void BuildLevel() =>
-            _levelManager.BuildCurrentLevel();
+        private void BuildLevel()
+        {
+            if (CachedLevel.CurrentLevelDetailsData is not null)
+                _levelManager.BuildCurrentLevel();
+            else
+                _levelManager.BuildRandomLevel(GetRandomLevelType());
+        }
 
         private async Task PrepareUITimer()
         {
@@ -105,7 +110,7 @@ namespace Core.StateMachine
                 Timer.ContinueTimer();
         }
 
-        private void BuildRandomLevel()
+        /*private void BuildRandomLevel()
         {
             var values = Enum.GetValues(typeof(LevelType));
             var random = new Random();
@@ -115,6 +120,19 @@ namespace Core.StateMachine
             if (randomType == 0) randomType++; 
             
             _levelManager.BuildRandomLevel(randomType);
+        }*/
+
+        private LevelType GetRandomLevelType()
+        {
+            var randomValue = Random.Range(0, 100);
+            
+            return randomValue switch
+            {
+                < 50 => LevelType.Easy,
+                < 80 => LevelType.Medium,
+                < 95 => LevelType.Hard,
+                _ => LevelType.SuperHard
+            };
         }
         
 #if UNITY_EDITOR
