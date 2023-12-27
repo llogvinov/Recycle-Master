@@ -3,6 +3,7 @@ using Core.AssetManagement.LocalAssetProviders;
 using Core.Data;
 using Core.SaveService;
 using Main;
+using Main.Level;
 using UI.Base;
 
 namespace Core.StateMachine
@@ -35,6 +36,7 @@ namespace Core.StateMachine
                 case GameOverCondition.Won:
                     UpdateSaveData();
                     await PrepareUIWinLevel();
+                    await CacheNextLevel();
                     break;
                 case GameOverCondition.LostByTime:
                     await PrepareUILostLevel();
@@ -93,6 +95,9 @@ namespace Core.StateMachine
                 _stateMachine.Enter<PrepareGameState, int>(_saveService.SaveData.CurrentLevel);
             }
         }
+
+        private async Task CacheNextLevel() => 
+            await CachedLevel.CacheLevel(_saveService.SaveData.CurrentLevel);
 
         private async Task PrepareUILostLevel()
         {

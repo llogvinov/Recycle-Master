@@ -26,6 +26,7 @@ namespace Main.Level
 
         private LevelBuilder _levelBuilder;
         private List<TrashObjectSpawner> _trashObjectSpawners;
+        private LevelDetailsData currentLevelDetailsData;
 
         private void OnEnable() => 
             RecycleManager.AllObjectsOfSpawnerThrown += CheckAllSpawners;
@@ -39,7 +40,7 @@ namespace Main.Level
                 LevelComplete?.Invoke();
         }
 
-        public void GenerateTutorialLevel(TrashCanData trashCanData)
+        public void BuildTutorialLevel(TrashCanData trashCanData)
         {
             _levelBuilder = new LevelBuilder(this);
             _wallAdjuster.AdjustAllWalls();
@@ -52,7 +53,7 @@ namespace Main.Level
                 .InvokeAllObjectSpawned();
         }
 
-        public void GenerateSpecificLevel()
+        public void BuildSpecificLevel()
         {
             _levelBuilder = new LevelBuilder(this);
             _wallAdjuster.AdjustAllWalls();
@@ -67,7 +68,26 @@ namespace Main.Level
                 .InvokeAllObjectSpawned();
         }
 
-        public void GenerateRandomLevel(LevelType levelType)
+        public void BuildCurrentLevel()
+        {
+            _levelBuilder = new LevelBuilder(this);
+            _wallAdjuster.AdjustAllWalls();
+            _trashObjectSpawners = new List<TrashObjectSpawner>();
+
+            currentLevelDetailsData = CachedLevel.CurrentLevelDetailsData;
+            if (currentLevelDetailsData is null)
+                throw new ArgumentNullException(nameof(currentLevelDetailsData), "cached level is null");
+            
+            _levelBuilder
+                .ClearLevel()
+                .SetLevelDetails(currentLevelDetailsData)
+                .SetLevelDifficultyData(currentLevelDetailsData.Type)
+                .SpawnTrashCans()
+                .SpawnTrashObjects()
+                .InvokeAllObjectSpawned();
+        }
+
+        public void BuildRandomLevel(LevelType levelType)
         {
             _levelBuilder = new LevelBuilder(this);
             _wallAdjuster.AdjustAllWalls();

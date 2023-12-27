@@ -1,6 +1,8 @@
-﻿using Core.Audio;
+﻿using System.Threading.Tasks;
+using Core.Audio;
 using Core.Data;
 using Core.SaveService;
+using Main.Level;
 
 namespace Core.StateMachine
 {
@@ -22,9 +24,13 @@ namespace Core.StateMachine
             _settingsData = _services.Single<ISaveService<PlayerSettingsData>>().Load();
         }
 
-        public void Enter()
+        private async Task CacheCurrentLevel() => 
+            await CachedLevel.CacheLevel(_progressData.CurrentLevel);
+
+        public async void Enter()
         {
             AudioManager.Instance.MusicPlayer.Switch(_settingsData.PlayMusic);
+            await CacheCurrentLevel();
             _stateMachine.Enter<MenuState>();
         }
 

@@ -25,7 +25,7 @@ namespace UI
             _hardLevel.onClick.AddListener(GenerateHardLevel);
             _superHardLevel.onClick.AddListener(GenerateSuperHardLevel);
             _clearButton.onClick.AddListener(_levelManager.ClearLevel);
-            _specificLevelButton.onClick.AddListener(_levelManager.GenerateSpecificLevel);
+            _specificLevelButton.onClick.AddListener(_levelManager.BuildSpecificLevel);
         }
 
         private void OnDestroy()
@@ -35,12 +35,12 @@ namespace UI
             _hardLevel.onClick.RemoveListener(GenerateHardLevel);
             _superHardLevel.onClick.RemoveListener(GenerateSuperHardLevel);
             _clearButton.onClick.RemoveListener(_levelManager.ClearLevel);
-            _specificLevelButton.onClick.RemoveListener(_levelManager.GenerateSpecificLevel);
+            _specificLevelButton.onClick.RemoveListener(_levelManager.BuildSpecificLevel);
         }
 
-        private void GenerateEasyLevel() => _levelManager.GenerateRandomLevel(LevelType.Easy);
-        private void GenerateMediumLevel() => _levelManager.GenerateRandomLevel(LevelType.Medium);
-        private void GenerateHardLevel() => _levelManager.GenerateRandomLevel(LevelType.Hard);
-        private void GenerateSuperHardLevel() => _levelManager.GenerateRandomLevel(LevelType.SuperHard);
+        private void GenerateEasyLevel() => _levelManager.BuildRandomLevel(LevelType.Easy);
+        private void GenerateMediumLevel() => _levelManager.BuildRandomLevel(LevelType.Medium);
+        private void GenerateHardLevel() => _levelManager.BuildRandomLevel(LevelType.Hard);
+        private void GenerateSuperHardLevel() => _levelManager.BuildRandomLevel(LevelType.SuperHard);
     }
 }

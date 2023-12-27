@@ -60,14 +60,13 @@ namespace Core.StateMachine
             if (_levelManager is not null)
             {
                 _levelManager.LevelComplete = null;
-                _levelManager.LevelComplete += () 
-                    => _game.GameOver(GameOverCondition.Won);
+                _levelManager.LevelComplete += () => 
+                    _game.GameOver(GameOverCondition.Won);
             }
         }
-
-        // todo: change level type choosing
-        private void BuildLevel() => 
-            BuildEasyLevel();
+        
+        private void BuildLevel() =>
+            _levelManager.BuildCurrentLevel();
 
         private async Task PrepareUITimer()
         {
@@ -115,14 +114,14 @@ namespace Core.StateMachine
             // exclude Undefined type
             if (randomType == 0) randomType++; 
             
-            _levelManager.GenerateRandomLevel(randomType);
+            _levelManager.BuildRandomLevel(randomType);
         }
         
 #if UNITY_EDITOR
-        private void BuildEasyLevel() => _levelManager.GenerateRandomLevel(LevelType.Easy);
-        private void BuildMediumLevel() => _levelManager.GenerateRandomLevel(LevelType.Medium);
-        private void BuildHardLevel() => _levelManager.GenerateRandomLevel(LevelType.Hard);
-        private void BuildSuperHardLevel() => _levelManager.GenerateRandomLevel(LevelType.SuperHard);
+        private void BuildEasyLevel() => _levelManager.BuildRandomLevel(LevelType.Easy);
+        private void BuildMediumLevel() => _levelManager.BuildRandomLevel(LevelType.Medium);
+        private void BuildHardLevel() => _levelManager.BuildRandomLevel(LevelType.Hard);
+        private void BuildSuperHardLevel() => _levelManager.BuildRandomLevel(LevelType.SuperHard);
 #endif
     }
 }

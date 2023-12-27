@@ -92,7 +92,7 @@ namespace Core.StateMachine
             _uiMessage = GameObject.FindObjectOfType<UIMessage>();
 
         private void GenerateTutorialLevel(TrashCanData trashCanData) => 
-            _levelManager.GenerateTutorialLevel(trashCanData);
+            _levelManager.BuildTutorialLevel(trashCanData);
 
         private void UpdateProgressData()
         {
