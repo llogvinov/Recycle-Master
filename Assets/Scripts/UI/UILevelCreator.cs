@@ -1,5 +1,6 @@
 ﻿using LevelData;
 using Main;
+using Main.Level;
 using UI.Base;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ namespace UI
         [SerializeField] private Button _clearButton;
         [SerializeField] private Button _specificLevelButton;
         [Space]
-        [SerializeField] private LevelCreator _levelCreator;
+        [SerializeField] private LevelManager _levelManager;
 
         private void Start()
         {
@@ -23,8 +24,8 @@ namespace UI
             _mediumLevel.onClick.AddListener(GenerateMediumLevel);
             _hardLevel.onClick.AddListener(GenerateHardLevel);
             _superHardLevel.onClick.AddListener(GenerateSuperHardLevel);
-            _clearButton.onClick.AddListener(_levelCreator.ClearLevel);
-            _specificLevelButton.onClick.AddListener(_levelCreator.GenerateLevel);
+            _clearButton.onClick.AddListener(_levelManager.ClearLevel);
+            _specificLevelButton.onClick.AddListener(_levelManager.BuildSpecificLevel);
         }
 
         private void OnDestroy()
@@ -33,13 +34,13 @@ namespace UI
             _mediumLevel.onClick.RemoveListener(GenerateMediumLevel);
             _hardLevel.onClick.RemoveListener(GenerateHardLevel);
             _superHardLevel.onClick.RemoveListener(GenerateSuperHardLevel);
-            _clearButton.onClick.RemoveListener(_levelCreator.ClearLevel);
-            _specificLevelButton.onClick.RemoveListener(_levelCreator.GenerateLevel);
+            _clearButton.onClick.RemoveListener(_levelManager.ClearLevel);
+            _specificLevelButton.onClick.RemoveListener(_levelManager.BuildSpecificLevel);
         }
 
-        private void GenerateEasyLevel() => _levelCreator.GenerateLevel(LevelType.Easy);
-        private void GenerateMediumLevel() => _levelCreator.GenerateLevel(LevelType.Medium);
-        private void GenerateHardLevel() => _levelCreator.GenerateLevel(LevelType.Hard);
-        private void GenerateSuperHardLevel() => _levelCreator.GenerateLevel(LevelType.SuperHard);
+        private void GenerateEasyLevel() => _levelManager.BuildRandomLevel(LevelType.Easy);
+        private void GenerateMediumLevel() => _levelManager.BuildRandomLevel(LevelType.Medium);
+        private void GenerateHardLevel() => _levelManager.BuildRandomLevel(LevelType.Hard);
+        private void GenerateSuperHardLevel() => _levelManager.BuildRandomLevel(LevelType.SuperHard);
     }
 }

@@ -16,5 +16,5 @@ MonoBehaviour:
   _levelObjectsData:
     _trashCanCount: 2
     _trashObjectForCanCount: 3
-    _trashObjectMaxCount: 7
+    _trashObjectMaxCount: 3
   _countdownTime: 90

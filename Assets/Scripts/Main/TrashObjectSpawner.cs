@@ -7,6 +7,8 @@ namespace Main
 {
     public class TrashObjectSpawner : MonoBehaviour
     {
+        public bool AllObjectsThrown => _trashObjects.Count == 0;
+        
         private int _count;
         private TrashData _trashData;
         private List<TrashObject> _trashObjects;
@@ -21,6 +23,9 @@ namespace Main
             Spawn(_count);
         }
 
+        public void ObjectThrown(TrashObject trashObject)
+            => _trashObjects.Remove(trashObject);
+
         private void Spawn(int count)
         {
             for (int i = 0; i < count; i++)
@@ -30,7 +35,7 @@ namespace Main
                 if (trashObject.TryGetComponent<MultiVariantTrashObject>(out var multiVariantTrashObject))
                     multiVariantTrashObject.ChooseRandomMesh();
                 
-                trashObject.Init(_trashData);
+                trashObject.Init(_trashData, this);
                 _trashObjects.Add(trashObject);
             }
         }

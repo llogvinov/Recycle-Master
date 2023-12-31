@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace UI.Base
@@ -10,14 +11,15 @@ namespace UI.Base
         public override void Open()
         {
             Content.localScale = Vector3.zero;
+            gameObject.SetActive(true);
             base.Open();
             Content.DOScale(Vector3.one, AnimationDuration);
         }
 
-        public override void Close()
+        public override void Close(Action onComplete = default)
         {
             Content.DOScale(Vector3.zero, AnimationDuration)
-                .OnComplete(base.Close);
+                .OnComplete(() => base.Close(onComplete));
         }
     }
 }
