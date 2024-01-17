@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3551096793318357608}
   - component: {fileID: 3943155785871068759}
   - component: {fileID: 6282807844578663284}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Check Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5568555706792444463}
   - component: {fileID: 2727258151293448292}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Trash Can
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5802131752940889147}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Object Start Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5453248079094679850}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Object End Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,6 +193,10 @@ PrefabInstance:
     - target: {fileID: 4299194863320084724, guid: c3340ec000cdd624b817215e5f1c7d27, type: 3}
       propertyPath: m_Name
       value: FX_Dust
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299194863320084724, guid: c3340ec000cdd624b817215e5f1c7d27, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4299194863320509652, guid: c3340ec000cdd624b817215e5f1c7d27, type: 3}
       propertyPath: m_LocalPosition.x
@@ -305,10 +309,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mesh
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c14654320eb93fd42881e09522053883, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c14654320eb93fd42881e09522053883, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1948385115388725340}
   m_SourcePrefab: {fileID: 100100000, guid: c14654320eb93fd42881e09522053883, type: 3}
 --- !u!4 &5787426300386244657 stripped
 Transform:
@@ -320,3 +331,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c14654320eb93fd42881e09522053883, type: 3}
   m_PrefabInstance: {fileID: 6330839466604437466}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1948385115388725340
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6564771758702207627}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.024623645, y: 0.02505869, z: 0.020077767}
+  m_Center: {x: -0.00017380567, y: 6.177917e-20, z: -0.000038883365}

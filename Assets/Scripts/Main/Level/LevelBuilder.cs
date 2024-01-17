@@ -32,6 +32,7 @@ namespace Main.Level
         {
             var trashCanSpawner = GameObject.Instantiate(_levelManager.TrashCanSpawnerPrefab);
             trashCanSpawner.Init(_trashCanDatas);
+            TrashCanSpawner.SelectTrashCan(TrashCanSpawner.TrashCans[0]);
             
             return this;
         }
