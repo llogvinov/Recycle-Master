@@ -49,8 +49,11 @@ namespace UI
             base.Close(() => _settingsButton.gameObject.SetActive(true));
         }
 
-        private void OnSkipTutorialButtonClicked() => 
+        private void OnSkipTutorialButtonClicked()
+        {
             AllServices.Container.Single<ISaveService<PlayerProgressData>>().SaveData.TutorialCompleted = true;
+            AllServices.Container.Single<ISaveService<PlayerProgressData>>().Save();
+        }
 
         private void OnResetButtonClicked()
         {
