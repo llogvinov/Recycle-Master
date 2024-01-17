@@ -10,13 +10,13 @@ namespace Core.InputService
             var ray = Camera.ScreenPointToRay(InputPosition);
             
             if (Input.GetMouseButton(0))
-                OnMouseButtonHeld(ray);
+                OnHold(ray);
 
             if (Input.GetMouseButtonDown(0))
-                OnMouseButtonDown(ray);
+                OnInputBegan(ray);
 
             if (Input.GetMouseButtonUp(0)) 
-                OnReleaseButton();
+                OnInputEnded();
         }
     }
 }

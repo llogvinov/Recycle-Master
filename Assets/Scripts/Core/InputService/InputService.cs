@@ -15,7 +15,7 @@ namespace Core.InputService
         protected void Awake() => 
             Camera = Camera.main;
 
-        protected void OnMouseButtonDown(Ray ray)
+        protected void OnInputBegan(Ray ray)
         {
             if (!Physics.Raycast(ray, out var hit, 50f, _trashCanLayerMask.value)) return;
             if (!hit.collider.transform.parent.TryGetComponent<TrashCan>(out var trashCan)) return;
@@ -23,7 +23,7 @@ namespace Core.InputService
             TrashCanSpawner.SelectTrashCan(trashCan);
         }
 
-        protected void OnMouseButtonHeld(Ray ray)
+        protected void OnHold(Ray ray)
         {
             if (!Physics.Raycast(ray, out var hit, 50f, _interactableLayerMask.value)) return;
             if (!hit.collider.transform.parent.TryGetComponent<TrashObject>(out var trashObject)) return; 
@@ -31,7 +31,7 @@ namespace Core.InputService
             Selected = trashObject;
         }
 
-        protected void OnReleaseButton()
+        protected void OnInputEnded()
         {
             if (Selected == null) return;
 
