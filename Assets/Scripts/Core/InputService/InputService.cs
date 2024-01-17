@@ -34,8 +34,16 @@ namespace Core.InputService
         protected void OnReleaseButton()
         {
             if (Selected == null) return;
-            
-            RecycleController.DisposeAnimation(Selected, RecycleController.TrashCan);
+
+            if (Selected.TrashData.Type == RecycleController.TrashCan.TrashCanData.Type)
+            {
+                Debug.Log("right");
+                RecycleController.DisposeAnimation(Selected, RecycleController.TrashCan);
+            }
+            else
+            {
+                Debug.Log("wrong");
+            }
             Selected = null;
         }
     }
