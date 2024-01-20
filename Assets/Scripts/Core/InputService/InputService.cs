@@ -1,10 +1,14 @@
-﻿using Main;
+﻿using System;
+using Main;
 using UnityEngine;
 
 namespace Core.InputService
 {
     public class InputService : MonoBehaviour, IService
     {
+        public static Action<TrashObject, TrashCan> OnRight;
+        public static Action<TrashObject> OnWrong;
+        
         [SerializeField] protected LayerMask _interactableLayerMask;
         [SerializeField] protected LayerMask _trashCanLayerMask;
         
@@ -38,11 +42,13 @@ namespace Core.InputService
             if (Selected.TrashData.Type == RecycleController.TrashCan.TrashCanData.Type)
             {
                 Debug.Log("right");
-                RecycleController.DisposeAnimation(Selected, RecycleController.TrashCan);
+                OnRight?.Invoke(Selected, RecycleController.TrashCan);
+                //RecycleController.DisposeAnimation(Selected, RecycleController.TrashCan);
             }
             else
             {
                 Debug.Log("wrong");
+                OnWrong?.Invoke(Selected);
             }
             Selected = null;
         }

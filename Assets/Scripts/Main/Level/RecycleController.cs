@@ -1,19 +1,53 @@
 ﻿using System;
+using Core.Audio;
+using Core.InputService;
 using DG.Tweening;
 using Main;
 using UnityEngine;
 
-public static class RecycleController
+public class RecycleController : MonoBehaviour
 {
     public static Action AllObjectsOfSpawnerThrown;
+    
+    [SerializeField] private AudioPlayer _throwAwayAudioPlayer;
+    [SerializeField] private AudioPlayer _throwTrashAudioPlayer;
     
     public static TrashCan TrashCan { get; set; }
     
     private static Vector3 _rotationBeforeDisposal;
 
     private const float AnimationDuration = 0.5f;
-    
-    public static void DisposeAnimation(TrashObject trashObject, TrashCan trashCan, Action onComplete = default)
+
+    private void OnEnable()
+    {
+        InputService.OnRight += Dispose;
+        InputService.OnWrong += OnWrong;
+    }
+
+    private void OnDisable()
+    {
+        InputService.OnRight -= Dispose;
+        InputService.OnWrong -= OnWrong;
+    }
+
+    private void Dispose(TrashObject trashObject, TrashCan trashCan)
+    {
+        DisposeAnimation(trashObject, trashCan, onComplete: () =>
+        {
+            _throwTrashAudioPlayer.Switch(play: true);
+            trashCan.FXDust.Play();
+        });
+    }
+
+    private void OnWrong(TrashObject trashObject)
+    {
+        if (Timer.HasInstance)
+            Timer.Instance.ReduceTime(5f); // todo: change this
+
+        _throwAwayAudioPlayer.Switch(play: true);
+    }
+
+    private void DisposeAnimation(TrashObject trashObject, TrashCan trashCan, Action onComplete = default)
     {
         const float midScaler = 1.2f;
         _rotationBeforeDisposal = new Vector3(90f, 0f, 0f);
