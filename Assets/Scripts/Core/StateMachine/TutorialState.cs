@@ -60,7 +60,7 @@ namespace Core.StateMachine
                 _uiMessage.MessageRead = null;
                 _uiMessage.MessageRead += () => messageRead = true;
                 
-                _uiMessage.MessageRead = null;
+                _uiMessage.MessageSkiped = null;
                 _uiMessage.MessageSkiped += () =>
                 {
                     messageRead = true;

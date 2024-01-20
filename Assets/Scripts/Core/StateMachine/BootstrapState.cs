@@ -24,9 +24,6 @@ namespace Core.StateMachine
             _settingsData = _services.Single<ISaveService<PlayerSettingsData>>().Load();
         }
 
-        private async Task CacheCurrentLevel() => 
-            await CachedLevel.CacheLevel(_progressData.CurrentLevel);
-
         public async void Enter()
         {
             AudioManager.Instance.MusicPlayer.Switch(_settingsData.PlayMusic);
@@ -38,7 +35,10 @@ namespace Core.StateMachine
         {
             
         }
-        
+
+        private async Task CacheCurrentLevel() => 
+            await CachedLevel.CacheLevel(_progressData.CurrentLevel);
+
         private void RegisterServices()
         {
             _services.RegisterSingle<ISaveService<PlayerProgressData>>(

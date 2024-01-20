@@ -5,6 +5,8 @@ using UnityEngine;
 
 public static class RecycleController
 {
+    public static Action AllObjectsOfSpawnerThrown;
+    
     public static TrashCan TrashCan { get; set; }
     
     private static Vector3 _rotationBeforeDisposal;
@@ -31,6 +33,8 @@ public static class RecycleController
             onComplete?.Invoke();
             trashObject.gameObject.SetActive(false);
             trashObject.TrashObjectSpawner.ObjectThrown(trashObject);
+            if (trashObject.TrashObjectSpawner.AllObjectsThrown)
+                AllObjectsOfSpawnerThrown?.Invoke();
         });
     }
 }
