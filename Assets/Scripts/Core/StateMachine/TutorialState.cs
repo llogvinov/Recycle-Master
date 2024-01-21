@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Core.Data;
 using Core.SaveService;
+using Core.Tutorial;
 using Main;
 using Main.Level;
 using ObjectsData;
@@ -34,18 +35,35 @@ namespace Core.StateMachine
         {
             PrepareLevelManager();
             PrepareUIMessage();
-            _coroutineRunner.StartCoroutine(ProceedTutorial());
+            //_coroutineRunner.StartCoroutine(ProceedTutorial());
 
-            _game.GameOver = null;
-            _game.GameOver += (condition) =>  _stateMachine.Enter<GameOverState, GameOverCondition>(condition);
+            var tutorial = TutorialManager.Create()
+                .AddPart(new MessagePart(_uiMessage, "hello recycle master! you need to dispose all trash..."))
+                .AddPart(new MessagePart(_uiMessage, "let's start!!!"))
+                .AddPart(new LevelPart(_levelManager, ResourceLoader.TrashCanDatas[0]))
+                .AddPart(new MessagePart(_uiMessage, "let's continue"))
+                .AddPart(new LevelPart(_levelManager, ResourceLoader.TrashCanDatas[1]))
+                .AddPart(new MessagePart(_uiMessage, "well done!"));
+
+            tutorial.TutorialCompleted += OnTutorialCompleted;
+            _coroutineRunner.StartCoroutine(tutorial.StartExecution());
+
+            /*_game.GameOver = null;
+            _game.GameOver += (condition) =>  _stateMachine.Enter<GameOverState, GameOverCondition>(condition);*/
         }
-        
+
+        private void OnTutorialCompleted()
+        {
+            UpdateProgressData();
+            _stateMachine.Enter<GameOverState, GameOverCondition>(GameOverCondition.TutorialCompleted);
+        }
+
         public void Exit()
         {
             _levelManager.LevelComplete = null;
         }
 
-        private IEnumerator ProceedTutorial()
+        /*private IEnumerator ProceedTutorial()
         {
             const float checkDelay = 0.5f;
             
@@ -83,7 +101,7 @@ namespace Core.StateMachine
             }
             UpdateProgressData();
             _game.GameOver(GameOverCondition.Won);
-        }
+        }*/
 
         private void PrepareLevelManager() => 
             _levelManager = GameObject.FindObjectOfType<LevelManager>();

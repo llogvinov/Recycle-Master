@@ -26,5 +26,6 @@ namespace Core
         Won,
         LostByTime,
         Left,
+        TutorialCompleted,
     }
 }

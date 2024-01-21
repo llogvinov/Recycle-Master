@@ -1,5 +1,4 @@
-﻿using System;
-using UI.Base;
+﻿using UI.Base;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,15 +6,13 @@ namespace UI
 {
     public class UIMessage : UIPanel
     {
-        public Action MessageRead;
+        /*public Action MessageRead;
         public Action MessageSkiped;
         
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _nextButton;
         [SerializeField] private Button _skipButton;
-        [SerializeField] private Text _title;
-        [SerializeField] private Text _message;
-
+        
         private void OnEnable()
         {
             _closeButton.onClick.AddListener(CloseMessage);
@@ -34,12 +31,12 @@ namespace UI
             base.Close(() => MessageSkiped?.Invoke());
         
         private void CloseMessage() => 
-            base.Close(() => MessageRead?.Invoke());
+            base.Close(() => MessageRead?.Invoke());*/
 
-        public void SetMessage(string title, string message)
-        {
-            _title.text = title;
+        public Button SkipButton;
+        [SerializeField] private Text _message;
+
+        public void SetMessage(string message) => 
             _message.text = message;
-        }
     }
 }

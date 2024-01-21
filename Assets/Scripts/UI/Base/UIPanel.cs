@@ -8,12 +8,13 @@ namespace UI.Base
     {
         public const float AnimationDuration = 0.5f;
 
-        public override void Open()
+        public override void Open(Action onComplete = default)
         {
             Content.localScale = Vector3.zero;
             gameObject.SetActive(true);
             base.Open();
-            Content.DOScale(Vector3.one, AnimationDuration);
+            Content.DOScale(Vector3.one, AnimationDuration)
+                .OnComplete(() => onComplete?.Invoke());
         }
 
         public override void Close(Action onComplete = default)
