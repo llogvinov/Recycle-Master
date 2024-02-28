@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Core.AssetManagement.LocalAssetProviders;
 using LevelData;
 using Main;
@@ -19,7 +18,6 @@ namespace Core.StateMachine
 
         private LevelManager _levelManager;
         private UITimerProvider _uiTimerProvider;
-        private RecycleManager _recycleManager;
 
         private UITimer UITimer => _uiTimerProvider.LoadedObject;
 
@@ -41,6 +39,7 @@ namespace Core.StateMachine
             _game.GameOver = null;
             _game.GameOver += (condition) =>  _stateMachine.Enter<GameOverState, GameOverCondition>(condition);
 
+            GameObject.FindObjectOfType<UIMessage>().Close();
             PrepareLevelManager();
             BuildLevel();
             await PrepareUITimer();
@@ -59,9 +58,9 @@ namespace Core.StateMachine
             _levelManager = GameObject.FindObjectOfType<LevelManager>();
             if (_levelManager is not null)
             {
-                _levelManager.LevelComplete = null;
-                _levelManager.LevelComplete += () => 
-                    _game.GameOver(GameOverCondition.Won);
+                _levelManager.LevelComplete.RemoveAllListeners();
+                _levelManager.LevelComplete.AddListener(() => 
+                    _game.GameOver(GameOverCondition.Won));
             }
         }
         

@@ -22,6 +22,7 @@ namespace Core.Tutorial
 
         public IEnumerator WaitForAction()
         {
+            Debug.Log("message part");
             var clicked = false;
             _uiMessage.SetMessage(_message);
             _uiMessage.Open(() =>

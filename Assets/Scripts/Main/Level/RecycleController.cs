@@ -36,6 +36,8 @@ public class RecycleController : MonoBehaviour
         {
             _throwTrashAudioPlayer.Switch(play: true);
             trashCan.FXDust.Play();
+            trashObject.IsDisposed = true;
+            trashObject.OnDisposed?.Invoke();
         });
     }
 

@@ -31,6 +31,7 @@ namespace Core.InputService
         {
             if (!Physics.Raycast(ray, out var hit, 50f, _interactableLayerMask.value)) return;
             if (!hit.collider.transform.parent.TryGetComponent<TrashObject>(out var trashObject)) return; 
+            if (!trashObject.IsInteractable) return;
                 
             Selected = trashObject;
         }
@@ -43,7 +44,6 @@ namespace Core.InputService
             {
                 Debug.Log("right");
                 OnRight?.Invoke(Selected, RecycleController.TrashCan);
-                //RecycleController.DisposeAnimation(Selected, RecycleController.TrashCan);
             }
             else
             {

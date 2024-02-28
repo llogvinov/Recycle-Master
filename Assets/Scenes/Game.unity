@@ -835,7 +835,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1814656627}
-  - component: {fileID: 1814656626}
   - component: {fileID: 1814656630}
   - component: {fileID: 1814656628}
   - component: {fileID: 1814656629}
@@ -846,20 +845,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1814656626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814656625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 576b31b5d75f44769ee77f41df9b9f2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _throwAwayAudioPlayer: {fileID: 1814656628}
-  _throwTrashAudioPlayer: {fileID: 1814656629}
 --- !u!4 &1814656627
 Transform:
   m_ObjectHideFlags: 0

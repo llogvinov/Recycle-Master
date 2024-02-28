@@ -6,7 +6,6 @@ namespace Main
     public class TrashCan : MonoBehaviour
     {
         [SerializeField] private GameObject _mesh;
-        [SerializeField] private TrashCanColliderChecker _checkTrashCanCollider;
         [Space] [Header("Animation")]
         [SerializeField] private Transform _objectStartPoint;
         [SerializeField] private Transform _objectEndPoint;
@@ -24,11 +23,6 @@ namespace Main
         {
             _mesh.GetComponent<MeshRenderer>().material.color = trashCanData.Color;
             TrashCanData = trashCanData;
-        }
-        
-        private void Awake()
-        {
-            _checkTrashCanCollider.Init(this);
         }
     }
 }

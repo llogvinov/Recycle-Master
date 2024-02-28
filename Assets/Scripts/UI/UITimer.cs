@@ -13,12 +13,12 @@ namespace UI
 
         private void OnEnable()
         {
-            TrashCanColliderChecker.Fail += FlashErrorScreen;
+            //TrashCanColliderChecker.Fail += FlashErrorScreen;
         }
 
         private void OnDisable()
         {
-            TrashCanColliderChecker.Fail -= FlashErrorScreen;
+            //TrashCanColliderChecker.Fail -= FlashErrorScreen;
         }
 
         public void UpdateRemainingTime(float remainingTime)

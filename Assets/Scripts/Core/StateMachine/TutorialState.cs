@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using Core.Data;
 using Core.SaveService;
 using Core.Tutorial;
@@ -35,21 +36,32 @@ namespace Core.StateMachine
         {
             PrepareLevelManager();
             PrepareUIMessage();
-            //_coroutineRunner.StartCoroutine(ProceedTutorial());
+            
+            _levelManager.BuildTutorialLevel(ResourceLoader.TrashCanDatas[0]);
+            var trash = GameObject.FindObjectsOfType<TrashObject>();
+            var glass = trash.First(t => t.TrashData.Title == "Glass");
+            
+            foreach (var trashObject in trash) 
+                trashObject.ToggleInteraction(false);
 
             var tutorial = TutorialManager.Create()
-                .AddPart(new MessagePart(_uiMessage, "hello recycle master! you need to dispose all trash..."))
-                .AddPart(new MessagePart(_uiMessage, "let's start!!!"))
-                .AddPart(new LevelPart(_levelManager, ResourceLoader.TrashCanDatas[0]))
-                .AddPart(new MessagePart(_uiMessage, "let's continue"))
-                .AddPart(new LevelPart(_levelManager, ResourceLoader.TrashCanDatas[1]))
-                .AddPart(new MessagePart(_uiMessage, "well done!"));
+                .AddPart(new MessagePart(_uiMessage, "hello recycle master! you need to dispose all the trash here..."))
+                .AddPart(new MessagePart(_uiMessage, "let's start with the glass."))
+                .AddPart(new MessagePart(_uiMessage, "tap on the glass to dispose it"))
+                // highlight bottle
+                .AddPart(new CustomActionPart(() => glass.ToggleInteraction(true)))
+                .AddPart(new TriggerPart(glass.OnDisposed))
+                .AddPart(new MessagePart(_uiMessage, "good, now dispose all the rest."))
+                .AddPart(new CustomActionPart(() =>
+                {
+                    foreach (var trashObject in trash) 
+                        trashObject.ToggleInteraction(true);
+                }))
+                .AddPart(new TriggerPart(_levelManager.LevelComplete))
+                .AddPart(new MessagePart(_uiMessage, "well done! tutorial is complete"));
 
             tutorial.TutorialCompleted += OnTutorialCompleted;
             _coroutineRunner.StartCoroutine(tutorial.StartExecution());
-
-            /*_game.GameOver = null;
-            _game.GameOver += (condition) =>  _stateMachine.Enter<GameOverState, GameOverCondition>(condition);*/
         }
 
         private void OnTutorialCompleted()
@@ -62,46 +74,6 @@ namespace Core.StateMachine
         {
             _levelManager.LevelComplete = null;
         }
-
-        /*private IEnumerator ProceedTutorial()
-        {
-            const float checkDelay = 0.5f;
-            
-            foreach (var trashCanData in ResourceLoader.TrashCanDatas)
-            {
-                var tutorialPartCompleted = false;
-                GenerateTutorialLevel(trashCanData);
-                _uiMessage.SetMessage("tutorial", $"dispose all {trashCanData.Type} trash");
-
-                // message
-                var messageRead = false;
-                _uiMessage.MessageRead = null;
-                _uiMessage.MessageRead += () => messageRead = true;
-                
-                _uiMessage.MessageSkiped = null;
-                _uiMessage.MessageSkiped += () =>
-                {
-                    messageRead = true;
-                    tutorialPartCompleted = true;
-                };
-                
-                _uiMessage.Open();
-                while (!messageRead)
-                {
-                    yield return new WaitForSeconds(checkDelay);
-                }
-
-                // level
-                _levelManager.LevelComplete = null;
-                _levelManager.LevelComplete += () => tutorialPartCompleted = true;
-                while (!tutorialPartCompleted)
-                {
-                    yield return new WaitForSeconds(checkDelay);
-                }
-            }
-            UpdateProgressData();
-            _game.GameOver(GameOverCondition.Won);
-        }*/
 
         private void PrepareLevelManager() => 
             _levelManager = GameObject.FindObjectOfType<LevelManager>();

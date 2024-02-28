@@ -4,12 +4,13 @@ using System.Linq;
 using LevelData;
 using ObjectsData;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Main.Level
 {
     public class LevelManager : MonoBehaviour
     {
-        public Action LevelComplete;
+        public UnityEvent LevelComplete;
         
         [SerializeField] private WallAdjuster _wallAdjuster;
         [SerializeField] private TrashCanSpawner _trashCanSpawnerPrefab;
