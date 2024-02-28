@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43667555, g: 0.48427182, b: 0.56452405, a: 1}
+  m_IndirectSpecularColor: {r: 0.43424124, g: 0.48113012, b: 0.56203675, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -444,20 +444,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 627911314}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 418449dabf71416bb59bf00b5aec77b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 20
   _interactableLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  _rayCheckerLayerMask:
+  _trashCanLayerMask:
     serializedVersion: 2
-    m_Bits: 512
-  _rayCheckerPlane: {fileID: 396975883}
-  _objectFloatHeight: 2
+    m_Bits: 0
 --- !u!114 &627911318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,15 +467,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923b098c0deb4e84f8c2b86702efc1e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 20
   _interactableLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  _rayCheckerLayerMask:
+  _trashCanLayerMask:
     serializedVersion: 2
-    m_Bits: 512
-  _rayCheckerPlane: {fileID: 396975883}
-  _objectFloatHeight: 2
+    m_Bits: 4096
 --- !u!20 &1002949608 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 4211159004508092151, guid: 523f1883b0d9b014f9067ddd8ed787f1, type: 3}

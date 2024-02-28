@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.4440221, g: 0.49316514, b: 0.5722316, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -523,6 +523,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Message
       objectReference: {fileID: 0}
+    - target: {fileID: 5327462308902011845, guid: e0eb331c04324514b8ec9b74b22d8959, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6656480450371338438, guid: e0eb331c04324514b8ec9b74b22d8959, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -832,6 +836,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1814656627}
   - component: {fileID: 1814656626}
+  - component: {fileID: 1814656630}
   - component: {fileID: 1814656628}
   - component: {fileID: 1814656629}
   m_Layer: 0
@@ -896,6 +901,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioData: {fileID: 11400000, guid: 77144580d90d85245acb680b1e935274, type: 2}
+--- !u!114 &1814656630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814656625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf157423898420891120e3572bb00d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwAwayAudioPlayer: {fileID: 1814656628}
+  _throwTrashAudioPlayer: {fileID: 1814656629}
 --- !u!1 &1896891943
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,15 +945,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923b098c0deb4e84f8c2b86702efc1e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 20
   _interactableLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  _rayCheckerLayerMask:
+  _trashCanLayerMask:
     serializedVersion: 2
-    m_Bits: 512
-  _rayCheckerPlane: {fileID: 2108852406}
-  _objectFloatHeight: 2
+    m_Bits: 4096
 --- !u!114 &1896891945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -942,20 +958,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896891943}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 418449dabf71416bb59bf00b5aec77b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 20
   _interactableLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  _rayCheckerLayerMask:
+  _trashCanLayerMask:
     serializedVersion: 2
-    m_Bits: 512
-  _rayCheckerPlane: {fileID: 2108852406}
-  _objectFloatHeight: 2
+    m_Bits: 0
 --- !u!4 &1896891946
 Transform:
   m_ObjectHideFlags: 0

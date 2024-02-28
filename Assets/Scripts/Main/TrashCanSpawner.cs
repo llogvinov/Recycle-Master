@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ObjectsData;
 using UnityEngine;
 
@@ -10,13 +9,27 @@ namespace Main
         [SerializeField] private TrashCan _trashCanPrefab;
         
         private List<TrashCanData> _trashCanDatas;
-        private List<TrashCan> _trashCans;
+        
+        public static List<TrashCan> TrashCans { get; set; }
 
         public void Init(List<TrashCanData> trashCanDatas)
         {
-            _trashCans = new List<TrashCan>();
+            TrashCans = new List<TrashCan>();
             _trashCanDatas = trashCanDatas;
             Spawn();
+        }
+
+        public static void SelectTrashCan(TrashCan trashCan)
+        {
+            if (RecycleController.TrashCan == trashCan) return;
+            
+            RecycleController.TrashCan = trashCan;
+            foreach (var can in TrashCans)
+            {
+                can.transform.localScale = can == trashCan ? 
+                    new Vector3(1.2f, 1.2f, 1.2f) : 
+                    new Vector3(0.9f, 0.9f, 0.9f);
+            }
         }
 
         private void Spawn()
@@ -26,7 +39,7 @@ namespace Main
             {
                 var trashCan = SpawnTrashCan(xPositions[i]);
                 trashCan.Init(_trashCanDatas[i]);
-                _trashCans.Add(trashCan);
+                TrashCans.Add(trashCan);
             }
         }
         

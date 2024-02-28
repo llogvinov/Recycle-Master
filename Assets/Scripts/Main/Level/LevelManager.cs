@@ -29,10 +29,10 @@ namespace Main.Level
         private LevelDetailsData currentLevelDetailsData;
 
         private void OnEnable() => 
-            RecycleManager.AllObjectsOfSpawnerThrown += CheckAllSpawners;
+            RecycleController.AllObjectsOfSpawnerThrown += CheckAllSpawners;
 
         private void OnDisable() => 
-            RecycleManager.AllObjectsOfSpawnerThrown -= CheckAllSpawners;
+            RecycleController.AllObjectsOfSpawnerThrown -= CheckAllSpawners;
 
         private void CheckAllSpawners()
         {

@@ -44,6 +44,11 @@ namespace Core.StateMachine
                 case GameOverCondition.Left:
                     LoadMenu();
                     break;
+                case GameOverCondition.TutorialCompleted:
+                    UpdateSaveData();
+                    await CacheNextLevel();
+                    _stateMachine.Enter<LoadSceneState, string>(AssetPath.MenuScene);
+                    break;
             }
         }
 

@@ -9,7 +9,7 @@ namespace UI.Base
 
         protected Transform Content => _content;
 
-        public virtual void Open()
+        public virtual void Open(Action onComplete = default)
         {
             _content.gameObject.SetActive(true);
         }

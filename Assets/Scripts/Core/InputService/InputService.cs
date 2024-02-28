@@ -1,53 +1,56 @@
-﻿using Main;
+﻿using System;
+using Main;
 using UnityEngine;
 
 namespace Core.InputService
 {
     public class InputService : MonoBehaviour, IService
     {
-        [SerializeField] protected float _speed;
-        [Space]
+        public static Action<TrashObject, TrashCan> OnRight;
+        public static Action<TrashObject> OnWrong;
+        
         [SerializeField] protected LayerMask _interactableLayerMask;
-        [SerializeField] protected LayerMask _rayCheckerLayerMask;
-        [Space]
-        [SerializeField] protected GameObject _rayCheckerPlane;
-        [Range(1f, 3f)]
-        [SerializeField] protected float _objectFloatHeight;
+        [SerializeField] protected LayerMask _trashCanLayerMask;
         
         protected Camera Camera;
-        protected TrashObject Dragged;
+        protected TrashObject Selected;
         protected Vector3 InputPosition;
         
-        protected void Awake()
-        {
+        protected void Awake() => 
             Camera = Camera.main;
-            _rayCheckerPlane.transform.position = Vector3.up * _objectFloatHeight;
-        }
-        
+
         protected void OnInputBegan(Ray ray)
         {
-            if (!Physics.Raycast(ray, out var hit, 50f, _interactableLayerMask.value)) return;
-            if (!hit.collider.transform.parent.TryGetComponent<TrashObject>(out var trashObject)) return;
-            
-            Dragged = trashObject;
-            Dragged.OnStartDrag();
+            if (!Physics.Raycast(ray, out var hit, 50f, _trashCanLayerMask.value)) return;
+            if (!hit.collider.transform.parent.TryGetComponent<TrashCan>(out var trashCan)) return;
+
+            TrashCanSpawner.SelectTrashCan(trashCan);
         }
 
-        protected void OnInputMoved(Ray ray)
+        protected void OnHold(Ray ray)
         {
-            if (Physics.Raycast(ray, out var hit, 50f, _rayCheckerLayerMask.value))
-            {
-                Dragged.transform.position =
-                    Vector3.Lerp(Dragged.transform.position, hit.point, _speed * Time.deltaTime);
-            }
+            if (!Physics.Raycast(ray, out var hit, 50f, _interactableLayerMask.value)) return;
+            if (!hit.collider.transform.parent.TryGetComponent<TrashObject>(out var trashObject)) return; 
+                
+            Selected = trashObject;
         }
 
         protected void OnInputEnded()
         {
-            if (Dragged == null) return;
-            
-            Dragged.OnEndDrag();
-            Dragged = null;
+            if (Selected == null) return;
+
+            if (Selected.TrashData.Type == RecycleController.TrashCan.TrashCanData.Type)
+            {
+                Debug.Log("right");
+                OnRight?.Invoke(Selected, RecycleController.TrashCan);
+                //RecycleController.DisposeAnimation(Selected, RecycleController.TrashCan);
+            }
+            else
+            {
+                Debug.Log("wrong");
+                OnWrong?.Invoke(Selected);
+            }
+            Selected = null;
         }
     }
 }
