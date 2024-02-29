@@ -1081,7 +1081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4936649801248915779, guid: 2a3d20a96c746b0458203adaaf904bfa, type: 3}
       propertyPath: m_Name
-      value: Tutorial UI
+      value: Tutorial
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

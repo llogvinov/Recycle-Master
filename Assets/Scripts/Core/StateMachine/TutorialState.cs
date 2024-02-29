@@ -36,7 +36,6 @@ namespace Core.StateMachine
         public void Enter()
         {
             PrepareLevelManager();
-            PrepareUIMessage();
             
             _levelManager.BuildTutorialLevel(ResourceLoader.TrashCanDatas[0]);
             var trash = GameObject.FindObjectsOfType<TrashObject>();
@@ -88,9 +87,6 @@ namespace Core.StateMachine
 
         private void PrepareLevelManager() => 
             _levelManager = GameObject.FindObjectOfType<LevelManager>();
-        
-        private void PrepareUIMessage() => 
-            _uiMessage = GameObject.FindObjectOfType<UIMessage>();
 
         private void GenerateTutorialLevel(TrashCanData trashCanData) => 
             _levelManager.BuildTutorialLevel(trashCanData);

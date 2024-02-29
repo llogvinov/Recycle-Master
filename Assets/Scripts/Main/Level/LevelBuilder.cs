@@ -40,7 +40,6 @@ namespace Main.Level
         public LevelBuilder SpawnTrashCans(TrashCanData trashCanData)
         {
             _trashCanDatas = new List<TrashCanData> {trashCanData};
-            Debug.Log(string.Join("\t", _trashCanDatas));
             return SpawnTrashCans();
         }
 
@@ -77,7 +76,6 @@ namespace Main.Level
         public LevelBuilder SpawnTrashObjects(TrashCanData trashCanData)
         {
             _trashDatas = ResourceLoader.TrashDatas.Where(data => data.Type == trashCanData.Type).ToList();
-            Debug.Log(string.Join("\t", _trashDatas.Select(d => d.Title)));
             return SpawnTrashObjects(spawnOneObject: true);
         }
 
