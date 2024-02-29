@@ -3,6 +3,7 @@ using System.Linq;
 using Core.Data;
 using Core.SaveService;
 using Core.Tutorial;
+using Core.Tutorial.UI;
 using Main;
 using Main.Level;
 using ObjectsData;
@@ -39,26 +40,36 @@ namespace Core.StateMachine
             
             _levelManager.BuildTutorialLevel(ResourceLoader.TrashCanDatas[0]);
             var trash = GameObject.FindObjectsOfType<TrashObject>();
-            var glass = trash.First(t => t.TrashData.Title == "Glass");
+            var glass = trash.First(t => t.TrashData.Title == "BeerBottle");
             
             foreach (var trashObject in trash) 
                 trashObject.ToggleInteraction(false);
 
+            var tutorialUI = GameObject.FindObjectOfType<TutorialMessages>();
+
             var tutorial = TutorialManager.Create()
-                .AddPart(new MessagePart(_uiMessage, "hello recycle master! you need to dispose all the trash here..."))
-                .AddPart(new MessagePart(_uiMessage, "let's start with the glass."))
-                .AddPart(new MessagePart(_uiMessage, "tap on the glass to dispose it"))
+                .AddPart(new CustomActionPart(tutorialUI.Init))
+                .AddPart(new TriggerPart(tutorialUI.Messages[0].SkipButton.onClick))
+                .AddPart(new CustomActionPart(tutorialUI.SwitchToNext))
+                .AddPart(new TriggerPart(tutorialUI.Messages[1].SkipButton.onClick))
+                .AddPart(new CustomActionPart(tutorialUI.SwitchToNext))
+                .AddPart(new TriggerPart(tutorialUI.Messages[2].SkipButton.onClick))
+                .AddPart(new CustomActionPart(tutorialUI.DisableCurrent))
                 // highlight bottle
                 .AddPart(new CustomActionPart(() => glass.ToggleInteraction(true)))
                 .AddPart(new TriggerPart(glass.OnDisposed))
-                .AddPart(new MessagePart(_uiMessage, "good, now dispose all the rest."))
+                .AddPart(new CustomActionPart(tutorialUI.EnableNext))
+                .AddPart(new TriggerPart(tutorialUI.Messages[3].SkipButton.onClick))
+                .AddPart(new CustomActionPart(tutorialUI.DisableCurrent))
                 .AddPart(new CustomActionPart(() =>
                 {
-                    foreach (var trashObject in trash) 
+                    foreach (var trashObject in trash)
                         trashObject.ToggleInteraction(true);
                 }))
                 .AddPart(new TriggerPart(_levelManager.LevelComplete))
-                .AddPart(new MessagePart(_uiMessage, "well done! tutorial is complete"));
+                .AddPart(new CustomActionPart(tutorialUI.EnableNext))
+                .AddPart(new TriggerPart(tutorialUI.Messages[4].SkipButton.onClick))
+                .AddPart(new CustomActionPart(tutorialUI.DisableCurrent));
 
             tutorial.TutorialCompleted += OnTutorialCompleted;
             _coroutineRunner.StartCoroutine(tutorial.StartExecution());

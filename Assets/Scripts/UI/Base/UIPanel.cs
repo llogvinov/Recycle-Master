@@ -22,5 +22,16 @@ namespace UI.Base
             Content.DOScale(Vector3.zero, AnimationDuration)
                 .OnComplete(() => base.Close(onComplete));
         }
+
+        public void OpenWithoutAnimation(Action onComplete = default)
+        {
+            gameObject.SetActive(true);
+            base.Open(onComplete);
+        }
+
+        public void CloseWithoutAnimation(Action onComplete = default)
+        {
+            base.Close(onComplete);
+        }
     }
 }

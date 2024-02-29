@@ -12,6 +12,7 @@ namespace UI.Base
         public virtual void Open(Action onComplete = default)
         {
             _content.gameObject.SetActive(true);
+            onComplete?.Invoke();
         }
 
         public virtual void Close(Action onComplete = default)

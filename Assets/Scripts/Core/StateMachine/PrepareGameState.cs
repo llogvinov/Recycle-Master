@@ -39,7 +39,7 @@ namespace Core.StateMachine
             _game.GameOver = null;
             _game.GameOver += (condition) =>  _stateMachine.Enter<GameOverState, GameOverCondition>(condition);
 
-            GameObject.FindObjectOfType<UIMessage>().Close();
+            GameObject.FindObjectOfType<UIMessage>().CloseWithoutAnimation();
             PrepareLevelManager();
             BuildLevel();
             await PrepareUITimer();
