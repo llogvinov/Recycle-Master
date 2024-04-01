@@ -5,6 +5,7 @@ using Main;
 using Main.Level;
 using UI;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace Core.StateMachine
@@ -39,7 +40,6 @@ namespace Core.StateMachine
             _game.GameOver = null;
             _game.GameOver += (condition) =>  _stateMachine.Enter<GameOverState, GameOverCondition>(condition);
 
-            GameObject.FindObjectOfType<UIMessage>().CloseWithoutAnimation();
             PrepareLevelManager();
             BuildLevel();
             await PrepareUITimer();
@@ -109,18 +109,6 @@ namespace Core.StateMachine
                 Timer.ContinueTimer();
         }
 
-        /*private void BuildRandomLevel()
-        {
-            var values = Enum.GetValues(typeof(LevelType));
-            var random = new Random();
-            var randomType = (LevelType)values.GetValue(random.Next(values.Length));
-            
-            // exclude Undefined type
-            if (randomType == 0) randomType++; 
-            
-            _levelManager.BuildRandomLevel(randomType);
-        }*/
-
         private LevelType GetRandomLevelType()
         {
             var randomValue = Random.Range(0, 100);
@@ -133,12 +121,5 @@ namespace Core.StateMachine
                 _ => LevelType.SuperHard
             };
         }
-        
-#if UNITY_EDITOR
-        private void BuildEasyLevel() => _levelManager.BuildRandomLevel(LevelType.Easy);
-        private void BuildMediumLevel() => _levelManager.BuildRandomLevel(LevelType.Medium);
-        private void BuildHardLevel() => _levelManager.BuildRandomLevel(LevelType.Hard);
-        private void BuildSuperHardLevel() => _levelManager.BuildRandomLevel(LevelType.SuperHard);
-#endif
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Linq;
+﻿using System.Linq;
 using Core.Data;
 using Core.SaveService;
 using Core.Tutorial;
@@ -20,7 +19,7 @@ namespace Core.StateMachine
         private readonly ISaveService<PlayerProgressData> _playerProgressData;
         
         private LevelManager _levelManager;
-        private UIMessage _uiMessage;
+        private UIPause _uiPause;
 
         public TutorialState(GameStateMachine stateMachine, 
             Game game, 
@@ -36,7 +35,9 @@ namespace Core.StateMachine
         public void Enter()
         {
             PrepareLevelManager();
-            
+            PrepareUIPause();
+            DisableUIPause();
+
             _levelManager.BuildTutorialLevel(ResourceLoader.TrashCanDatas[0]);
             var trash = GameObject.FindObjectsOfType<TrashObject>();
             var glass = trash.First(t => t.TrashData.Title == "BeerBottle");
@@ -82,14 +83,17 @@ namespace Core.StateMachine
 
         public void Exit()
         {
-            _levelManager.LevelComplete = null;
+            _levelManager.LevelComplete.RemoveAllListeners();
         }
 
         private void PrepareLevelManager() => 
             _levelManager = GameObject.FindObjectOfType<LevelManager>();
 
-        private void GenerateTutorialLevel(TrashCanData trashCanData) => 
-            _levelManager.BuildTutorialLevel(trashCanData);
+        private void PrepareUIPause() => 
+            _uiPause = GameObject.FindObjectOfType<UIPause>();
+
+        private void DisableUIPause() => 
+            _uiPause.CloseWithoutAnimation();
 
         private void UpdateProgressData()
         {

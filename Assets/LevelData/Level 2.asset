@@ -13,22 +13,15 @@ MonoBehaviour:
   m_Name: Level 2
   m_EditorClassIdentifier: 
   _levelNumber: 2
-  _levelType: 2
+  _levelType: 1
   _trashCanDatas:
-  - {fileID: 11400000, guid: 162067b5aa6b17d4a8b450fa1c9dad25, type: 2}
-  - {fileID: 11400000, guid: b2733e4c3ed630e47af8c2708c09fdca, type: 2}
   - {fileID: 11400000, guid: f6304d1f7a6392f4eb9a9ab6f7f2c890, type: 2}
+  - {fileID: 11400000, guid: db07ccde8dea84a48997e1524e1bae69, type: 2}
   _trashDatas:
-  - {fileID: 11400000, guid: 4b82105dbc658c4469903b57188e2d15, type: 2}
-  - {fileID: 11400000, guid: 04f0d7b048258b8489c32db2d7f082d8, type: 2}
-  - {fileID: 11400000, guid: 04f0d7b048258b8489c32db2d7f082d8, type: 2}
-  - {fileID: 11400000, guid: 04f0d7b048258b8489c32db2d7f082d8, type: 2}
-  - {fileID: 11400000, guid: c8e613ad26842e247b74f7c3b10cd8d5, type: 2}
-  - {fileID: 11400000, guid: c8e613ad26842e247b74f7c3b10cd8d5, type: 2}
-  - {fileID: 11400000, guid: 769d2a9fb068a0d4e80248af64b10bd6, type: 2}
-  - {fileID: 11400000, guid: 9c4e5208ac00012438bc60ee69e13986, type: 2}
-  - {fileID: 11400000, guid: cb65b0026aaab5b4caa1fd01166f1a78, type: 2}
-  - {fileID: 11400000, guid: cb65b0026aaab5b4caa1fd01166f1a78, type: 2}
-  - {fileID: 11400000, guid: 29f8698a236bff04bacfeea629fdfbe3, type: 2}
-  - {fileID: 11400000, guid: 29f8698a236bff04bacfeea629fdfbe3, type: 2}
-  _allowSimilarObjects: 1
+  - {fileID: 11400000, guid: 1d0694742be3dbc47a47c6d3655bbcd1, type: 2}
+  - {fileID: 11400000, guid: 59b12610900524e4fa68dc985696ed95, type: 2}
+  - {fileID: 11400000, guid: fd1e5016367675447a5e41fb769e1213, type: 2}
+  - {fileID: 11400000, guid: 20e924e033296314cb22fca7a67c3f9d, type: 2}
+  - {fileID: 11400000, guid: 8a847ee3171410548a188138e4b244d9, type: 2}
+  - {fileID: 11400000, guid: ef14703167e2ed746a10a2675d88b513, type: 2}
+  _allowSimilarObjects: 0
