@@ -16,12 +16,12 @@ MonoBehaviour:
   _levelType: 1
   _trashCanDatas:
   - {fileID: 11400000, guid: 162067b5aa6b17d4a8b450fa1c9dad25, type: 2}
-  - {fileID: 11400000, guid: db07ccde8dea84a48997e1524e1bae69, type: 2}
+  - {fileID: 11400000, guid: f6304d1f7a6392f4eb9a9ab6f7f2c890, type: 2}
   _trashDatas:
-  - {fileID: 11400000, guid: c813bf9c37e023f45abb89b6ad420200, type: 2}
   - {fileID: 11400000, guid: e9a557e44e5d28b4982edd78b651a414, type: 2}
-  - {fileID: 11400000, guid: c813bf9c37e023f45abb89b6ad420200, type: 2}
-  - {fileID: 11400000, guid: 8a847ee3171410548a188138e4b244d9, type: 2}
-  - {fileID: 11400000, guid: ef14703167e2ed746a10a2675d88b513, type: 2}
-  - {fileID: 11400000, guid: 2b3232a2fb32a0144bf61a577f9c01f1, type: 2}
-  _allowSimilarObjects: 1
+  - {fileID: 11400000, guid: 4b82105dbc658c4469903b57188e2d15, type: 2}
+  - {fileID: 11400000, guid: 4e312887c757290449d72b75c3f71dbb, type: 2}
+  - {fileID: 11400000, guid: cb65b0026aaab5b4caa1fd01166f1a78, type: 2}
+  - {fileID: 11400000, guid: d9788f2108c4853429384b50590a856b, type: 2}
+  - {fileID: 11400000, guid: 1d0694742be3dbc47a47c6d3655bbcd1, type: 2}
+  _allowSimilarObjects: 0
