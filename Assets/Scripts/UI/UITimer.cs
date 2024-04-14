@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Core.InputService;
+using DG.Tweening;
 using Main;
 using UI.Base;
 using UnityEngine;
@@ -13,12 +14,12 @@ namespace UI
 
         private void OnEnable()
         {
-            //TrashCanColliderChecker.Fail += FlashErrorScreen;
+            InputService.OnWrong += FlashErrorScreen;
         }
 
         private void OnDisable()
         {
-            //TrashCanColliderChecker.Fail -= FlashErrorScreen;
+            InputService.OnWrong -= FlashErrorScreen;
         }
 
         public void UpdateRemainingTime(float remainingTime)

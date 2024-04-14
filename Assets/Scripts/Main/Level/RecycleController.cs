@@ -44,7 +44,10 @@ public class RecycleController : MonoBehaviour
     private void OnWrong(TrashObject trashObject)
     {
         if (Timer.HasInstance)
-            Timer.Instance.ReduceTime(5f); // todo: change this
+        {
+            Timer.Instance.ReduceTime(5f);
+            
+        }
 
         _throwAwayAudioPlayer.Switch(play: true);
     }
