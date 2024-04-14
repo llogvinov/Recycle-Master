@@ -5,11 +5,13 @@ using LevelData;
 using ObjectsData;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Main.Level
 {
     public class LevelManager : MonoBehaviour
     {
+        [HideInInspector]
         public UnityEvent LevelComplete;
         
         [SerializeField] private WallAdjuster _wallAdjuster;
@@ -18,6 +20,7 @@ namespace Main.Level
         [Space]
         [SerializeField] private LevelDetailsData _levelDetailsData;
         [SerializeField] private bool _allowSimilarObjects;
+        [SerializeField] private Text _levelText;
 
         public TrashCanSpawner TrashCanSpawnerPrefab => _trashCanSpawnerPrefab;
         public TrashObjectSpawner TrashObjectSpawnerPrefab => _trashObjectSpawnerPrefab;
@@ -35,6 +38,8 @@ namespace Main.Level
         private void OnDisable() => 
             RecycleController.AllObjectsOfSpawnerThrown -= CheckAllSpawners;
 
+        private void UpdateLevelUI() => _levelText.text = $"level {currentLevelDetailsData.LevelNumber}";
+        
         private void CheckAllSpawners()
         {
             if (_trashObjectSpawners.All(spawner => spawner.AllObjectsThrown)) 
@@ -79,6 +84,7 @@ namespace Main.Level
             if (currentLevelDetailsData is null)
                 throw new ArgumentNullException(nameof(currentLevelDetailsData), "cached level is null");
             
+            UpdateLevelUI();
             _levelBuilder
                 .ClearLevel()
                 .SetLevelDetails(currentLevelDetailsData)
