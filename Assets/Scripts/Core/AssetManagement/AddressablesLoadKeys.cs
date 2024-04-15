@@ -7,5 +7,6 @@
         public static string UIWinLevel => "UIWinLevel";
         public static string UILostLevel => "UILostLevel";
         public static string UILeave => "UILeave";
+        public static string Tutorial => "Tutorial";
     }
 }

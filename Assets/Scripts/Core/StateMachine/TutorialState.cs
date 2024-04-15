@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Core.AssetManagement.LocalAssetProviders;
 using Core.Data;
 using Core.SaveService;
 using Core.Tutorial;
@@ -17,6 +18,7 @@ namespace Core.StateMachine
         private readonly Game _game;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly ISaveService<PlayerProgressData> _playerProgressData;
+        private readonly UILoadingProvider _uiLoadingProvider;
         
         private LevelManager _levelManager;
         private UIPause _uiPause;
@@ -24,23 +26,28 @@ namespace Core.StateMachine
         public TutorialState(GameStateMachine stateMachine, 
             Game game, 
             ICoroutineRunner coroutineRunner, 
+            UILoadingProvider uiLoadingProvider,
             ISaveService<PlayerProgressData> playerProgressData)
         {
             _stateMachine = stateMachine;
             _game = game;
             _coroutineRunner = coroutineRunner;
+            _uiLoadingProvider = uiLoadingProvider;
             _playerProgressData = playerProgressData;
         }
 
-        public void Enter()
+        public async void Enter()
         {
             PrepareLevelManager();
             PrepareUIPause();
             DisableUIPause();
 
-            _levelManager.BuildTutorialLevel(ResourceLoader.TrashCanDatas[0]);
+            TutorialProvider tutorialProvider = new TutorialProvider();
+            await tutorialProvider.Load();
+
+            _levelManager.BuildTutorialLevel(ResourceLoader.TrashCanDatas.First(data => data.Type == TrashType.Organic));
             var trash = GameObject.FindObjectsOfType<TrashObject>();
-            var glass = trash.First(t => t.TrashData.Title == "BeerBottle");
+            var banana = trash.First(t => t.TrashData.Title == "Banana");
             
             foreach (var trashObject in trash) 
                 trashObject.ToggleInteraction(false);
@@ -55,9 +62,9 @@ namespace Core.StateMachine
                 .AddPart(new CustomActionPart(tutorialUI.SwitchToNext))
                 .AddPart(new TriggerPart(tutorialUI.Messages[2].SkipButton.onClick))
                 .AddPart(new CustomActionPart(tutorialUI.DisableCurrent))
-                // highlight bottle
-                .AddPart(new CustomActionPart(() => glass.ToggleInteraction(true)))
-                .AddPart(new TriggerPart(glass.OnDisposed))
+                // highlight banana
+                .AddPart(new CustomActionPart(() => banana.ToggleInteraction(true)))
+                .AddPart(new TriggerPart(banana.OnDisposed))
                 .AddPart(new CustomActionPart(tutorialUI.EnableNext))
                 .AddPart(new TriggerPart(tutorialUI.Messages[3].SkipButton.onClick))
                 .AddPart(new CustomActionPart(tutorialUI.DisableCurrent))
@@ -72,6 +79,8 @@ namespace Core.StateMachine
                 .AddPart(new CustomActionPart(tutorialUI.DisableCurrent));
 
             tutorial.TutorialCompleted += OnTutorialCompleted;
+            
+            _uiLoadingProvider.TryUnload();
             _coroutineRunner.StartCoroutine(tutorial.StartExecution());
         }
 
@@ -86,8 +95,11 @@ namespace Core.StateMachine
             _levelManager.LevelComplete.RemoveAllListeners();
         }
 
-        private void PrepareLevelManager() => 
+        private void PrepareLevelManager()
+        {
             _levelManager = GameObject.FindObjectOfType<LevelManager>();
+            _levelManager.ClearLevelUI();
+        }
 
         private void PrepareUIPause() => 
             _uiPause = GameObject.FindObjectOfType<UIPause>();

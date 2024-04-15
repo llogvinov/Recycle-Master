@@ -1,5 +1,4 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using ObjectsData;
 using UnityEngine;
 using UnityEngine.Events;

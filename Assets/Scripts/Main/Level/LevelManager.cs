@@ -39,6 +39,7 @@ namespace Main.Level
             RecycleController.AllObjectsOfSpawnerThrown -= CheckAllSpawners;
 
         private void UpdateLevelUI() => _levelText.text = $"level {currentLevelDetailsData.LevelNumber}";
+        public void ClearLevelUI() => _levelText.text = "";
         
         private void CheckAllSpawners()
         {
