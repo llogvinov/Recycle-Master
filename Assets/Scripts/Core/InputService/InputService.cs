@@ -23,7 +23,8 @@ namespace Core.InputService
         {
             if (!Physics.Raycast(ray, out var hit, 50f, _trashCanLayerMask.value)) return;
             if (!hit.collider.transform.parent.TryGetComponent<TrashCan>(out var trashCan)) return;
-
+            if (!trashCan.IsInteractable) return;
+            
             TrashCanSpawner.SelectTrashCan(trashCan);
         }
 

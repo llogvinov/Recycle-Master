@@ -30,6 +30,7 @@ namespace Main
                     new Vector3(1.2f, 1.2f, 1.2f) : 
                     new Vector3(0.9f, 0.9f, 0.9f);
             }
+            trashCan.OnSelected?.Invoke();
         }
 
         private void Spawn()

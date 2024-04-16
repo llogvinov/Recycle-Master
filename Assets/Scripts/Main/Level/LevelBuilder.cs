@@ -28,19 +28,21 @@ namespace Main.Level
         public LevelBuilder(LevelManager levelManager) => 
             _levelManager = levelManager;
 
-        public LevelBuilder SpawnTrashCans()
+        public LevelBuilder SpawnTrashCans(bool selectOnInit = true)
         {
             var trashCanSpawner = GameObject.Instantiate(_levelManager.TrashCanSpawnerPrefab);
             trashCanSpawner.Init(_trashCanDatas);
-            TrashCanSpawner.SelectTrashCan(TrashCanSpawner.TrashCans[0]);
-            
+
+            if (selectOnInit) 
+                TrashCanSpawner.SelectTrashCan(TrashCanSpawner.TrashCans[0]);
+
             return this;
         }
 
-        public LevelBuilder SpawnTrashCans(TrashCanData trashCanData)
+        public LevelBuilder SpawnTrashCans(TrashCanData trashCanData, bool selectOnInit = true)
         {
             _trashCanDatas = new List<TrashCanData> {trashCanData};
-            return SpawnTrashCans();
+            return SpawnTrashCans(selectOnInit);
         }
 
         public LevelBuilder GetRandomTrashCanDatas()

@@ -46,9 +46,11 @@ namespace Core.StateMachine
             await tutorialProvider.Load();
 
             _levelManager.BuildTutorialLevel(ResourceLoader.TrashCanDatas.First(data => data.Type == TrashType.Organic));
+            var can = GameObject.FindObjectOfType<TrashCan>();
             var trash = GameObject.FindObjectsOfType<TrashObject>();
             var banana = trash.First(t => t.TrashData.Title == "Banana");
             
+            can.ToggleInteraction(false);
             foreach (var trashObject in trash) 
                 trashObject.ToggleInteraction(false);
 
@@ -61,12 +63,20 @@ namespace Core.StateMachine
                 .AddPart(new TriggerPart(tutorialUI.Messages[1].SkipButton.onClick))
                 .AddPart(new CustomActionPart(tutorialUI.SwitchToNext))
                 .AddPart(new TriggerPart(tutorialUI.Messages[2].SkipButton.onClick))
+                .AddPart(new CustomActionPart(tutorialUI.SwitchToNext))
+                .AddPart(new TriggerPart(tutorialUI.Messages[3].SkipButton.onClick))
                 .AddPart(new CustomActionPart(tutorialUI.DisableCurrent))
-                // highlight banana
+                .AddPart(new CustomActionPart(() => can.ToggleInteraction(true)))
+                .AddPart(new TriggerPart(can.OnSelected))
+                .AddPart(new CustomActionPart(tutorialUI.EnableNext))
+                .AddPart(new TriggerPart(tutorialUI.Messages[4].SkipButton.onClick))
+                .AddPart(new CustomActionPart(tutorialUI.SwitchToNext))
+                .AddPart(new TriggerPart(tutorialUI.Messages[5].SkipButton.onClick))
+                .AddPart(new CustomActionPart(tutorialUI.DisableCurrent))
                 .AddPart(new CustomActionPart(() => banana.ToggleInteraction(true)))
                 .AddPart(new TriggerPart(banana.OnDisposed))
                 .AddPart(new CustomActionPart(tutorialUI.EnableNext))
-                .AddPart(new TriggerPart(tutorialUI.Messages[3].SkipButton.onClick))
+                .AddPart(new TriggerPart(tutorialUI.Messages[6].SkipButton.onClick))
                 .AddPart(new CustomActionPart(tutorialUI.DisableCurrent))
                 .AddPart(new CustomActionPart(() =>
                 {
@@ -75,7 +85,7 @@ namespace Core.StateMachine
                 }))
                 .AddPart(new TriggerPart(_levelManager.LevelComplete))
                 .AddPart(new CustomActionPart(tutorialUI.EnableNext))
-                .AddPart(new TriggerPart(tutorialUI.Messages[4].SkipButton.onClick))
+                .AddPart(new TriggerPart(tutorialUI.Messages[7].SkipButton.onClick))
                 .AddPart(new CustomActionPart(tutorialUI.DisableCurrent));
 
             tutorial.TutorialCompleted += OnTutorialCompleted;

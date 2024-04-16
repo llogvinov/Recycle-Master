@@ -55,7 +55,7 @@ namespace Main.Level
 
             _levelBuilder
                 .ClearLevel()
-                .SpawnTrashCans(trashCanData)
+                .SpawnTrashCans(trashCanData, selectOnInit: false)
                 .SpawnTrashObjects(trashCanData)
                 .InvokeAllObjectSpawned();
         }
