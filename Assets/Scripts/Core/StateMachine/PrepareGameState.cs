@@ -19,8 +19,10 @@ namespace Core.StateMachine
 
         private LevelManager _levelManager;
         private UITimerProvider _uiTimerProvider;
+        private UIFlashScreenProvider _uiFlashScreenProvider;
 
         private UITimer UITimer => _uiTimerProvider.LoadedObject;
+        private UIFlashScreen UIFlashScreen => _uiFlashScreenProvider.LoadedObject;
 
         public PrepareGameState(GameStateMachine stateMachine,
             Game game,
@@ -31,6 +33,8 @@ namespace Core.StateMachine
             _game = game;
             _coroutineRunner = coroutineRunner;
             _uiLoadingProvider = uiLoadingProvider;
+            _uiTimerProvider = new UITimerProvider();
+            _uiFlashScreenProvider = new UIFlashScreenProvider();
         }
 
         public async void Enter(int level)
@@ -43,6 +47,7 @@ namespace Core.StateMachine
             PrepareLevelManager();
             BuildLevel();
             await PrepareUITimer();
+            await PrepareUIFlashScreen();
             PrepareUIPause();
 
             _stateMachine.Enter<GameLoopState, LevelManager>(_levelManager);
@@ -76,21 +81,21 @@ namespace Core.StateMachine
         {
             if (GameObject.FindObjectOfType<UITimer>() is null)
             {
-                await LoadUITimer();
+                await _uiTimerProvider.Load();
                 Timer.Initialize(_coroutineRunner, UITimer);
             }
 
             Timer.Instance.OnFinish = null;
             Timer.Instance.OnFinish += OnTimerFinished;
 
-            async Task LoadUITimer()
-            {
-                _uiTimerProvider = new UITimerProvider();
-                await _uiTimerProvider.Load();
-            }
-
             void OnTimerFinished() => 
                 _game.GameOver?.Invoke(GameOverCondition.LostByTime);
+        }
+
+        private async Task PrepareUIFlashScreen()
+        {
+            if (GameObject.FindObjectOfType<UIFlashScreen>() is null) 
+                await _uiFlashScreenProvider.Load();
         }
 
         private void PrepareUIPause()

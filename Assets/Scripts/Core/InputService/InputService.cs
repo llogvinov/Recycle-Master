@@ -1,13 +1,13 @@
 ﻿using System;
 using Main;
+using Main.Level;
 using UnityEngine;
 
 namespace Core.InputService
 {
     public class InputService : MonoBehaviour, IService
     {
-        public static Action<TrashObject, TrashCan> OnRight;
-        public static Action<TrashObject> OnWrong;
+        public static Action<TrashObject> ObjectSelected;
         
         [SerializeField] protected LayerMask _interactableLayerMask;
         [SerializeField] protected LayerMask _trashCanLayerMask;
@@ -16,8 +16,11 @@ namespace Core.InputService
         protected TrashObject Selected;
         protected Vector3 InputPosition;
         
-        protected void Awake() => 
+        protected void Awake()
+        {
             Camera = Camera.main;
+            ObjectSelectHandler objectSelectHandler = new();
+        }
 
         protected void OnInputBegan(Ray ray)
         {
@@ -41,16 +44,7 @@ namespace Core.InputService
         {
             if (Selected == null) return;
 
-            if (Selected.TrashData.Type == RecycleController.TrashCan.TrashCanData.Type)
-            {
-                Debug.Log("right");
-                OnRight?.Invoke(Selected, RecycleController.TrashCan);
-            }
-            else
-            {
-                Debug.Log("wrong");
-                OnWrong?.Invoke(Selected);
-            }
+            ObjectSelected?.Invoke(Selected);
             Selected = null;
         }
     }

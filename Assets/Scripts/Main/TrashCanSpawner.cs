@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Main.Level;
 using ObjectsData;
 using UnityEngine;
 
@@ -21,9 +22,9 @@ namespace Main
 
         public static void SelectTrashCan(TrashCan trashCan)
         {
-            if (RecycleController.TrashCan == trashCan) return;
+            if (RecycleController.SelectedTrashCan == trashCan) return;
             
-            RecycleController.TrashCan = trashCan;
+            RecycleController.SelectedTrashCan = trashCan;
             foreach (var can in TrashCans)
             {
                 can.transform.localScale = can == trashCan ? 
