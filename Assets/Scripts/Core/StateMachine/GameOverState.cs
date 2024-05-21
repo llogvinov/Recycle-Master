@@ -4,7 +4,9 @@ using Core.Data;
 using Core.SaveService;
 using Main;
 using Main.Level;
+using UI;
 using UI.Base;
+using UnityEngine;
 
 namespace Core.StateMachine
 {
@@ -17,8 +19,11 @@ namespace Core.StateMachine
         private readonly ISaveService<PlayerProgressData> _saveService;
         private readonly UILoadingProvider _uiLoadingProvider;
 
-        private UIWinLevelProvider _uiWinLevel;
-        private UILostLevelProvider _uiLostLevel;
+        private readonly UIWinLevelProvider _uiWinLevelProvider;
+        private readonly UILostLevelProvider _uiLostLevelProvider;
+
+        private UIWinLevel UIWinLvl => _uiWinLevelProvider.LoadedObject;
+        private UILostLevel UILostLvl => _uiLostLevelProvider.LoadedObject;
 
         public GameOverState(GameStateMachine stateMachine, 
             ISaveService<PlayerProgressData> saveService,
@@ -27,6 +32,8 @@ namespace Core.StateMachine
             _stateMachine = stateMachine;
             _saveService = saveService;
             _uiLoadingProvider = uiLoadingProvider;
+            _uiWinLevelProvider = new UIWinLevelProvider();
+            _uiLostLevelProvider = new UILostLevelProvider();
         }
 
         public async void Enter(GameOverCondition condition)
@@ -53,20 +60,21 @@ namespace Core.StateMachine
 
         public void Exit()
         {
-            if (_uiWinLevel is not null)
+            Debug.Log("_uiWinLevel.HasLoadedObject - " + _uiWinLevelProvider.HasLoadedObject);
+            Debug.Log("_uiLostLevel.HasLoadedObject - " + _uiLostLevelProvider.HasLoadedObject);
+            
+            if (_uiWinLevelProvider.HasLoadedObject)
             {
-                _uiWinLevel.LoadedObject.MenuButton.onClick.RemoveAllListeners();
-                _uiWinLevel.LoadedObject.NextButton.onClick.RemoveAllListeners();
-                _uiWinLevel.TryUnload();
-                _uiWinLevel = null;
+                UIWinLvl.MenuButton.onClick.RemoveAllListeners();
+                UIWinLvl.NextButton.onClick.RemoveAllListeners();
+                _uiWinLevelProvider.TryUnload();
             }
 
-            if (_uiLostLevel is not null)
+            if (_uiLostLevelProvider.HasLoadedObject)
             {
-                _uiLostLevel.LoadedObject.MenuButton.onClick.RemoveAllListeners();
-                _uiLostLevel.LoadedObject.RestartButton.onClick.RemoveAllListeners();
-                _uiLostLevel.TryUnload();
-                _uiLostLevel = null;
+                UILostLvl.MenuButton.onClick.RemoveAllListeners();
+                UILostLvl.RestartButton.onClick.RemoveAllListeners();
+                _uiLostLevelProvider.TryUnload();
             }
         }
 
@@ -80,20 +88,17 @@ namespace Core.StateMachine
         {
             await LoadUIWinLevel();
             
-            _uiWinLevel.LoadedObject.MenuButton.onClick.AddListener(LoadMenu);
-            _uiWinLevel.LoadedObject.NextButton.onClick.AddListener(LoadNextLevel);
+            UIWinLvl.MenuButton.onClick.AddListener(LoadMenu);
+            UIWinLvl.NextButton.onClick.AddListener(LoadNextLevel);
             
-            _uiWinLevel.LoadedObject.Open();
+            UIWinLvl.Open();
 
-            async Task LoadUIWinLevel()
-            {
-                _uiWinLevel = new UIWinLevelProvider();
-                await _uiWinLevel.Load(disableOnInit: true);
-            }
+            async Task LoadUIWinLevel() => 
+                await _uiWinLevelProvider.Load(disableOnInit: true);
 
             async void LoadNextLevel()
             {
-                _uiWinLevel.LoadedObject.Close();
+                UIWinLvl.Close();
                 await Task.Delay((int)(UIPanel.AnimationDuration + Additional) * MillisecondsPerSeconds);
                 await LoadUILoading();
                 _stateMachine.Enter<PrepareGameState, int>(_saveService.SaveData.CurrentLevel);
@@ -107,20 +112,17 @@ namespace Core.StateMachine
         {
             await LoadUILostLevel();
             
-            _uiLostLevel.LoadedObject.MenuButton.onClick.AddListener(LoadMenu);
-            _uiLostLevel.LoadedObject.RestartButton.onClick.AddListener(RestartLevel);
+            UILostLvl.MenuButton.onClick.AddListener(LoadMenu);
+            UILostLvl.RestartButton.onClick.AddListener(RestartLevel);
             
-            _uiLostLevel.LoadedObject.Open();
+            UILostLvl.Open();
             
-            async Task LoadUILostLevel()
-            {
-                _uiLostLevel = new UILostLevelProvider();
-                await _uiLostLevel.Load(disableOnInit: true);
-            }
-            
+            async Task LoadUILostLevel() => 
+                await _uiLostLevelProvider.Load(disableOnInit: true);
+
             async void RestartLevel()
             {
-                _uiLostLevel.LoadedObject.Close();
+                UILostLvl.Close();
                 await Task.Delay((int)(UIPanel.AnimationDuration + Additional) * MillisecondsPerSeconds);
                 await LoadUILoading();
                 _stateMachine.Enter<PrepareGameState, int>(_saveService.SaveData.CurrentLevel);

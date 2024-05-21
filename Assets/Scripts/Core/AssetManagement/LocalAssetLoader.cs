@@ -16,6 +16,8 @@ namespace Core.AssetManagement
         public T LoadedObject => _loadedObject;
         protected abstract string AssetId { get; }
 
+        public bool HasLoadedObject => _loadedObject is not null;
+
         public async Task<T> Load(bool disableOnInit = false)
         {
             var handle = Addressables.InstantiateAsync(AssetId);

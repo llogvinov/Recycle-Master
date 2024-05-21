@@ -496,6 +496,10 @@ PrefabInstance:
       propertyPath: m_Text
       value: LOST LEVEL
       objectReference: {fileID: 0}
+    - target: {fileID: 7836305049490999045, guid: 9314b9bed203ff844b91b5fc67b2112e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
