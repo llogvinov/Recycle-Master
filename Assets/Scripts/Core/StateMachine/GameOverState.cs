@@ -60,9 +60,6 @@ namespace Core.StateMachine
 
         public void Exit()
         {
-            Debug.Log("_uiWinLevel.HasLoadedObject - " + _uiWinLevelProvider.HasLoadedObject);
-            Debug.Log("_uiLostLevel.HasLoadedObject - " + _uiLostLevelProvider.HasLoadedObject);
-            
             if (_uiWinLevelProvider.HasLoadedObject)
             {
                 UIWinLvl.MenuButton.onClick.RemoveAllListeners();
