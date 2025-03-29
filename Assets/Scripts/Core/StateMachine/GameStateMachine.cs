@@ -28,7 +28,7 @@ namespace Core.StateMachine
             _coroutineRunner = coroutineRunner;
             _states = new List<IState>
             {
-                new BootstrapState(this, services),
+                new BootstrapState(this, sceneLoader, services),
                 new TutorialState(this, _game, _coroutineRunner, uiLoadingProvider, services.Single<ISaveService<PlayerProgressData>>()),
                 new MenuState(this, uiLoadingProvider),
                 new LoadSceneState(this, services.Single<ISaveService<PlayerProgressData>>(), sceneLoader, uiLoadingProvider),

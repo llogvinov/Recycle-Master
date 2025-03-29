@@ -9,15 +9,19 @@ namespace Core.StateMachine
     public class BootstrapState : ISimpleState
     {
         private readonly GameStateMachine _stateMachine;
+        private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
         private readonly PlayerProgressData _progressData;
         private readonly PlayerSettingsData _settingsData;
 
-        public BootstrapState(GameStateMachine stateMachine, AllServices services)
+        public BootstrapState(GameStateMachine stateMachine,
+            SceneLoader sceneLoader,
+            AllServices services)
         {
             _stateMachine = stateMachine;
+            _sceneLoader = sceneLoader;
             _services = services;
-            
+
             RegisterServices();
 
             _progressData = _services.Single<ISaveService<PlayerProgressData>>().Load();
@@ -28,15 +32,18 @@ namespace Core.StateMachine
         {
             AudioManager.Instance.MusicPlayer.Switch(_settingsData.PlayMusic);
             await CacheCurrentLevel();
-            _stateMachine.Enter<MenuState>();
+            _sceneLoader.LoadScene("Menu", () =>
+            {
+                _stateMachine.Enter<MenuState>();
+            });
         }
 
         public void Exit()
         {
-            
+
         }
 
-        private async Task CacheCurrentLevel() => 
+        private async Task CacheCurrentLevel() =>
             await CachedLevel.CacheLevel(_progressData.CurrentLevel);
 
         private void RegisterServices()
